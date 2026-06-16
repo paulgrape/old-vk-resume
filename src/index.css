@@ -1,5 +1,41 @@
 @import 'tailwindcss';
 
+@theme {
+  /* VK palette — reuse via bg-vk-*, text-vk-*, border-vk-*, etc. */
+  --color-vk-link: #2b587a;
+  --color-vk-border: #d2d9e0;
+  --color-vk-border-light: #eef0f2;
+  --color-vk-muted: #909499;
+  --color-vk-heading: #506a8d;
+  --color-vk-heading-dark: #2b3d4f;
+  --color-vk-badge-text: #507299;
+  --color-vk-badge-bg: #d9e6f0;
+  --color-vk-titlebar: #ede5b7;
+  --color-vk-section-bg: #f0f2f5;
+  --color-vk-footer: #e9ecf1;
+  --color-vk-friends-header: #dee3ec;
+  --color-vk-friends-count: #f1f1f1;
+  --color-vk-placeholder: #999999;
+  --color-vk-text: #333333;
+  --color-vk-text-subtle: #555555;
+  --color-vk-header-top: #476d96;
+  --color-vk-header-mid: #5d8ab8;
+  --color-vk-header-bottom: #6e9fc8;
+  --color-vk-avatar-from: #c8d5df;
+  --color-vk-avatar-to: #8fa5b5;
+  --color-vk-friend-avatar-from: #dde6ef;
+  --color-vk-friend-avatar-to: #b0c2d0;
+}
+
+@utility bg-vk-header {
+  background: linear-gradient(
+    to bottom,
+    var(--color-vk-header-top) 0%,
+    var(--color-vk-header-mid) 40%,
+    var(--color-vk-header-bottom) 100%
+  );
+}
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
