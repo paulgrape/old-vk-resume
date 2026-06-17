@@ -1,4 +1,5 @@
 import vkLogo from './assets/logo-vk.png'
+import { SectionHeader } from './components/SectionHeader'
 // import vkLogo from './assets/logo2006.svg'
 // import vkLogo from './assets/vk-logo-2012.png'
 
@@ -162,24 +163,11 @@ function App() {
                 <div className='border-t border-vk-border my-2' />
 
                 {/* Friends block */}
-                <div>
-                  <div className='flex items-baseline justify-between px-2 bg-vk-friends-header'>
-                    <span className='text-[13px] font-bold text-vk-heading'>
-                      Друзья
-                    </span>
-                    <a
-                      href='#'
-                      className='text-[12px] text-vk-link no-underline hover:underline'
-                    >
-                      новости
-                    </a>
-                  </div>
-                  <div className='text-left px-2 bg-vk-friends-count'>
-                    <span className='m-0 text-[12px] text-vk-muted text-left'>
-                      N друзей
-                    </span>
-                  </div>
-                </div>
+                <SectionHeader
+                  title='Друзья'
+                  count='N друзей'
+                  linkText='новости'
+                />
 
                 <div className='grid grid-cols-3 gap-1.5 mb-1'>
                   {[
@@ -281,17 +269,11 @@ function App() {
 
                 {/* Photos section */}
                 <div className='border-b border-vk-border'>
-                  <div className='flex items-center justify-between px-3 py-1.5 border-b border-vk-border bg-vk-section-bg'>
-                    <span className='text-[13px] font-bold text-vk-heading-dark'>
-                      N фотографий
-                    </span>
-                    <a
-                      href='#'
-                      className='text-[12px] text-vk-link no-underline hover:underline'
-                    >
-                      все
-                    </a>
-                  </div>
+                  <SectionHeader
+                    title='Фотографии'
+                    count='N фотографий'
+                    linkText='все'
+                  />
                   <div className='grid grid-cols-4 gap-0 p-2 gap-1'>
                     {Array.from({ length: 4 }).map((_, i) => (
                       <div
@@ -307,17 +289,11 @@ function App() {
 
                 {/* Wall section */}
                 <div>
-                  <div className='flex items-center justify-between px-3 py-1.5 border-b border-vk-border bg-vk-section-bg'>
-                    <span className='text-[13px] font-bold text-vk-heading-dark'>
-                      N записей
-                    </span>
-                    <a
-                      href='#'
-                      className='text-[12px] text-vk-link no-underline hover:underline'
-                    >
-                      к записям Павла
-                    </a>
-                  </div>
+                  <SectionHeader
+                    title='Стена'
+                    count='N записей'
+                    linkText='к записям Павла'
+                  />
 
                   {/* Post */}
                   <article className='flex gap-2.5 px-3 pt-2.5 pb-2 border-b border-vk-border-light'>
