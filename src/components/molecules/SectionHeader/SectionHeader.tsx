@@ -1,3 +1,5 @@
+import { VkLink } from '@/components/atoms/VkLink/VkLink'
+
 type SectionHeaderProps = {
   title: string
   count?: string
@@ -16,12 +18,7 @@ export function SectionHeader({
       <div className='flex items-baseline justify-between px-2 bg-vk-friends-header'>
         <span className='text-[13px] font-bold text-vk-heading'>{title}</span>
         {linkText && (
-          <a
-            href={linkHref}
-            className='text-[12px] text-vk-link no-underline hover:underline'
-          >
-            {linkText}
-          </a>
+          <VkLink href={linkHref}>{linkText}</VkLink>
         )}
       </div>
       {count && (
