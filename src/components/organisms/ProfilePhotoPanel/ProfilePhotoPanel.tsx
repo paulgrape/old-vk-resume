@@ -13,6 +13,7 @@ type FriendsSectionData = {
 }
 
 type ProfilePhotoPanelProps = {
+  name: string
   stats: ProfileStat[]
   friends: readonly string[]
   friendsSection: FriendsSectionData
@@ -20,6 +21,7 @@ type ProfilePhotoPanelProps = {
 }
 
 export function ProfilePhotoPanel({
+  name,
   stats,
   friends,
   friendsSection,

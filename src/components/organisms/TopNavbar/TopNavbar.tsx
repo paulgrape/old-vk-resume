@@ -2,8 +2,21 @@ import headerBg from '@/assets/xhead2.gif'
 import { NavLink } from '@/components/atoms/NavLink/NavLink'
 import { SearchInput } from '@/components/atoms/SearchInput/SearchInput'
 
+type NavigationItem = string | {
+  label: string
+  href: string
+}
+
 type TopNavbarProps = {
-  links: readonly string[]
+  links: readonly NavigationItem[]
+}
+
+function getNavigationItemData(item: NavigationItem) {
+  return typeof item === 'string' ? { label: item, href: '#' } : item
+}
+
+function isExternalHref(href: string) {
+  return /^https?:\/\//.test(href)
 }
 
 export function TopNavbar({ links }: TopNavbarProps) {
@@ -16,14 +29,20 @@ export function TopNavbar({ links }: TopNavbarProps) {
         <SearchInput />
 
         <nav className='flex flex-1 flex-wrap items-center justify-end gap-5 pr-1.5'>
-          {links.map(link => (
-            <NavLink
-              key={link}
-              href='#'
-            >
-              {link}
-            </NavLink>
-          ))}
+          {links.map(link => {
+            const item = getNavigationItemData(link)
+
+            return (
+              <NavLink
+                key={item.label}
+                href={item.href}
+                target={isExternalHref(item.href) ? '_blank' : undefined}
+                rel={isExternalHref(item.href) ? 'noreferrer' : undefined}
+              >
+                {item.label}
+              </NavLink>
+            )
+          })}
         </nav>
       </div>
     </header>

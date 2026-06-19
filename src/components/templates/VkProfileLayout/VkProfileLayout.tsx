@@ -4,7 +4,7 @@ type VkProfileLayoutProps = {
   header: ReactNode
   sidebar: ReactNode
   titlebar: ReactNode
-  photoColumn: ReactNode
+  photoColumn?: ReactNode
   mainColumn: ReactNode
   footer: ReactNode
 }
@@ -17,6 +17,10 @@ export function VkProfileLayout({
   mainColumn,
   footer,
 }: VkProfileLayoutProps) {
+  const mainColumnClassName = photoColumn
+    ? 'w-[420px] shrink-0 min-w-0'
+    : 'w-full min-w-0'
+
   return (
     <div className='flex flex-col min-h-screen bg-white w-full mx-auto '>
       {header}
@@ -30,7 +34,7 @@ export function VkProfileLayout({
 
             <div className='flex flex-1 items-start bg-white scheme-light gap-[10px]'>
               {photoColumn}
-              <div className='w-[420px] shrink-0 min-w-0'>{mainColumn}</div>
+              <div className={mainColumnClassName}>{mainColumn}</div>
             </div>
           </div>
         </div>
