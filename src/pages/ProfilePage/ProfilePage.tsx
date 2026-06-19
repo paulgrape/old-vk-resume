@@ -43,6 +43,7 @@ export function ProfilePage() {
       }
       photoColumn={
         <ProfilePhotoPanel
+          name={user.name}
           stats={profileStats}
           friends={friends}
           friendsSection={friendsSection}
