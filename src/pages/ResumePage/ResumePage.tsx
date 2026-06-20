@@ -1,15 +1,17 @@
+import type { ReactNode } from 'react'
 import { ProfileInfoPanel } from '@/components/organisms/ProfileInfoPanel/ProfileInfoPanel'
 import { ProfileTitlebar } from '@/components/organisms/ProfileTitlebar/ProfileTitlebar'
 import { ResumeExperienceSection } from '@/components/organisms/ResumeExperienceSection/ResumeExperienceSection'
 import { ResumePhotoPanel } from '@/components/organisms/ResumePhotoPanel/ResumePhotoPanel'
 import { ResumeProjectsSection } from '@/components/organisms/ResumeProjectsSection/ResumeProjectsSection'
+import { ResumeStackSection } from '@/components/organisms/ResumeStackSection/ResumeStackSection'
 import { SidebarNav } from '@/components/organisms/SidebarNav/SidebarNav'
 import { SiteFooter } from '@/components/organisms/SiteFooter/SiteFooter'
 import { TopNavbar } from '@/components/organisms/TopNavbar/TopNavbar'
 import { VkProfileLayout } from '@/components/templates/VkProfileLayout/VkProfileLayout'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
-import { defaultResumeLocale, resumeContent } from '@/data/resume'
+import { defaultResumeLocale, resumeContent, type ResumeContent } from '@/data/resume'
 import {
   resumeRouteHrefs,
   resumeRoutes,
@@ -21,9 +23,12 @@ type ResumePageProps = {
   routeId?: ResumeRouteId
 }
 
-function ResumeHomeContent() {
-  const resume = resumeContent[defaultResumeLocale]
+type ResumePageDefinition = {
+  showPhotoColumn?: boolean
+  render: (resume: ResumeContent, route: ResumeRoute) => ReactNode
+}
 
+function ResumeHomeContent({ resume }: { resume: ResumeContent }) {
   return (
     <div className='px-2'>
       <ProfileInfoPanel
@@ -73,9 +78,52 @@ function ResumePlaceholderContent({ route }: { route: ResumeRoute }) {
   )
 }
 
+const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
+  home: {
+    showPhotoColumn: true,
+    render: resume => <ResumeHomeContent resume={resume} />,
+  },
+  experience: {
+    render: resume => (
+      <ResumeExperienceSection
+        title={resume.experienceSection.title}
+        count={resume.experienceSection.count}
+        linkText={resume.experienceSection.linkText}
+        entries={resume.experience}
+      />
+    ),
+  },
+  projects: {
+    render: resume => (
+      <ResumeProjectsSection
+        title={resume.projectsSection.title}
+        count={resume.projectsSection.count}
+        linkText={resume.projectsSection.linkText}
+        projects={resume.projects}
+      />
+    ),
+  },
+  stack: {
+    render: resume => <ResumeStackSection skillGroups={resume.skillGroups} />,
+  },
+  achievements: {
+    render: (_resume, route) => <ResumePlaceholderContent route={route} />,
+  },
+  references: {
+    render: (_resume, route) => <ResumePlaceholderContent route={route} />,
+  },
+  contacts: {
+    render: (_resume, route) => <ResumePlaceholderContent route={route} />,
+  },
+  downloadCv: {
+    render: (_resume, route) => <ResumePlaceholderContent route={route} />,
+  },
+}
+
 export function ResumePage({ routeId = 'home' }: ResumePageProps) {
   const resume = resumeContent[defaultResumeLocale]
   const route = resumeRoutes[routeId]
+  const definition = resumePageRegistry[routeId]
   const isHomeRoute = routeId === 'home'
 
   return (
@@ -95,7 +143,7 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
         />
       }
       photoColumn={
-        isHomeRoute ? (
+        definition.showPhotoColumn ? (
           <ResumePhotoPanel
             name={resume.user.name}
             stats={resume.stats}
@@ -103,9 +151,7 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
           />
         ) : null
       }
-      mainColumn={
-        isHomeRoute ? <ResumeHomeContent /> : <ResumePlaceholderContent route={route} />
-      }
+      mainColumn={definition.render(resume, route)}
       footer={
         <SiteFooter
           links={resume.footerLinks}
