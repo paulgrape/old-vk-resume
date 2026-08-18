@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "documentTitle": "Павел Виноградов"
+  },
+  "ui": {
+    "searchPlaceholder": "Поиск",
+    "writeMessage": "Написать сообщение",
+    "reply": "Ответить",
+    "like": "Мне нравится",
+    "showAll": "все",
+    "skillsCount": "{count} навыков",
+    "showDetails": "Показать подробную информацию",
+    "placeholderNote": "Страница подготовлена как раздел резюме.",
+    "backHome": "Вернуться на главную",
+    "localeSwitch": "Язык"
+  },
+  "routes": {
+    "home": {
+      "title": "Моя Страница",
+      "subtitle": "resume profile",
+      "description": "Главная страница резюме с кратким профилем, проектами и опытом.",
+      "details": ["Профиль", "Проекты", "Опыт работы"]
+    },
+    "experience": {
+      "title": "Мой Опыт",
+      "subtitle": "frontend timeline",
+      "description": "Подробная страница про роли, зоны ответственности и результаты в продуктовых командах.",
+      "details": [
+        "Senior frontend delivery",
+        "UI architecture",
+        "Mentoring and reviews"
+      ]
+    },
+    "projects": {
+      "title": "Мои Проекты",
+      "subtitle": "selected work",
+      "description": "Подборка проектов с акцентом на интерфейсы, дизайн-системы, платформенные решения и DX.",
+      "details": ["Portfolio Old VK", "Design System", "Frontend Platform"]
+    },
+    "stack": {
+      "title": "Мои Навыки",
+      "subtitle": "technology stack",
+      "description": "Технологии и практики, которыми я регулярно пользуюсь при разработке frontend-продуктов.",
+      "details": [
+        "React and TypeScript",
+        "Vite and CI/CD",
+        "Accessibility and performance"
+      ]
+    },
+    "achievements": {
+      "title": "Мои Достижения",
+      "subtitle": "impact highlights",
+      "description": "Короткий список заметных результатов: ускорение интерфейсов, улучшение качества релизов и развитие командных практик.",
+      "details": [
+        "Core Web Vitals",
+        "Reusable UI foundations",
+        "Release quality"
+      ]
+    },
+    "references": {
+      "title": "Мои Рекомендации",
+      "subtitle": "feedback",
+      "description": "Место для рекомендаций коллег, лидов и продуктовых команд.",
+      "details": ["Team feedback", "Code review notes", "Delivery references"]
+    },
+    "contacts": {
+      "title": "Мои Контакты",
+      "subtitle": "get in touch",
+      "description": "Способы связаться для обсуждения frontend-роли, продукта или технического проекта.",
+      "details": ["Telegram", "Email", "LinkedIn"]
+    },
+    "downloadCv": {
+      "title": "Скачать CV",
+      "subtitle": "pdf resume",
+      "description": "Заглушка для будущей загрузки PDF-версии резюме.",
+      "details": ["Russian CV", "English CV", "Printable version"]
+    }
+  },
+  "resume": {
+    "user": {
+      "name": "Павел Виноградов",
+      "titlebarSubtitle": "(senior frontend developer)",
+      "status": "онлайн",
+      "profileStatus": "Senior frontend developer: проектирую надежные, быстрые и поддерживаемые интерфейсы на React и TypeScript, помогаю командам выпускать продукт без хаоса в UI.",
+      "specialization": "Frontend Architecture"
+    },
+    "topNavLinks": [
+      { "id": "experience", "label": "опыт" },
+      { "id": "projects", "label": "проекты" },
+      { "id": "stack", "label": "стек" },
+      { "id": "contacts", "label": "контакты" },
+      { "id": "github", "label": "github" },
+      { "id": "linkedin", "label": "linkedin" }
+    ],
+    "sidebarNavItems": [
+      { "id": "home", "label": "Моя Страница" },
+      { "id": "experience", "label": "Мой Опыт" },
+      { "id": "projects", "label": "Мои Проекты" },
+      { "id": "stack", "label": "Мои Навыки" },
+      { "id": "achievements", "label": "Мои Достижения" },
+      { "id": "references", "label": "Мои Рекомендации" },
+      { "id": "contacts", "label": "Мои Контакты" },
+      { "id": "downloadCv", "label": "Скачать CV" }
+    ],
+    "appMenuItems": [
+      { "label": "Open to work", "badge": "remote" },
+      { "label": "English", "badge": "Fluent" },
+      { "label": "Relocation", "badge": "EU" }
+    ],
+    "stats": [
+      { "label": "Лет во frontend", "count": "7+" },
+      { "label": "Production-проектов", "count": "20+" },
+      { "label": "Размер команды", "count": "до 6" },
+      { "label": "Performance wins", "count": "Core Web Vitals" }
+    ],
+    "fields": [
+      { "label": "Город:", "value": "Санкт-Петербург / remote", "link": true },
+      {
+        "label": "Опыт:",
+        "value": "Senior frontend, UI architecture, delivery",
+        "link": false
+      },
+      {
+        "label": "Основной стек:",
+        "value": "React, TypeScript, Next.js, Zustand, Tailwind",
+        "link": false
+      },
+      {
+        "label": "Фокус:",
+        "value": "Карты, дата-виз, enterprise-таблицы, performance",
+        "link": false
+      },
+      {
+        "label": "Языки:",
+        "value": "Русский, English, Italiano",
+        "link": false
+      }
+    ],
+    "skillGroups": [
+      {
+        "title": "Frontend",
+        "items": [
+          "React",
+          "TypeScript",
+          "Next.js",
+          "Zustand",
+          "TanStack Query",
+          "TanStack Table"
+        ]
+      },
+      {
+        "title": "Архитектура",
+        "items": [
+          "Feature-Sliced Design",
+          "Micro-frontends",
+          "Design systems",
+          "Accessibility"
+        ]
+      },
+      {
+        "title": "Data & Viz",
+        "items": ["OpenLayers", "Recharts", "GraphQL", "WebSockets"]
+      },
+      {
+        "title": "Tooling",
+        "items": ["Vite", "Webpack", "Docker", "CI/CD", "Vitest", "Playwright"]
+      }
+    ],
+    "projectsSection": {
+      "title": "Избранные проекты",
+      "count": "4 проекта",
+      "linkText": "портфолио"
+    },
+    "projects": [
+      {
+        "title": "Self-Organizing Network Platform",
+        "description": "Высоконагруженный UI для платформы SON: карты, кластеризация 10K+ объектов, кастомные векторные слои.",
+        "stack": ["React", "Next.js", "OpenLayers"],
+        "metric": "10K+ объектов"
+      },
+      {
+        "title": "Многофункциональная таблица",
+        "description": "Переиспользуемый компонент на TanStack Table: выбор, фильтры, контекстное меню, автообновление, редактирование.",
+        "stack": ["React", "TanStack Table", "TypeScript"],
+        "metric": "reusable UI"
+      },
+      {
+        "title": "Виртуализированное дерево",
+        "description": "Дерево с догрузкой данных по API при раскрытии и подгрузкой на скролле для узлов с тысячами детей.",
+        "stack": ["React", "TanStack Query", "Virtualization"],
+        "metric": "big data UX"
+      },
+      {
+        "title": "Визуализация 5G (NSSF)",
+        "description": "Интерактивные инструменты визуализации сетей 5G и импорт/экспорт CSV для массовых операций.",
+        "stack": ["Vue.js", "Charts", "CSV"],
+        "metric": "5G networks"
+      }
+    ],
+    "experienceSection": {
+      "title": "Опыт работы",
+      "count": "senior frontend timeline",
+      "linkText": "подробнее"
+    },
+    "experience": [
+      {
+        "company": "Bercut Ltd.",
+        "role": "Senior Frontend Developer",
+        "period": "январь 2025 - сейчас",
+        "summary": "Веду frontend сложной платформы Self-Organizing Network: архитектура UI, карты, таблицы и визуализация данных.",
+        "highlights": [
+          "Спроектировал и с нуля внедрил высокопроизводительный UI для нескольких сервисов (React, Next.js, Tailwind, Zustand) на архитектуре FSD.",
+          "Построил картографическое решение с кластеризацией 10K+ объектов и кастомными векторными слоями.",
+          "Создал многофункциональную таблицу на TanStack Table и дерево с догрузкой данных по API.",
+          "Снизил размер бандла на 40% за счёт code splitting и lazy loading; задал frontend-стандарты для 5+ проектов."
+        ],
+        "stack": [
+          "React",
+          "Next.js",
+          "TypeScript",
+          "Zustand",
+          "OpenLayers",
+          "TanStack Table"
+        ],
+        "likes": "impact 100500"
+      },
+      {
+        "company": "Nexign Ltd.",
+        "role": "Senior Frontend Developer",
+        "period": "сентябрь 2018 - декабрь 2024",
+        "summary": "Развивал библиотеку UI-компонентов и инструменты визуализации для телеком-продуктов.",
+        "highlights": [
+          "Построил и поддерживал библиотеку UI-компонентов по принципам atomic design (Vue.js).",
+          "Провёл миграцию с Vue.js 2 на Vue.js 3.",
+          "Разработал интерактивную визуализацию сетей 5G (NSSF) и импорт/экспорт CSV для массовых операций."
+        ],
+        "stack": ["Vue.js", "JavaScript", "Atomic Design", "CSV"],
+        "likes": "users 1M+"
+      }
+    ],
+    "footerLinks": ["GitHub", "LinkedIn", "Telegram", "Email", "PDF CV"],
+    "footerCopyright": "© 2006-2026, Павел Виноградов"
+  }
+}

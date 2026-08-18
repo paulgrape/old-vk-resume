@@ -1,19 +1,26 @@
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import type { SkillGroup } from '@/data/resume'
+import { interpolate } from '@/i18n/interpolate'
 
 type ResumeStackSectionProps = {
   skillGroups: SkillGroup[]
+  skillsCountTemplate: string
+  showAllLabel: string
 }
 
-export function ResumeStackSection({ skillGroups }: ResumeStackSectionProps) {
+export function ResumeStackSection({
+  skillGroups,
+  skillsCountTemplate,
+  showAllLabel,
+}: ResumeStackSectionProps) {
   return (
     <section className='border-b border-vk-border'>
       {skillGroups.map(group => (
         <div key={group.title} className='mb-2'>
           <SectionHeader
             title={group.title}
-            count={`${group.items.length} навыков`}
-            linkText='все'
+            count={interpolate(skillsCountTemplate, { count: group.items.length })}
+            linkText={showAllLabel}
           />
           <div className='flex flex-wrap gap-1.5 p-2'>
             {group.items.map(skill => (

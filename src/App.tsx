@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { LocaleProvider } from './i18n/LocaleContext'
 import { ResumePage } from './pages/ResumePage/ResumePage'
 import { getResumeRouteIdFromHash } from './data/resumeRoutes'
 
@@ -17,5 +18,9 @@ export default function App() {
     }
   }, [])
 
-  return <ResumePage routeId={routeId} />
+  return (
+    <LocaleProvider>
+      <ResumePage routeId={routeId} />
+    </LocaleProvider>
+  )
 }

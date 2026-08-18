@@ -11,13 +11,17 @@ import { TopNavbar } from '@/components/organisms/TopNavbar/TopNavbar'
 import { VkProfileLayout } from '@/components/templates/VkProfileLayout/VkProfileLayout'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
-import { defaultResumeLocale, resumeContent, type ResumeContent } from '@/data/resume'
+import { hydrateResume, type ResumeContent } from '@/data/resume'
 import {
+  hydrateRoute,
   resumeRouteHrefs,
-  resumeRoutes,
   type ResumeRoute,
   type ResumeRouteId,
 } from '@/data/resumeRoutes'
+import { useLocale } from '@/i18n/LocaleContext'
+import type { LocaleMessages } from '@/i18n/locales'
+
+type UiLabels = LocaleMessages['ui']
 
 type ResumePageProps = {
   routeId?: ResumeRouteId
@@ -25,10 +29,16 @@ type ResumePageProps = {
 
 type ResumePageDefinition = {
   showPhotoColumn?: boolean
-  render: (resume: ResumeContent, route: ResumeRoute) => ReactNode
+  render: (resume: ResumeContent, route: ResumeRoute, ui: UiLabels) => ReactNode
 }
 
-function ResumeHomeContent({ resume }: { resume: ResumeContent }) {
+function ResumeHomeContent({
+  resume,
+  ui,
+}: {
+  resume: ResumeContent
+  ui: UiLabels
+}) {
   return (
     <div className='px-2'>
       <ProfileInfoPanel
@@ -36,6 +46,7 @@ function ResumeHomeContent({ resume }: { resume: ResumeContent }) {
         status={resume.user.profileStatus}
         education={resume.user.specialization}
         fields={resume.fields}
+        showDetailsLabel={ui.showDetails}
       />
       <ResumeProjectsSection
         title={resume.projectsSection.title}
@@ -48,12 +59,20 @@ function ResumeHomeContent({ resume }: { resume: ResumeContent }) {
         count={resume.experienceSection.count}
         linkText={resume.experienceSection.linkText}
         entries={resume.experience}
+        replyLabel={ui.reply}
+        likeLabel={ui.like}
       />
     </div>
   )
 }
 
-function ResumePlaceholderContent({ route }: { route: ResumeRoute }) {
+function ResumePlaceholderContent({
+  route,
+  ui,
+}: {
+  route: ResumeRoute
+  ui: UiLabels
+}) {
   return (
     <section className='border-b border-vk-border'>
       <SectionHeader
@@ -70,8 +89,8 @@ function ResumePlaceholderContent({ route }: { route: ResumeRoute }) {
           ))}
         </ul>
         <div className='bg-vk-friends-count border border-vk-border-light p-2 text-[12px] text-vk-muted'>
-          Страница подготовлена как раздел резюме.{' '}
-          <VkLink href={resumeRouteHrefs.home}>Вернуться на главную</VkLink>
+          {ui.placeholderNote}{' '}
+          <VkLink href={resumeRouteHrefs.home}>{ui.backHome}</VkLink>
         </div>
       </div>
     </section>
@@ -81,15 +100,22 @@ function ResumePlaceholderContent({ route }: { route: ResumeRoute }) {
 const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
   home: {
     showPhotoColumn: true,
-    render: resume => <ResumeHomeContent resume={resume} />,
+    render: (resume, _route, ui) => (
+      <ResumeHomeContent
+        resume={resume}
+        ui={ui}
+      />
+    ),
   },
   experience: {
-    render: resume => (
+    render: (resume, _route, ui) => (
       <ResumeExperienceSection
         title={resume.experienceSection.title}
         count={resume.experienceSection.count}
         linkText={resume.experienceSection.linkText}
         entries={resume.experience}
+        replyLabel={ui.reply}
+        likeLabel={ui.like}
       />
     ),
   },
@@ -104,27 +130,55 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
     ),
   },
   stack: {
-    render: resume => <ResumeStackSection skillGroups={resume.skillGroups} />,
+    render: (resume, _route, ui) => (
+      <ResumeStackSection
+        skillGroups={resume.skillGroups}
+        skillsCountTemplate={ui.skillsCount}
+        showAllLabel={ui.showAll}
+      />
+    ),
   },
   achievements: {
-    render: (_resume, route) => <ResumePlaceholderContent route={route} />,
+    render: (_resume, route, ui) => (
+      <ResumePlaceholderContent
+        route={route}
+        ui={ui}
+      />
+    ),
   },
   references: {
-    render: (_resume, route) => <ResumePlaceholderContent route={route} />,
+    render: (_resume, route, ui) => (
+      <ResumePlaceholderContent
+        route={route}
+        ui={ui}
+      />
+    ),
   },
   contacts: {
-    render: (_resume, route) => <ResumePlaceholderContent route={route} />,
+    render: (_resume, route, ui) => (
+      <ResumePlaceholderContent
+        route={route}
+        ui={ui}
+      />
+    ),
   },
   downloadCv: {
-    render: (_resume, route) => <ResumePlaceholderContent route={route} />,
+    render: (_resume, route, ui) => (
+      <ResumePlaceholderContent
+        route={route}
+        ui={ui}
+      />
+    ),
   },
 }
 
 export function ResumePage({ routeId = 'home' }: ResumePageProps) {
-  const resume = resumeContent[defaultResumeLocale]
-  const route = resumeRoutes[routeId]
+  const { messages } = useLocale()
+  const resume = hydrateResume(messages.resume)
+  const route = hydrateRoute(routeId, messages.routes[routeId])
   const definition = resumePageRegistry[routeId]
   const isHomeRoute = routeId === 'home'
+  const ui = messages.ui
 
   return (
     <VkProfileLayout
@@ -148,10 +202,13 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
             name={resume.user.name}
             stats={resume.stats}
             skillGroups={resume.skillGroups}
+            writeMessageLabel={ui.writeMessage}
+            skillsCountTemplate={ui.skillsCount}
+            showAllLabel={ui.showAll}
           />
         ) : null
       }
-      mainColumn={definition.render(resume, route)}
+      mainColumn={definition.render(resume, route, ui)}
       footer={
         <SiteFooter
           links={resume.footerLinks}

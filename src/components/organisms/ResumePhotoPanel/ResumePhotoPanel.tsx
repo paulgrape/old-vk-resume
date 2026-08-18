@@ -5,17 +5,24 @@ import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeade
 import { StatRow } from '@/components/molecules/StatRow/StatRow'
 import type { ProfileStat } from '@/data/profile'
 import type { SkillGroup } from '@/data/resume'
+import { interpolate } from '@/i18n/interpolate'
 
 type ResumePhotoPanelProps = {
   name: string
   stats: ProfileStat[]
   skillGroups: SkillGroup[]
+  writeMessageLabel: string
+  skillsCountTemplate: string
+  showAllLabel: string
 }
 
 export function ResumePhotoPanel({
   name,
   stats,
   skillGroups,
+  writeMessageLabel,
+  skillsCountTemplate,
+  showAllLabel,
 }: ResumePhotoPanelProps) {
   return (
     <div className='w-[200px] shrink-0 pt-2 pl-2'>
@@ -39,7 +46,7 @@ export function ResumePhotoPanel({
         href='mailto:hello@example.com'
         className='flex items-center gap-1.5'
       >
-        Написать сообщение
+        {writeMessageLabel}
       </VkLink>
 
       <Divider className='my-2' />
@@ -48,8 +55,8 @@ export function ResumePhotoPanel({
         <div key={group.title} className='mb-2'>
           <SectionHeader
             title={group.title}
-            count={`${group.items.length} навыков`}
-            linkText='все'
+            count={interpolate(skillsCountTemplate, { count: group.items.length })}
+            linkText={showAllLabel}
           />
           <div className='flex flex-wrap gap-1.5 pt-2 px-1'>
             {group.items.map(skill => (

@@ -7,6 +7,7 @@ type ProfileInfoPanelProps = {
   status: string
   education: string
   fields: ProfileField[]
+  showDetailsLabel: string
 }
 
 export function ProfileInfoPanel({
@@ -14,6 +15,7 @@ export function ProfileInfoPanel({
   status,
   education,
   fields,
+  showDetailsLabel,
 }: ProfileInfoPanelProps) {
   return (
     <div className='pt-3 pb-2 border-b border-vk-border'>
@@ -46,7 +48,7 @@ export function ProfileInfoPanel({
         href='#'
         className='mt-2 block'
       >
-        Показать подробную информацию
+        {showDetailsLabel}
       </VkLink>
     </div>
   )

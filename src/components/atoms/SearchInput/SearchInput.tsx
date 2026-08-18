@@ -16,7 +16,6 @@ export function SearchInput({ className = '', ...props }: SearchInputProps) {
       />
       <input
         type='text'
-        placeholder='Поиск'
         className='min-w-0 flex-1 h-full bg-transparent text-[12px] text-black placeholder-vk-placeholder border-0 p-0 focus:outline-none'
         {...props}
       />

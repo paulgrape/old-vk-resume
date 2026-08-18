@@ -8,6 +8,8 @@ type ResumeExperienceSectionProps = {
   count: string
   linkText: string
   entries: ExperienceEntry[]
+  replyLabel: string
+  likeLabel: string
 }
 
 export function ResumeExperienceSection({
@@ -15,6 +17,8 @@ export function ResumeExperienceSection({
   count,
   linkText,
   entries,
+  replyLabel,
+  likeLabel,
 }: ResumeExperienceSectionProps) {
   return (
     <section>
@@ -59,9 +63,9 @@ export function ResumeExperienceSection({
             </div>
             <div className='flex items-center gap-4 mt-2 text-[12px] text-vk-muted'>
               <span>{entry.period}</span>
-              <VkLink href='#'>Ответить</VkLink>
+              <VkLink href='#'>{replyLabel}</VkLink>
               <span className='ml-auto flex items-center gap-1'>
-                Мне нравится <span className='text-vk-link'>{entry.likes}</span>
+                {likeLabel} <span className='text-vk-link'>{entry.likes}</span>
               </span>
             </div>
           </div>
