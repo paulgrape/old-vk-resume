@@ -146,14 +146,6 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
       />
     ),
   },
-  references: {
-    render: (_resume, route, ui) => (
-      <ResumePlaceholderContent
-        route={route}
-        ui={ui}
-      />
-    ),
-  },
   contacts: {
     render: (_resume, route, ui) => (
       <ResumePlaceholderContent
@@ -190,11 +182,13 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
         />
       }
       titlebar={
-        <ProfileTitlebar
-          name={isHomeRoute ? resume.user.name : route.title}
-          subtitle={isHomeRoute ? resume.user.titlebarSubtitle : `(${route.subtitle})`}
-          status={resume.user.status}
-        />
+        isHomeRoute ? (
+          <ProfileTitlebar
+            name={resume.user.name}
+            subtitle={resume.user.titlebarSubtitle}
+            status={resume.user.status}
+          />
+        ) : null
       }
       photoColumn={
         definition.showPhotoColumn ? (

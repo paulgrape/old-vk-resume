@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import avatar from '@/assets/avatar-small.jpg'
+import avatarFull from '@/assets/avatar-full.jpg'
 import { Divider } from '@/components/atoms/Divider/Divider'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { FriendCard } from '@/components/molecules/FriendCard/FriendCard'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { StatRow } from '@/components/molecules/StatRow/StatRow'
+import { PhotoViewer } from '@/components/organisms/PhotoViewer/PhotoViewer'
 import type { ProfileStat } from '@/data/profile'
 
 type FriendsSectionData = {
@@ -27,21 +30,47 @@ export function ProfilePhotoPanel({
   friendsSection,
   friendsOnlineSection,
 }: ProfilePhotoPanelProps) {
+  const [photoOpen, setPhotoOpen] = useState(false)
+
   return (
     <div className='w-[200px] shrink-0 pt-2 pl-2'>
-      <img
-        src={avatar}
-        alt={name}
-        className='w-[200px] h-[200px] object-cover'
-      />
-
-      {stats.map(({ label, count }) => (
-        <StatRow
-          key={label}
-          label={label}
-          count={count}
+      <button
+        type='button'
+        className='block m-0 p-0 border-0 bg-transparent cursor-pointer'
+        onClick={() => setPhotoOpen(true)}
+      >
+        <img
+          src={avatar}
+          alt={name}
+          className='w-[200px] h-[200px] object-cover'
         />
-      ))}
+      </button>
+
+      {photoOpen ? (
+        <PhotoViewer
+          photos={[
+            {
+              src: avatarFull,
+              alt: name,
+              likes: '12',
+              authorName: name,
+              authorAvatar: avatar,
+            },
+          ]}
+          index={0}
+          onClose={() => setPhotoOpen(false)}
+        />
+      ) : null}
+
+      <div className='divide-y divide-vk-border-light'>
+        {stats.map(({ label, count }) => (
+          <StatRow
+            key={label}
+            label={label}
+            count={count}
+          />
+        ))}
+      </div>
 
       <Divider className='my-2' />
 

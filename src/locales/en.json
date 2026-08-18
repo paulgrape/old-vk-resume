@@ -12,7 +12,15 @@
     "showDetails": "Show detailed information",
     "placeholderNote": "This page is prepared as a resume section.",
     "backHome": "Back to home",
-    "localeSwitch": "Language"
+    "localeSwitch": "Language",
+    "photoOf": "Photo {current} of {total}",
+    "close": "Close",
+    "photoAdded": "Added {date}",
+    "photoAddedDate": "13 October 2021",
+    "photoAlbum": "Profile photos",
+    "photoAlbumLabel": "Album:",
+    "photoSenderLabel": "Sender:",
+    "commentsHidden": "Comments are hidden due to the user's privacy settings."
   },
   "routes": {
     "home": {
@@ -57,12 +65,6 @@
         "Release quality"
       ]
     },
-    "references": {
-      "title": "My References",
-      "subtitle": "feedback",
-      "description": "A place for recommendations from colleagues, leads and product teams.",
-      "details": ["Team feedback", "Code review notes", "Delivery references"]
-    },
     "contacts": {
       "title": "My Contacts",
       "subtitle": "get in touch",
@@ -81,7 +83,7 @@
       "name": "Pavel Vinogradov",
       "titlebarSubtitle": "(senior frontend developer)",
       "status": "online",
-      "profileStatus": "Senior frontend developer building reliable, fast and maintainable product interfaces with React, TypeScript and thoughtful UI architecture.",
+      "profileStatus": "Your friendly neighborhood button-fixer",
       "specialization": "Frontend Architecture"
     },
     "topNavLinks": [
@@ -98,20 +100,17 @@
       { "id": "projects", "label": "My Projects" },
       { "id": "stack", "label": "My Skills" },
       { "id": "achievements", "label": "My Achievements" },
-      { "id": "references", "label": "My References" },
       { "id": "contacts", "label": "My Contacts" },
       { "id": "downloadCv", "label": "Download CV" }
     ],
     "appMenuItems": [
       { "label": "Open to work", "badge": "remote" },
-      { "label": "English", "badge": "Fluent" },
-      { "label": "Relocation", "badge": "EU" }
+      { "label": "English", "badge": "Fluent" }
     ],
     "stats": [
       { "label": "Years in frontend", "count": "7+" },
       { "label": "Production projects", "count": "20+" },
-      { "label": "Team size led", "count": "6" },
-      { "label": "Performance wins", "count": "Core Web Vitals" }
+      { "label": "Team size led", "count": "6" }
     ],
     "fields": [
       {

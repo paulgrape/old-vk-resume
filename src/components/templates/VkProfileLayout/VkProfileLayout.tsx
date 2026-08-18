@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 type VkProfileLayoutProps = {
   header: ReactNode
   sidebar: ReactNode
-  titlebar: ReactNode
+  titlebar?: ReactNode | null
   photoColumn?: ReactNode
   mainColumn: ReactNode
   footer: ReactNode

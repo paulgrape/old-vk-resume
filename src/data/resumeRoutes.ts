@@ -6,7 +6,6 @@ export type ResumeRouteId =
   | 'projects'
   | 'stack'
   | 'achievements'
-  | 'references'
   | 'contacts'
   | 'downloadCv'
 
@@ -33,7 +32,6 @@ export const resumeRoutePaths = {
   projects: '/projects',
   stack: '/stack',
   achievements: '/achievements',
-  references: '/references',
   contacts: '/contacts',
   downloadCv: '/download-cv',
 } as const satisfies Record<ResumeRouteId, string>
@@ -44,7 +42,6 @@ export const resumeRouteHrefs = {
   projects: '#/projects',
   stack: '#/stack',
   achievements: '#/achievements',
-  references: '#/references',
   contacts: '#/contacts',
   downloadCv: '#/download-cv',
 } as const satisfies Record<ResumeRouteId, string>

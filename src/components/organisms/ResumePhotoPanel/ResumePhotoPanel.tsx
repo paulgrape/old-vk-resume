@@ -1,8 +1,11 @@
+import { useState } from 'react'
 import avatar from '@/assets/avatar-small.jpg'
+import avatarFull from '@/assets/avatar-full.jpg'
 import { Divider } from '@/components/atoms/Divider/Divider'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { StatRow } from '@/components/molecules/StatRow/StatRow'
+import { PhotoViewer } from '@/components/organisms/PhotoViewer/PhotoViewer'
 import type { ProfileStat } from '@/data/profile'
 import type { SkillGroup } from '@/data/resume'
 import { interpolate } from '@/i18n/interpolate'
@@ -24,21 +27,47 @@ export function ResumePhotoPanel({
   skillsCountTemplate,
   showAllLabel,
 }: ResumePhotoPanelProps) {
+  const [photoOpen, setPhotoOpen] = useState(false)
+
   return (
     <div className='w-[200px] shrink-0 pt-2 pl-2'>
-      <img
-        src={avatar}
-        alt={name}
-        className='w-[200px] h-[200px] object-cover'
-      />
-
-      {stats.map(({ label, count }) => (
-        <StatRow
-          key={label}
-          label={label}
-          count={count}
+      <button
+        type='button'
+        className='block m-0 p-0 border-0 bg-transparent cursor-pointer'
+        onClick={() => setPhotoOpen(true)}
+      >
+        <img
+          src={avatar}
+          alt={name}
+          className='w-[200px] h-[200px] object-cover'
         />
-      ))}
+      </button>
+
+      {photoOpen ? (
+        <PhotoViewer
+          photos={[
+            {
+              src: avatarFull,
+              alt: name,
+              likes: '12',
+              authorName: name,
+              authorAvatar: avatar,
+            },
+          ]}
+          index={0}
+          onClose={() => setPhotoOpen(false)}
+        />
+      ) : null}
+
+      <div className='mt-1 mx-0.5 divide-y divide-vk-border-light'>
+        {stats.map(({ label, count }) => (
+          <StatRow
+            key={label}
+            label={label}
+            count={count}
+          />
+        ))}
+      </div>
 
       <Divider className='my-2' />
 
@@ -52,10 +81,15 @@ export function ResumePhotoPanel({
       <Divider className='my-2' />
 
       {skillGroups.map(group => (
-        <div key={group.title} className='mb-2'>
+        <div
+          key={group.title}
+          className='mb-2'
+        >
           <SectionHeader
             title={group.title}
-            count={interpolate(skillsCountTemplate, { count: group.items.length })}
+            count={interpolate(skillsCountTemplate, {
+              count: group.items.length,
+            })}
             linkText={showAllLabel}
           />
           <div className='flex flex-wrap gap-1.5 pt-2 px-1'>

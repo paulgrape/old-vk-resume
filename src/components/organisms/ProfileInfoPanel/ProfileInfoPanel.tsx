@@ -24,11 +24,11 @@ export function ProfileInfoPanel({
           <div className='text-[13px] font-bold text-vk-heading leading-tight'>
             {name}
           </div>
-          <div className='text-[13px] text-vk-text-subtle italic mb-2'>
+          <div className='leading-none text-[13px] text-black mt-1 mb-2'>
             {status}
           </div>
         </div>
-        <div className='text-[12px] text-vk-link shrink-0 ml-4'>
+        <div className='text-[12px] text-vk-link shrink-0 ml-4 border'>
           {education}
         </div>
       </div>

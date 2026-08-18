@@ -7,7 +7,7 @@ type StatRowProps = {
 
 export function StatRow({ label, count }: StatRowProps) {
   return (
-    <div className='flex items-center justify-between py-[3px] border-b border-vk-border-light last:border-b-0'>
+    <div className='flex items-center justify-between py-[3px]'>
       <VkLink href='#'>{label}</VkLink>
       <span className='text-[12px] text-vk-muted ml-1 shrink-0'>{count}</span>
     </div>
