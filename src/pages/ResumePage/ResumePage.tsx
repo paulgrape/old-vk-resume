@@ -11,6 +11,7 @@ import { TopNavbar } from '@/components/organisms/TopNavbar/TopNavbar'
 import { VkProfileLayout } from '@/components/templates/VkProfileLayout/VkProfileLayout'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
+import { resumeByLocale } from '@/data/content'
 import { hydrateResume, type ResumeContent } from '@/data/resume'
 import {
   hydrateRoute,
@@ -59,6 +60,7 @@ function ResumeHomeContent({
         count={resume.experienceSection.count}
         linkText={resume.experienceSection.linkText}
         entries={resume.experience}
+        avatarSrc={resume.photos.avatarIcon}
         replyLabel={ui.reply}
         likeLabel={ui.like}
       />
@@ -114,6 +116,7 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
         count={resume.experienceSection.count}
         linkText={resume.experienceSection.linkText}
         entries={resume.experience}
+        avatarSrc={resume.photos.avatarIcon}
         replyLabel={ui.reply}
         likeLabel={ui.like}
       />
@@ -165,8 +168,8 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
 }
 
 export function ResumePage({ routeId = 'home' }: ResumePageProps) {
-  const { messages } = useLocale()
-  const resume = hydrateResume(messages.resume)
+  const { locale, messages } = useLocale()
+  const resume = hydrateResume(resumeByLocale[locale])
   const route = hydrateRoute(routeId, messages.routes[routeId])
   const definition = resumePageRegistry[routeId]
   const isHomeRoute = routeId === 'home'
@@ -194,6 +197,9 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
         definition.showPhotoColumn ? (
           <ResumePhotoPanel
             name={resume.user.name}
+            avatarSrc={resume.photos.avatar}
+            avatarFullSrc={resume.photos.avatarFull}
+            email={resume.email}
             stats={resume.stats}
             skillGroups={resume.skillGroups}
             writeMessageLabel={ui.writeMessage}

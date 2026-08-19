@@ -1,4 +1,3 @@
-import avatar from '@/assets/avatar-icon.jpg'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import type { ExperienceEntry } from '@/data/resume'
@@ -8,6 +7,7 @@ type ResumeExperienceSectionProps = {
   count: string
   linkText: string
   entries: ExperienceEntry[]
+  avatarSrc: string
   replyLabel: string
   likeLabel: string
 }
@@ -17,6 +17,7 @@ export function ResumeExperienceSection({
   count,
   linkText,
   entries,
+  avatarSrc,
   replyLabel,
   likeLabel,
 }: ResumeExperienceSectionProps) {
@@ -33,7 +34,7 @@ export function ResumeExperienceSection({
           className='flex gap-2.5 pr-3 pt-2.5 pb-2 border-b border-vk-border-light'
         >
           <img
-            src={avatar}
+            src={avatarSrc}
             alt={entry.company}
             className='size-[45px] object-cover'
           />

@@ -1,11 +1,15 @@
 import type { AppMenuItem, ProfileField, ProfileStat } from '@/data/profile'
 import {
-  resumeExternalHrefs,
+  siteConfig,
+  sitePhotos,
+  type ResumeJson,
+  type SitePhotos,
+} from '@/data/content'
+import {
   resumeRouteHrefs,
   type ResumeNavItem,
   type ResumeRouteId,
 } from '@/data/resumeRoutes'
-import type { LocaleMessages } from '@/i18n/locales'
 
 export type SkillGroup = {
   title: string
@@ -29,7 +33,7 @@ export type ExperienceEntry = {
   likes: string
 }
 
-export type ResumeJson = LocaleMessages['resume']
+export type { ResumeJson }
 
 export type ResumeContent = {
   user: ResumeJson['user']
@@ -45,15 +49,17 @@ export type ResumeContent = {
   experience: ExperienceEntry[]
   footerLinks: readonly string[]
   footerCopyright: string
+  email: string
+  photos: SitePhotos
 }
 
 function getNavHref(id: string): string {
   if (id === 'github') {
-    return resumeExternalHrefs.github
+    return siteConfig.github
   }
 
   if (id === 'linkedin') {
-    return resumeExternalHrefs.linkedin
+    return siteConfig.linkedin
   }
 
   if (id in resumeRouteHrefs) {
@@ -84,5 +90,7 @@ export function hydrateResume(resume: ResumeJson): ResumeContent {
     experience: resume.experience,
     footerLinks: resume.footerLinks,
     footerCopyright: resume.footerCopyright,
+    email: siteConfig.email,
+    photos: sitePhotos,
   }
 }

@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import avatar from '@/assets/avatar-small.jpg'
-import avatarFull from '@/assets/avatar-full.jpg'
 import { Divider } from '@/components/atoms/Divider/Divider'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
@@ -12,6 +10,9 @@ import { interpolate } from '@/i18n/interpolate'
 
 type ResumePhotoPanelProps = {
   name: string
+  avatarSrc: string
+  avatarFullSrc: string
+  email: string
   stats: ProfileStat[]
   skillGroups: SkillGroup[]
   writeMessageLabel: string
@@ -21,6 +22,9 @@ type ResumePhotoPanelProps = {
 
 export function ResumePhotoPanel({
   name,
+  avatarSrc,
+  avatarFullSrc,
+  email,
   stats,
   skillGroups,
   writeMessageLabel,
@@ -37,7 +41,7 @@ export function ResumePhotoPanel({
         onClick={() => setPhotoOpen(true)}
       >
         <img
-          src={avatar}
+          src={avatarSrc}
           alt={name}
           className='w-[200px] h-[200px] object-cover'
         />
@@ -47,11 +51,11 @@ export function ResumePhotoPanel({
         <PhotoViewer
           photos={[
             {
-              src: avatarFull,
+              src: avatarFullSrc,
               alt: name,
               likes: '12',
               authorName: name,
-              authorAvatar: avatar,
+              authorAvatar: avatarSrc,
             },
           ]}
           index={0}
@@ -72,7 +76,7 @@ export function ResumePhotoPanel({
       <Divider className='my-2' />
 
       <VkLink
-        href='mailto:hello@example.com'
+        href={`mailto:${email}`}
         className='flex items-center gap-1.5'
       >
         {writeMessageLabel}

@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import { resumeByLocale } from '@/data/content'
 import {
   defaultLocale,
   isLocale,
@@ -57,8 +58,8 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = locale
-    document.title = messages.meta.documentTitle
-  }, [locale, messages.meta.documentTitle])
+    document.title = resumeByLocale[locale].user.name
+  }, [locale])
 
   const value = useMemo(
     () => ({ locale, setLocale, messages }),

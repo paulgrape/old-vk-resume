@@ -1,0 +1,162 @@
+{
+  "user": {
+    "name": "Павел Виноградов",
+    "titlebarSubtitle": "(senior frontend developer)",
+    "status": "онлайн",
+    "profileStatus": "Спасаю мир от ужасных кнопок",
+    "specialization": "Frontend Architecture"
+  },
+  "topNavLinks": [
+    { "id": "experience", "label": "опыт" },
+    { "id": "projects", "label": "проекты" },
+    { "id": "stack", "label": "стек" },
+    { "id": "contacts", "label": "контакты" },
+    { "id": "github", "label": "github" },
+    { "id": "linkedin", "label": "linkedin" }
+  ],
+  "sidebarNavItems": [
+    { "id": "home", "label": "Моя Страница" },
+    { "id": "experience", "label": "Мой Опыт" },
+    { "id": "projects", "label": "Мои Проекты" },
+    { "id": "stack", "label": "Мои Навыки" },
+    { "id": "achievements", "label": "Мои Достижения" },
+    { "id": "contacts", "label": "Мои Контакты" },
+    { "id": "downloadCv", "label": "Скачать CV" }
+  ],
+  "appMenuItems": [
+    { "label": "Open to work", "badge": "remote" },
+    { "label": "English", "badge": "Fluent" }
+  ],
+  "stats": [
+    { "label": "Лет во frontend", "count": "7+" },
+    { "label": "Production-проектов", "count": "20+" },
+    { "label": "Размер команды", "count": "до 6" }
+  ],
+  "fields": [
+    { "label": "Город:", "value": "Санкт-Петербург / remote", "link": true },
+    {
+      "label": "Опыт:",
+      "value": "Senior frontend, UI architecture, delivery",
+      "link": false
+    },
+    {
+      "label": "Основной стек:",
+      "value": "React, TypeScript, Next.js, Zustand, Tailwind",
+      "link": false
+    },
+    {
+      "label": "Фокус:",
+      "value": "Карты, дата-виз, enterprise-таблицы, performance",
+      "link": false
+    },
+    {
+      "label": "Языки:",
+      "value": "Русский, English, Italiano",
+      "link": false
+    }
+  ],
+  "skillGroups": [
+    {
+      "title": "Frontend",
+      "items": [
+        "React",
+        "TypeScript",
+        "Next.js",
+        "Zustand",
+        "TanStack Query",
+        "TanStack Table"
+      ]
+    },
+    {
+      "title": "Архитектура",
+      "items": [
+        "Feature-Sliced Design",
+        "Micro-frontends",
+        "Design systems",
+        "Accessibility"
+      ]
+    },
+    {
+      "title": "Data & Viz",
+      "items": ["OpenLayers", "Recharts", "GraphQL", "WebSockets"]
+    },
+    {
+      "title": "Tooling",
+      "items": ["Vite", "Webpack", "Docker", "CI/CD", "Vitest", "Playwright"]
+    }
+  ],
+  "projectsSection": {
+    "title": "Избранные проекты",
+    "count": "4 проекта",
+    "linkText": "портфолио"
+  },
+  "projects": [
+    {
+      "title": "Self-Organizing Network Platform",
+      "description": "Высоконагруженный UI для платформы SON: карты, кластеризация 10K+ объектов, кастомные векторные слои.",
+      "stack": ["React", "Next.js", "OpenLayers"],
+      "metric": "10K+ объектов"
+    },
+    {
+      "title": "Многофункциональная таблица",
+      "description": "Переиспользуемый компонент на TanStack Table: выбор, фильтры, контекстное меню, автообновление, редактирование.",
+      "stack": ["React", "TanStack Table", "TypeScript"],
+      "metric": "reusable UI"
+    },
+    {
+      "title": "Виртуализированное дерево",
+      "description": "Дерево с догрузкой данных по API при раскрытии и подгрузкой на скролле для узлов с тысячами детей.",
+      "stack": ["React", "TanStack Query", "Virtualization"],
+      "metric": "big data UX"
+    },
+    {
+      "title": "Визуализация 5G (NSSF)",
+      "description": "Интерактивные инструменты визуализации сетей 5G и импорт/экспорт CSV для массовых операций.",
+      "stack": ["Vue.js", "Charts", "CSV"],
+      "metric": "5G networks"
+    }
+  ],
+  "experienceSection": {
+    "title": "Опыт работы",
+    "count": "senior frontend timeline",
+    "linkText": "подробнее"
+  },
+  "experience": [
+    {
+      "company": "Bercut Ltd.",
+      "role": "Senior Frontend Developer",
+      "period": "январь 2025 - сейчас",
+      "summary": "Веду frontend сложной платформы Self-Organizing Network: архитектура UI, карты, таблицы и визуализация данных.",
+      "highlights": [
+        "Спроектировал и с нуля внедрил высокопроизводительный UI для нескольких сервисов (React, Next.js, Tailwind, Zustand) на архитектуре FSD.",
+        "Построил картографическое решение с кластеризацией 10K+ объектов и кастомными векторными слоями.",
+        "Создал многофункциональную таблицу на TanStack Table и дерево с догрузкой данных по API.",
+        "Снизил размер бандла на 40% за счёт code splitting и lazy loading; задал frontend-стандарты для 5+ проектов."
+      ],
+      "stack": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Zustand",
+        "OpenLayers",
+        "TanStack Table"
+      ],
+      "likes": "impact 100500"
+    },
+    {
+      "company": "Nexign Ltd.",
+      "role": "Senior Frontend Developer",
+      "period": "сентябрь 2018 - декабрь 2024",
+      "summary": "Развивал библиотеку UI-компонентов и инструменты визуализации для телеком-продуктов.",
+      "highlights": [
+        "Построил и поддерживал библиотеку UI-компонентов по принципам atomic design (Vue.js).",
+        "Провёл миграцию с Vue.js 2 на Vue.js 3.",
+        "Разработал интерактивную визуализацию сетей 5G (NSSF) и импорт/экспорт CSV для массовых операций."
+      ],
+      "stack": ["Vue.js", "JavaScript", "Atomic Design", "CSV"],
+      "likes": "users 1M+"
+    }
+  ],
+  "footerLinks": ["GitHub", "LinkedIn", "Telegram", "Email", "PDF CV"],
+  "footerCopyright": "© 2006-2026, Павел Виноградов"
+}

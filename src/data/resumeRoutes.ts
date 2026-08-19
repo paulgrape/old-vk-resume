@@ -21,11 +21,6 @@ export type ResumeRoute = ResumeRouteCopy & {
   path: string
 }
 
-export const resumeExternalHrefs = {
-  github: 'https://github.com/paulgrape',
-  linkedin: 'https://www.linkedin.com/',
-} as const
-
 export const resumeRoutePaths = {
   home: '/',
   experience: '/experience',
