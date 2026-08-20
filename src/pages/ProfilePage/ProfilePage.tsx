@@ -57,7 +57,6 @@ export function ProfilePage() {
             status={user.profileStatus}
             education={user.education}
             fields={profileFields}
-            showDetailsLabel='Показать подробную информацию'
           />
           <PhotosSection
             title={photosSection.title}

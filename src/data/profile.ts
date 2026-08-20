@@ -12,6 +12,7 @@ export type ProfileField = {
   label: string
   value: string
   link: boolean
+  href?: string
 }
 
 export type WallPost = {

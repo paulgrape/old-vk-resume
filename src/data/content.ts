@@ -9,16 +9,35 @@ const photoModules = import.meta.glob('../../content/photos/*.{jpg,jpeg,png,webp
   import: 'default',
 }) as Record<string, string>
 
-function photoUrl(filename: string): string {
-  const match = Object.entries(photoModules).find(([modulePath]) =>
+const iconModules = import.meta.glob('../../content/icons/**/*.{svg,png,ico}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>
+
+function urlFromModules(
+  modules: Record<string, string>,
+  filename: string,
+): string | undefined {
+  const match = Object.entries(modules).find(([modulePath]) =>
     modulePath.replaceAll('\\', '/').endsWith(`/${filename}`),
   )
 
-  if (!match) {
+  return match?.[1]
+}
+
+function photoUrl(filename: string): string {
+  const url = urlFromModules(photoModules, filename)
+
+  if (!url) {
     throw new Error(`Missing content/photos/${filename}`)
   }
 
-  return match[1]
+  return url
+}
+
+export function iconUrl(filename: string): string | undefined {
+  return urlFromModules(iconModules, filename)
 }
 
 export type SiteConfig = typeof site

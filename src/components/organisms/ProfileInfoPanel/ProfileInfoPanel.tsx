@@ -1,13 +1,12 @@
-import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { ProfileFieldRow } from '@/components/molecules/ProfileFieldRow/ProfileFieldRow'
 import type { ProfileField } from '@/data/profile'
+import type { EducationEntry } from '@/data/resume'
 
 type ProfileInfoPanelProps = {
   name: string
   status: string
-  education: string
+  education: EducationEntry[] | string
   fields: ProfileField[]
-  showDetailsLabel: string
 }
 
 export function ProfileInfoPanel({
@@ -15,7 +14,6 @@ export function ProfileInfoPanel({
   status,
   education,
   fields,
-  showDetailsLabel,
 }: ProfileInfoPanelProps) {
   return (
     <div className='pt-3 pb-2 border-b border-vk-border'>
@@ -28,8 +26,8 @@ export function ProfileInfoPanel({
             {status}
           </div>
         </div>
-        <div className='text-[12px] text-vk-link shrink-0 ml-4 border'>
-          {education}
+        <div className='text-[12px] leading-tight text-vk-link shrink-0 self-start ml-4'>
+          {typeof education === 'string' ? education : education[0].institution}
         </div>
       </div>
 
@@ -43,13 +41,6 @@ export function ProfileInfoPanel({
           ))}
         </tbody>
       </table>
-
-      <VkLink
-        href='#'
-        className='mt-2 block'
-      >
-        {showDetailsLabel}
-      </VkLink>
     </div>
   )
 }

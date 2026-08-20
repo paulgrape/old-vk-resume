@@ -1,6 +1,8 @@
-import type { ReactNode } from 'react'
+import { VkLink } from '@/components/atoms/VkLink/VkLink'
+import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { ProfileInfoPanel } from '@/components/organisms/ProfileInfoPanel/ProfileInfoPanel'
 import { ProfileTitlebar } from '@/components/organisms/ProfileTitlebar/ProfileTitlebar'
+import { ResumeEducationSection } from '@/components/organisms/ResumeEducationSection/ResumeEducationSection'
 import { ResumeExperienceSection } from '@/components/organisms/ResumeExperienceSection/ResumeExperienceSection'
 import { ResumePhotoPanel } from '@/components/organisms/ResumePhotoPanel/ResumePhotoPanel'
 import { ResumeProjectsSection } from '@/components/organisms/ResumeProjectsSection/ResumeProjectsSection'
@@ -9,8 +11,6 @@ import { SidebarNav } from '@/components/organisms/SidebarNav/SidebarNav'
 import { SiteFooter } from '@/components/organisms/SiteFooter/SiteFooter'
 import { TopNavbar } from '@/components/organisms/TopNavbar/TopNavbar'
 import { VkProfileLayout } from '@/components/templates/VkProfileLayout/VkProfileLayout'
-import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
-import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { resumeByLocale } from '@/data/content'
 import { hydrateResume, type ResumeContent } from '@/data/resume'
 import {
@@ -21,8 +21,45 @@ import {
 } from '@/data/resumeRoutes'
 import { useLocale } from '@/i18n/LocaleContext'
 import type { LocaleMessages } from '@/i18n/locales'
+import type { ReactNode } from 'react'
 
 type UiLabels = LocaleMessages['ui']
+
+function telHref(phone: string): string {
+  return `tel:${phone.replace(/[^\d+]/g, '')}`
+}
+
+function telegramHandle(url: string): string {
+  const path = url.replace(/^https?:\/\/(t\.me|telegram\.me)\//, '')
+  return path.startsWith('@') ? path : `@${path}`
+}
+
+function profileInfoFields(resume: ResumeContent, ui: UiLabels) {
+  const [location, ...rest] = resume.fields
+
+  return [
+    ...(location ? [location] : []),
+    {
+      label: ui.phone,
+      value: resume.phone,
+      link: true,
+      href: telHref(resume.phone),
+    },
+    {
+      label: ui.email,
+      value: resume.email,
+      link: true,
+      href: `mailto:${resume.email}`,
+    },
+    {
+      label: ui.telegram,
+      value: telegramHandle(resume.telegram),
+      link: true,
+      href: resume.telegram,
+    },
+    ...rest,
+  ]
+}
 
 type ResumePageProps = {
   routeId?: ResumeRouteId
@@ -45,15 +82,12 @@ function ResumeHomeContent({
       <ProfileInfoPanel
         name={resume.user.name}
         status={resume.user.profileStatus}
-        education={resume.user.specialization}
-        fields={resume.fields}
-        showDetailsLabel={ui.showDetails}
+        education={resume.education}
+        fields={profileInfoFields(resume, ui)}
       />
-      <ResumeProjectsSection
-        title={resume.projectsSection.title}
-        count={resume.projectsSection.count}
-        linkText={resume.projectsSection.linkText}
-        projects={resume.projects}
+      <ResumeEducationSection
+        labels={ui.education}
+        entries={resume.education}
       />
       <ResumeExperienceSection
         title={resume.experienceSection.title}
@@ -62,6 +96,7 @@ function ResumeHomeContent({
         entries={resume.experience}
         avatarSrc={resume.photos.avatarIcon}
         replyLabel={ui.reply}
+        replyHref={resume.telegram}
         likeLabel={ui.like}
       />
     </div>
@@ -118,17 +153,21 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
         entries={resume.experience}
         avatarSrc={resume.photos.avatarIcon}
         replyLabel={ui.reply}
+        replyHref={resume.telegram}
         likeLabel={ui.like}
       />
     ),
   },
   projects: {
-    render: resume => (
+    render: (resume, _route, ui) => (
       <ResumeProjectsSection
         title={resume.projectsSection.title}
         count={resume.projectsSection.count}
         linkText={resume.projectsSection.linkText}
+        linkHref={resumeRouteHrefs.projects}
         projects={resume.projects}
+        demoLabel={ui.projectDemo}
+        npmLabel={ui.projectNpm}
       />
     ),
   },
@@ -195,17 +234,33 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
       }
       photoColumn={
         definition.showPhotoColumn ? (
-          <ResumePhotoPanel
-            name={resume.user.name}
-            avatarSrc={resume.photos.avatar}
-            avatarFullSrc={resume.photos.avatarFull}
-            email={resume.email}
-            stats={resume.stats}
-            skillGroups={resume.skillGroups}
-            writeMessageLabel={ui.writeMessage}
-            skillsCountTemplate={ui.skillsCount}
-            showAllLabel={ui.showAll}
-          />
+          <div className='w-[200px] shrink-0 pt-2 pl-2'>
+            <ResumePhotoPanel
+              name={resume.user.name}
+              avatarSrc={resume.photos.avatar}
+              avatarFullSrc={resume.photos.avatarFull}
+              writeMessageHref={resume.telegram}
+              writeMessageLabel={ui.writeMessage}
+            />
+            <ResumeProjectsSection
+              title={resume.projectsSection.title}
+              count={resume.projectsSection.count}
+              linkText={resume.projectsSection.linkText}
+              linkHref={resumeRouteHrefs.projects}
+              projects={resume.projects}
+              variant='compact'
+              demoLabel={ui.projectDemo}
+              npmLabel={ui.projectNpm}
+            />
+            <ResumeStackSection
+              skillGroups={resume.skillGroups}
+              skillsCountTemplate={ui.skillsCount}
+              showAllLabel={ui.showAll}
+              variant='compact'
+              title={ui.skillsTitle}
+              linkHref={resumeRouteHrefs.stack}
+            />
+          </div>
         ) : null
       }
       mainColumn={definition.render(resume, route, ui)}
