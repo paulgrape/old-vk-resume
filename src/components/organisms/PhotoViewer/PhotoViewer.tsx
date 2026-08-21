@@ -1,13 +1,14 @@
-import { useEffect, type MouseEvent } from 'react'
+import { useEffect, useMemo, useState, type MouseEvent } from 'react'
 import { createPortal } from 'react-dom'
+import { LikeControl } from '@/components/atoms/LikeControl/LikeControl'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { interpolate } from '@/i18n/interpolate'
 import { useLocale } from '@/i18n/LocaleContext'
+import type { Locale } from '@/i18n/locales'
 
 export type PhotoViewerPhoto = {
   src: string
   alt: string
-  likes?: string
   authorName: string
   authorAvatar: string
 }
@@ -23,17 +24,31 @@ function preventNav(event: MouseEvent<HTMLAnchorElement>) {
   event.preventDefault()
 }
 
+function formatPhotoAddedDate(locale: Locale, date: Date): string {
+  return new Intl.DateTimeFormat(locale === 'ru' ? 'ru-RU' : 'en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date)
+}
+
 export function PhotoViewer({
   photos,
   index,
   onClose,
   onIndexChange,
 }: PhotoViewerProps) {
-  const { messages } = useLocale()
+  const { locale, messages } = useLocale()
   const ui = messages.ui
   const photo = photos[index]
   const total = photos.length
   const showNav = total > 1 && onIndexChange != null
+  const [likesBySrc, setLikesBySrc] = useState<Record<string, number>>({})
+  const openedAt = useMemo(() => new Date(), [])
+  const addedDate = useMemo(
+    () => formatPhotoAddedDate(locale, openedAt),
+    [locale, openedAt],
+  )
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -74,6 +89,7 @@ export function PhotoViewer({
     current: index + 1,
     total,
   })
+  const likes = likesBySrc[photo.src] ?? 0
 
   return createPortal(
     <div
@@ -136,20 +152,20 @@ export function PhotoViewer({
 
         <div className='flex items-start justify-between gap-8 px-5 pt-3 pb-4'>
           <div className='min-w-0 flex-1'>
-            <div className='flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px]'>
-              <span className='text-vk-muted'>
-                {interpolate(ui.photoAdded, { date: ui.photoAddedDate })}
+            <div className='flex items-center text-[11px] text-vk-muted'>
+              <span>
+                {interpolate(ui.photoAdded, { date: addedDate })}
               </span>
-              <span className='text-vk-border'>|</span>
-              <VkLink
-                href='#'
-                size='sm'
-                onClick={preventNav}
-              >
-                {ui.like}
-              </VkLink>
-              <span className='text-[#da4a4a] leading-none'>♥</span>
-              <span className='text-vk-text'>{photo.likes ?? '12'}</span>
+              <LikeControl
+                likeLabel={ui.like}
+                count={likes}
+                onLike={() =>
+                  setLikesBySrc(prev => ({
+                    ...prev,
+                    [photo.src]: (prev[photo.src] ?? 0) + 1,
+                  }))
+                }
+              />
             </div>
 
             <p className='mt-5 mb-0 max-w-[280px] text-[11px] leading-[1.45] text-vk-muted'>

@@ -2,6 +2,7 @@ import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { ProfileInfoPanel } from '@/components/organisms/ProfileInfoPanel/ProfileInfoPanel'
 import { ProfileTitlebar } from '@/components/organisms/ProfileTitlebar/ProfileTitlebar'
+import { ResumeContactsSection } from '@/components/organisms/ResumeContactsSection/ResumeContactsSection'
 import { ResumeEducationSection } from '@/components/organisms/ResumeEducationSection/ResumeEducationSection'
 import { ResumeExperienceSection } from '@/components/organisms/ResumeExperienceSection/ResumeExperienceSection'
 import { ResumePhotoPanel } from '@/components/organisms/ResumePhotoPanel/ResumePhotoPanel'
@@ -12,7 +13,12 @@ import { SiteFooter } from '@/components/organisms/SiteFooter/SiteFooter'
 import { TopNavbar } from '@/components/organisms/TopNavbar/TopNavbar'
 import { VkProfileLayout } from '@/components/templates/VkProfileLayout/VkProfileLayout'
 import { resumeByLocale } from '@/data/content'
-import { hydrateResume, type ResumeContent } from '@/data/resume'
+import {
+  hydrateResume,
+  telHref,
+  telegramHandle,
+  type ResumeContent,
+} from '@/data/resume'
 import {
   hydrateRoute,
   resumeRouteHrefs,
@@ -24,15 +30,6 @@ import type { LocaleMessages } from '@/i18n/locales'
 import type { ReactNode } from 'react'
 
 type UiLabels = LocaleMessages['ui']
-
-function telHref(phone: string): string {
-  return `tel:${phone.replace(/[^\d+]/g, '')}`
-}
-
-function telegramHandle(url: string): string {
-  const path = url.replace(/^https?:\/\/(t\.me|telegram\.me)\//, '')
-  return path.startsWith('@') ? path : `@${path}`
-}
 
 function profileInfoFields(resume: ResumeContent, ui: UiLabels) {
   const [location, ...rest] = resume.fields
@@ -168,6 +165,11 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
         projects={resume.projects}
         demoLabel={ui.projectDemo}
         npmLabel={ui.projectNpm}
+        githubLabel={ui.projectGithub}
+        featuresLabel={ui.projectFeatures}
+        stackLabel={ui.projectStack}
+        authorName={resume.user.name}
+        authorAvatar={resume.photos.avatar}
       />
     ),
   },
@@ -189,10 +191,13 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
     ),
   },
   contacts: {
-    render: (_resume, route, ui) => (
-      <ResumePlaceholderContent
-        route={route}
-        ui={ui}
+    render: (resume, route, ui) => (
+      <ResumeContactsSection
+        title={route.title}
+        count={route.subtitle}
+        description={route.description}
+        contacts={resume.contacts}
+        labels={ui.contacts}
       />
     ),
   },
@@ -268,6 +273,7 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
         <SiteFooter
           links={resume.footerLinks}
           copyright={resume.footerCopyright}
+          disclaimer={ui.footerDisclaimer}
         />
       }
     />

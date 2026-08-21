@@ -20,19 +20,29 @@
       "mode": "Mode of study:",
       "status": "Status:"
     },
+    "contacts": {
+      "telegram": "Telegram",
+      "email": "Email",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "phone": "Phone"
+    },
     "projectDemo": "demo",
     "projectNpm": "npm",
+    "projectGithub": "GitHub",
+    "projectFeatures": "Features",
+    "projectStack": "Stack",
     "placeholderNote": "This page is prepared as a resume section.",
     "backHome": "Back to home",
     "localeSwitch": "Language",
     "photoOf": "Photo {current} of {total}",
     "close": "Close",
     "photoAdded": "Added {date}",
-    "photoAddedDate": "13 October 2021",
     "photoAlbum": "Profile photos",
     "photoAlbumLabel": "Album:",
-    "photoSenderLabel": "Sender:",
-    "commentsHidden": "Comments are hidden due to the user's privacy settings."
+    "photoSenderLabel": "User:",
+    "commentsHidden": "Comments are hidden due to the user's privacy settings.",
+    "footerDisclaimer": "Non-commercial personal website. Not affiliated with, endorsed by, or connected to VK / VKontakte or VK Company Limited."
   },
   "routes": {
     "home": {

@@ -40,7 +40,6 @@ export function ResumePhotoPanel({
             {
               src: avatarFullSrc,
               alt: name,
-              likes: '12',
               authorName: name,
               authorAvatar: avatarSrc,
             },

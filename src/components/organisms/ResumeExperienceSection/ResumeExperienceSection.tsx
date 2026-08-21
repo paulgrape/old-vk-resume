@@ -1,3 +1,4 @@
+import { LikeControl } from '@/components/atoms/LikeControl/LikeControl'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import type { ExperienceEntry } from '@/data/resume'
@@ -22,34 +23,6 @@ type ExperienceCardProps = {
   likeLabel: string
 }
 
-function HeartIcon({ filled }: { filled: boolean }) {
-  return (
-    <svg
-      viewBox='0 0 16 14'
-      width='12'
-      height='11'
-      aria-hidden='true'
-      className='shrink-0'
-    >
-      <path
-        d='M8 13.2S1.2 8.6 1.2 4.7C1.2 2.6 2.8 1 4.8 1c1.2 0 2.3.6 3.2 1.6C8.9 1.6 10 1 11.2 1c2 0 3.6 1.6 3.6 3.7 0 3.9-6.8 8.5-6.8 8.5z'
-        fill={filled ? 'currentColor' : 'none'}
-        stroke='currentColor'
-        strokeWidth='1.2'
-        strokeLinejoin='round'
-      />
-    </svg>
-  )
-}
-
-function likeDisplay(count: number): string | null {
-  if (count <= 0) {
-    return null
-  }
-
-  return count > 100 ? '100+' : String(count)
-}
-
 function ExperienceCard({
   entry,
   avatarSrc,
@@ -59,7 +32,6 @@ function ExperienceCard({
 }: ExperienceCardProps) {
   const [likes, setLikes] = useState(0)
   const imageSrc = entry.logoSrc ?? avatarSrc
-  const countLabel = likeDisplay(likes)
 
   return (
     <article className='flex gap-2.5 pr-3 pt-2.5 pb-2 border-b border-vk-border-light'>
@@ -98,18 +70,11 @@ function ExperienceCard({
         </div>
         <div className='flex items-center gap-4 mt-2 text-[12px] text-vk-muted'>
           <VkLink href={replyHref}>{replyLabel}</VkLink>
-          <span className='ml-auto flex items-center gap-1'>
-            {likeLabel}
-            <button
-              type='button'
-              className='inline-flex items-center gap-0.5 m-0 p-0 border-0 bg-transparent cursor-pointer text-vk-link'
-              onClick={() => setLikes(count => count + 1)}
-              aria-label={likeLabel}
-            >
-              <HeartIcon filled={likes > 0} />
-              {countLabel}
-            </button>
-          </span>
+          <LikeControl
+            likeLabel={likeLabel}
+            count={likes}
+            onLike={() => setLikes(count => count + 1)}
+          />
         </div>
       </div>
     </article>

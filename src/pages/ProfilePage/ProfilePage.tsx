@@ -74,7 +74,7 @@ export function ProfilePage() {
       }
       footer={
         <SiteFooter
-          links={footerLinks}
+          links={footerLinks.map(label => ({ label, href: '#' }))}
           copyright={footerCopyright}
         />
       }

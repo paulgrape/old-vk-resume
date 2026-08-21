@@ -52,7 +52,6 @@ export function ProfilePhotoPanel({
             {
               src: avatarFull,
               alt: name,
-              likes: '12',
               authorName: name,
               authorAvatar: avatar,
             },

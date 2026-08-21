@@ -20,19 +20,29 @@
       "mode": "Форма обучения:",
       "status": "Статус:"
     },
+    "contacts": {
+      "telegram": "Telegram",
+      "email": "E-mail",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "phone": "Телефон"
+    },
     "projectDemo": "демо",
     "projectNpm": "npm",
+    "projectGithub": "GitHub",
+    "projectFeatures": "Возможности",
+    "projectStack": "Стек",
     "placeholderNote": "Страница подготовлена как раздел резюме.",
     "backHome": "Вернуться на главную",
     "localeSwitch": "Язык",
     "photoOf": "Фотография {current} из {total}",
     "close": "Закрыть",
     "photoAdded": "Добавлена {date}",
-    "photoAddedDate": "13 октября 2021 г.",
     "photoAlbum": "Фотографии со страницы",
     "photoAlbumLabel": "Альбом:",
-    "photoSenderLabel": "Отправитель:",
-    "commentsHidden": "Комментарии скрыты настройками приватности пользователя."
+    "photoSenderLabel": "Пользователь:",
+    "commentsHidden": "Комментарии скрыты настройками приватности пользователя.",
+    "footerDisclaimer": "Некоммерческий личный сайт. Не связан с VK / ВКонтакте и VK Company Limited, не является их продуктом и не одобрен ими."
   },
   "routes": {
     "home": {
