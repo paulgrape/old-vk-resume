@@ -73,7 +73,7 @@ export function ResumeContactsSection({
           <li key={contact.id}>
             <ContactRow
               contact={contact}
-              label={labels[contact.id]}
+              label={labels[contact.id] ?? contact.id}
             />
           </li>
         ))}

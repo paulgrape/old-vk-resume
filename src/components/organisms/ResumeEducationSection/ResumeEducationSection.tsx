@@ -1,12 +1,17 @@
 import { ProfileFieldRow } from '@/components/molecules/ProfileFieldRow/ProfileFieldRow'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import type { EducationEntry } from '@/data/resume'
-import type { LocaleMessages } from '@/i18n/locales'
 import { interpolate } from '@/i18n/interpolate'
+import type { LocaleMessages } from '@/i18n/locales'
 
 type EducationLabels = LocaleMessages['ui']['education']
 
-type EducationFieldKey = 'institution' | 'department' | 'major' | 'mode' | 'status'
+type EducationFieldKey =
+  | 'institution'
+  | 'department'
+  | 'major'
+  | 'mode'
+  | 'status'
 
 const EDUCATION_FIELDS: EducationFieldKey[] = [
   'institution',
@@ -58,7 +63,6 @@ export function ResumeEducationSection({
       <SectionHeader
         title={labels.title}
         count={interpolate(labels.count, { count: entries.length })}
-        linkText={labels.linkText}
       />
       {entries.map((entry, index) => {
         const rows = rowsForEntry(entry, labels)
@@ -67,7 +71,9 @@ export function ResumeEducationSection({
           <div
             key={`${entry.institution}-${index}`}
             className={`px-2 py-2 ${
-              index < entries.length - 1 ? 'border-b border-vk-border-light' : ''
+              index < entries.length - 1
+                ? 'border-b border-vk-border-light'
+                : ''
             }`}
           >
             <table className='border-collapse w-full'>

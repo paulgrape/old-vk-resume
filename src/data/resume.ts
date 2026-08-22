@@ -6,7 +6,7 @@ import {
   type ResumeJson,
   type SitePhotos,
 } from '@/data/content'
-import { skillIconFiles } from '@/data/skillIcons'
+import { skillIconUrls } from '@/data/skillIcons'
 import {
   contactIds,
   contactLogoUrls,
@@ -108,46 +108,83 @@ function lastPathSegment(url: string): string {
   return url.replace(/\/+$/, '').split('/').pop() ?? url
 }
 
-function contactEntry(id: ContactId): ContactEntry {
-  const logoSrc = contactLogoUrls[id]
+function siteContactRaw(id: ContactId): string | undefined {
+  const value = (siteConfig as Record<string, unknown>)[id]
 
-  switch (id) {
-    case 'telegram':
-      return {
-        id,
-        value: telegramHandle(siteConfig.telegram),
-        href: siteConfig.telegram,
-        logoSrc,
-      }
-    case 'email':
-      return {
-        id,
-        value: siteConfig.email,
-        href: `mailto:${siteConfig.email}`,
-        logoSrc,
-      }
-    case 'github':
-      return {
-        id,
-        value: lastPathSegment(siteConfig.github),
-        href: siteConfig.github,
-        logoSrc,
-      }
-    case 'linkedin':
-      return {
-        id,
-        value: lastPathSegment(siteConfig.linkedin),
-        href: siteConfig.linkedin,
-        logoSrc,
-      }
-    case 'phone':
-      return {
-        id,
-        value: siteConfig.phone,
-        href: telHref(siteConfig.phone),
-        logoSrc,
-      }
+  return typeof value === 'string' && value.trim() !== ''
+    ? value.trim()
+    : undefined
+}
+
+function looksLikeEmail(value: string): boolean {
+  return value.includes('@') && !value.includes('://')
+}
+
+function contactHref(id: ContactId, raw: string): string {
+  if (
+    raw.startsWith('mailto:') ||
+    raw.startsWith('tel:') ||
+    raw.startsWith('skype:')
+  ) {
+    return raw
   }
+
+  if (raw.startsWith('http://') || raw.startsWith('https://')) {
+    return raw
+  }
+
+  if (id === 'email' || looksLikeEmail(raw)) {
+    return `mailto:${raw}`
+  }
+
+  if (id === 'phone') {
+    return telHref(raw)
+  }
+
+  if (id === 'telegram') {
+    return `https://t.me/${raw.replace(/^@/, '')}`
+  }
+
+  return raw
+}
+
+function contactValue(id: ContactId, raw: string, href: string): string {
+  if (id === 'email') {
+    return raw.replace(/^mailto:/, '')
+  }
+
+  if (id === 'phone') {
+    return raw
+  }
+
+  if (id === 'telegram') {
+    return telegramHandle(href)
+  }
+
+  if (href.startsWith('http://') || href.startsWith('https://')) {
+    return lastPathSegment(href)
+  }
+
+  return raw
+}
+
+function contactEntry(id: ContactId, raw: string): ContactEntry {
+  const href = contactHref(id, raw)
+
+  return {
+    id,
+    value: contactValue(id, raw, href),
+    href,
+    logoSrc: contactLogoUrls[id],
+  }
+}
+
+function contactsFromSite(): ContactEntry[] {
+  return contactIds.flatMap(id => {
+    const raw = siteContactRaw(id)
+
+    return raw ? [contactEntry(id, raw)] : []
+  })
 }
 
 function getNavHref(id: string): string {
@@ -189,13 +226,10 @@ export function hydrateResume(resume: ResumeJson): ResumeContent {
     fields: resume.fields,
     skillGroups: resume.skillGroups.map(group => ({
       title: group.title,
-      items: group.items.map(name => {
-        const iconFile = skillIconFiles[name]
-        return {
-          name,
-          iconSrc: iconFile ? iconUrl(iconFile) : undefined,
-        }
-      }),
+      items: group.items.map(name => ({
+        name,
+        iconSrc: skillIconUrls[name],
+      })),
     })),
     projectsSection: resume.projectsSection,
     projects: resume.projects.map(project => {
@@ -238,7 +272,7 @@ export function hydrateResume(resume: ResumeJson): ResumeContent {
     email: siteConfig.email,
     phone: siteConfig.phone,
     telegram: siteConfig.telegram,
-    contacts: contactIds.map(contactEntry),
+    contacts: contactsFromSite(),
     photos: sitePhotos,
   }
 }

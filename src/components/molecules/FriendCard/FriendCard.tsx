@@ -12,6 +12,7 @@ export function FriendCard({ name, src }: FriendCardProps) {
         <img
           src={src}
           alt={name}
+          referrerPolicy='no-referrer'
           className='w-[50px] h-[50px] object-contain bg-white p-0.5'
         />
       ) : (
