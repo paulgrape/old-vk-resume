@@ -76,6 +76,7 @@ export type { ContactId }
 
 export type ResumeContent = {
   user: ResumeJson['user']
+  cv: ResumeJson['cv']
   topNavLinks: readonly ResumeNavItem[]
   sidebarNavItems: readonly ResumeNavItem[]
   appMenuItems: AppMenuItem[]
@@ -214,6 +215,7 @@ function getNavHref(id: string): string {
 export function hydrateResume(resume: ResumeJson): ResumeContent {
   return {
     user: resume.user,
+    cv: resume.cv,
     topNavLinks: resume.topNavLinks.map(item => ({
       label: item.label,
       href: getNavHref(item.id),

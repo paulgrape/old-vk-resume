@@ -55,8 +55,16 @@
     "projectGithub": "GitHub",
     "projectFeatures": "Возможности",
     "projectStack": "Стек",
+    "downloadCv": {
+      "download": "Скачать PDF ({language})",
+      "languages": {
+        "en": "английский",
+        "ru": "русский"
+      }
+    },
     "placeholderNote": "Страница подготовлена как раздел резюме.",
     "backHome": "Вернуться на главную",
+    "backToResume": "к резюме",
     "localeSwitch": "Язык",
     "photoOf": "Фотография {current} из {total}",
     "close": "Закрыть",
@@ -119,8 +127,11 @@
     "downloadCv": {
       "title": "Скачать CV",
       "subtitle": "pdf resume",
-      "description": "Заглушка для будущей загрузки PDF-версии резюме.",
-      "details": ["Russian CV", "English CV", "Printable version"]
+      "details": [
+        "Резюме на русском",
+        "Резюме на английском",
+        "Вёрстка под ATS"
+      ]
     }
   }
 }

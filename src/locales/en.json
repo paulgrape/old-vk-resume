@@ -55,8 +55,16 @@
     "projectGithub": "GitHub",
     "projectFeatures": "Features",
     "projectStack": "Stack",
+    "downloadCv": {
+      "download": "Download PDF ({language})",
+      "languages": {
+        "en": "English",
+        "ru": "Russian"
+      }
+    },
     "placeholderNote": "This page is prepared as a resume section.",
     "backHome": "Back to home",
+    "backToResume": "to resume",
     "localeSwitch": "Language",
     "photoOf": "Photo {current} of {total}",
     "close": "Close",
@@ -119,8 +127,7 @@
     "downloadCv": {
       "title": "Download CV",
       "subtitle": "pdf resume",
-      "description": "Placeholder for a future PDF resume download.",
-      "details": ["Russian CV", "English CV", "Printable version"]
+      "details": ["English CV", "Russian CV", "ATS-friendly layout"]
     }
   }
 }

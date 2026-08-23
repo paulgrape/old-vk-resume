@@ -190,7 +190,7 @@ function FullProjectCard({
         <div className='text-[12px] font-semibold text-vk-text-subtle mb-1'>
           {featuresLabel}
         </div>
-        <ul className='m-0 mb-1.5 pl-4 text-[12px] text-vk-text leading-[1.4]'>
+        <ul className='m-0 mb-1.5 list-disc list-outside pl-5 space-y-0.5 text-[12px] text-vk-text leading-[1.5] marker:text-vk-heading'>
           {project.features.map(feature => (
             <li key={feature}>{feature}</li>
           ))}

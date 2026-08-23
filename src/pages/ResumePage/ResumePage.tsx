@@ -1,5 +1,6 @@
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
+import { DownloadCvSection } from '@/components/organisms/DownloadCvSection/DownloadCvSection'
 import { ProfileInfoPanel } from '@/components/organisms/ProfileInfoPanel/ProfileInfoPanel'
 import { ProfileTitlebar } from '@/components/organisms/ProfileTitlebar/ProfileTitlebar'
 import { ResumeContactsSection } from '@/components/organisms/ResumeContactsSection/ResumeContactsSection'
@@ -26,7 +27,7 @@ import {
   type ResumeRouteId,
 } from '@/data/resumeRoutes'
 import { useLocale } from '@/i18n/LocaleContext'
-import type { LocaleMessages } from '@/i18n/locales'
+import type { Locale, LocaleMessages } from '@/i18n/locales'
 import type { ReactNode } from 'react'
 
 type UiLabels = LocaleMessages['ui']
@@ -64,7 +65,12 @@ type ResumePageProps = {
 
 type ResumePageDefinition = {
   showPhotoColumn?: boolean
-  render: (resume: ResumeContent, route: ResumeRoute, ui: UiLabels) => ReactNode
+  render: (
+    resume: ResumeContent,
+    route: ResumeRoute,
+    ui: UiLabels,
+    locale: Locale,
+  ) => ReactNode
 }
 
 function ResumeHomeContent({
@@ -90,6 +96,7 @@ function ResumeHomeContent({
         title={resume.experienceSection.title}
         count={resume.experienceSection.count}
         linkText={resume.experienceSection.linkText}
+        linkHref={resumeRouteHrefs.experience}
         entries={resume.experience}
         avatarSrc={resume.photos.avatarIcon}
         replyLabel={ui.reply}
@@ -146,12 +153,14 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
       <ResumeExperienceSection
         title={resume.experienceSection.title}
         count={resume.experienceSection.count}
-        linkText={resume.experienceSection.linkText}
+        linkText={ui.backToResume}
+        linkHref={resumeRouteHrefs.home}
         entries={resume.experience}
         avatarSrc={resume.photos.avatarIcon}
         replyLabel={ui.reply}
         replyHref={resume.telegram}
         likeLabel={ui.like}
+        variant='full'
       />
     ),
   },
@@ -202,10 +211,13 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
     ),
   },
   downloadCv: {
-    render: (_resume, route, ui) => (
-      <ResumePlaceholderContent
-        route={route}
-        ui={ui}
+    render: (_resume, route, ui, locale) => (
+      <DownloadCvSection
+        title={route.title}
+        count={route.subtitle}
+        description={route.description}
+        locale={locale}
+        labels={ui.downloadCv}
       />
     ),
   },
@@ -268,7 +280,7 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
           </div>
         ) : null
       }
-      mainColumn={definition.render(resume, route, ui)}
+      mainColumn={definition.render(resume, route, ui, locale)}
       footer={
         <SiteFooter
           links={resume.footerLinks}
