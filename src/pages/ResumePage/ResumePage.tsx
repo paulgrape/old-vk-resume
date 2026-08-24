@@ -183,11 +183,13 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
     ),
   },
   stack: {
-    render: (resume, _route, ui) => (
+    render: (resume, route, ui) => (
       <ResumeStackSection
         skillGroups={resume.skillGroups}
         skillsCountTemplate={ui.skillsCount}
-        showAllLabel={ui.showAll}
+        showAllLabel={ui.backToResume}
+        title={route.title}
+        linkHref={resumeRouteHrefs.home}
       />
     ),
   },

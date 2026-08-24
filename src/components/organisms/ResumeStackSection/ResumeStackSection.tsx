@@ -38,8 +38,8 @@ function SkillFriendsGrid({
     <div
       className={
         compact
-          ? 'grid grid-cols-[repeat(3,50px)] gap-x-[15px] gap-y-1.5 mb-1 pt-2.5 items-start justify-center'
-          : 'grid grid-cols-[repeat(auto-fill,50px)] gap-x-[15px] gap-y-1.5 mb-1 p-2.5 items-start justify-start'
+          ? 'grid grid-cols-[repeat(3,50px)] gap-x-[15px] gap-y-1 mb-0.5 pt-1 items-start justify-center'
+          : 'grid grid-cols-[repeat(auto-fill,50px)] gap-x-[15px] gap-y-1 px-2 pt-1 pb-0.5 items-start justify-start'
       }
     >
       {items.map(item => (
@@ -55,6 +55,14 @@ function SkillFriendsGrid({
 
 function hasAnySkillIcon(groups: readonly SkillGroup[]) {
   return groups.some(group => group.items.some(item => item.iconSrc))
+}
+
+function SkillGroupHeading({ title }: { title: string }) {
+  return (
+    <div className='text-left px-2 pt-1 text-[11px] text-vk-muted'>
+      {title}
+    </div>
+  )
 }
 
 function SkillGroupBody({
@@ -88,10 +96,9 @@ export function ResumeStackSection({
 }: ResumeStackSectionProps) {
   const compact = variant === 'compact'
   const useGrid = hasAnySkillIcon(skillGroups)
+  const total = skillGroups.reduce((sum, group) => sum + group.items.length, 0)
 
   if (compact) {
-    const total = skillGroups.reduce((sum, group) => sum + group.items.length, 0)
-
     return (
       <section>
         <SectionHeader
@@ -102,9 +109,7 @@ export function ResumeStackSection({
         />
         {skillGroups.map(group => (
           <div key={group.title}>
-            <div className='text-left px-2 pt-1.5 text-[11px] text-vk-muted'>
-              {group.title}
-            </div>
+            <SkillGroupHeading title={group.title} />
             <SkillGroupBody
               items={group.items}
               compact
@@ -118,16 +123,15 @@ export function ResumeStackSection({
 
   return (
     <section className='border-b border-vk-border'>
+      <SectionHeader
+        title={title ?? ''}
+        count={interpolate(skillsCountTemplate, { count: total })}
+        linkText={showAllLabel}
+        linkHref={linkHref}
+      />
       {skillGroups.map(group => (
-        <div
-          key={group.title}
-          className='mb-2'
-        >
-          <SectionHeader
-            title={group.title}
-            count={interpolate(skillsCountTemplate, { count: group.items.length })}
-            linkText={showAllLabel}
-          />
+        <div key={group.title}>
+          <SkillGroupHeading title={group.title} />
           <SkillGroupBody
             items={group.items}
             compact={false}
