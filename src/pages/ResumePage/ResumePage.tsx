@@ -1,8 +1,7 @@
-import { VkLink } from '@/components/atoms/VkLink/VkLink'
-import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { DownloadCvSection } from '@/components/organisms/DownloadCvSection/DownloadCvSection'
 import { ProfileInfoPanel } from '@/components/organisms/ProfileInfoPanel/ProfileInfoPanel'
 import { ProfileTitlebar } from '@/components/organisms/ProfileTitlebar/ProfileTitlebar'
+import { ResumeAchievementsSection } from '@/components/organisms/ResumeAchievementsSection/ResumeAchievementsSection'
 import { ResumeContactsSection } from '@/components/organisms/ResumeContactsSection/ResumeContactsSection'
 import { ResumeEducationSection } from '@/components/organisms/ResumeEducationSection/ResumeEducationSection'
 import { ResumeExperienceSection } from '@/components/organisms/ResumeExperienceSection/ResumeExperienceSection'
@@ -107,37 +106,6 @@ function ResumeHomeContent({
   )
 }
 
-function ResumePlaceholderContent({
-  route,
-  ui,
-}: {
-  route: ResumeRoute
-  ui: UiLabels
-}) {
-  return (
-    <section className='border-b border-vk-border'>
-      <SectionHeader
-        title={route.title}
-        count={route.subtitle}
-      />
-      <div className='p-3 text-left'>
-        <p className='m-0 text-[13px] leading-[1.45] text-vk-text'>
-          {route.description}
-        </p>
-        <ul className='my-3 pl-4 text-[12px] leading-normal text-vk-text'>
-          {route.details.map(detail => (
-            <li key={detail}>{detail}</li>
-          ))}
-        </ul>
-        <div className='bg-vk-friends-count border border-vk-border-light p-2 text-[12px] text-vk-muted'>
-          {ui.placeholderNote}{' '}
-          <VkLink href={resumeRouteHrefs.home}>{ui.backHome}</VkLink>
-        </div>
-      </div>
-    </section>
-  )
-}
-
 const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
   home: {
     showPhotoColumn: true,
@@ -194,10 +162,11 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
     ),
   },
   achievements: {
-    render: (_resume, route, ui) => (
-      <ResumePlaceholderContent
-        route={route}
-        ui={ui}
+    render: (resume, route, ui) => (
+      <ResumeAchievementsSection
+        title={route.title}
+        countTemplate={ui.achievements.count}
+        entries={resume.achievements}
       />
     ),
   },
@@ -228,9 +197,16 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
 export function ResumePage({ routeId = 'home' }: ResumePageProps) {
   const { locale, messages } = useLocale()
   const resume = hydrateResume(resumeByLocale[locale])
-  const route = hydrateRoute(routeId, messages.routes[routeId])
-  const definition = resumePageRegistry[routeId]
-  const isHomeRoute = routeId === 'home'
+  const effectiveRouteId =
+    routeId === 'achievements' && resume.achievements.length === 0
+      ? 'home'
+      : routeId
+  const route = hydrateRoute(
+    effectiveRouteId,
+    messages.routes[effectiveRouteId],
+  )
+  const definition = resumePageRegistry[effectiveRouteId]
+  const isHomeRoute = effectiveRouteId === 'home'
   const ui = messages.ui
 
   return (

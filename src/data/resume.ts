@@ -48,6 +48,12 @@ export type EducationEntry = {
   status?: string
 }
 
+export type AchievementEntry = {
+  title: string
+  description?: string
+  year?: string
+}
+
 export type ExperienceEntry = {
   company: string
   role: string
@@ -85,6 +91,7 @@ export type ResumeContent = {
   projectsSection: ResumeJson['projectsSection']
   projects: ResumeProject[]
   education: EducationEntry[]
+  achievements: AchievementEntry[]
   experienceSection: ResumeJson['experienceSection']
   experience: ExperienceEntry[]
   footerLinks: readonly FooterLink[]
@@ -212,7 +219,17 @@ function getNavHref(id: string): string {
   return '#'
 }
 
+function achievementsFromResume(resume: ResumeJson): AchievementEntry[] {
+  if (!('achievements' in resume) || !Array.isArray(resume.achievements)) {
+    return []
+  }
+
+  return resume.achievements
+}
+
 export function hydrateResume(resume: ResumeJson): ResumeContent {
+  const achievements = achievementsFromResume(resume)
+
   return {
     user: resume.user,
     cv: resume.cv,
@@ -220,10 +237,18 @@ export function hydrateResume(resume: ResumeJson): ResumeContent {
       label: item.label,
       href: getNavHref(item.id),
     })),
-    sidebarNavItems: resume.sidebarNavItems.map(item => ({
-      label: item.label,
-      href: getNavHref(item.id),
-    })),
+    sidebarNavItems: resume.sidebarNavItems.flatMap(item => {
+      if (item.id === 'achievements' && achievements.length === 0) {
+        return []
+      }
+
+      return [
+        {
+          label: item.label,
+          href: getNavHref(item.id),
+        },
+      ]
+    }),
     appMenuItems: resume.appMenuItems,
     fields: resume.fields,
     skillGroups: resume.skillGroups.map(group => ({
@@ -252,6 +277,7 @@ export function hydrateResume(resume: ResumeJson): ResumeContent {
       }
     }),
     education: resume.education ?? [],
+    achievements,
     experienceSection: resume.experienceSection,
     experience: resume.experience.map(entry => {
       const logo = 'logo' in entry ? entry.logo : undefined

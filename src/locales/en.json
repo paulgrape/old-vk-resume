@@ -20,6 +20,9 @@
       "mode": "Mode of study:",
       "status": "Status:"
     },
+    "achievements": {
+      "count": "{count} highlights"
+    },
     "contacts": {
       "telegram": "Telegram",
       "email": "Email",

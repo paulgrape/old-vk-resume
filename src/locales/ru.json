@@ -20,6 +20,9 @@
       "mode": "Форма обучения:",
       "status": "Статус:"
     },
+    "achievements": {
+      "count": "{count} достижений"
+    },
     "contacts": {
       "telegram": "Telegram",
       "email": "E-mail",
