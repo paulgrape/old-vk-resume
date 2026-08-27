@@ -33,16 +33,16 @@ export function ProfilePhotoPanel({
   const [photoOpen, setPhotoOpen] = useState(false)
 
   return (
-    <div className='w-[200px] shrink-0 pt-2 pl-2'>
+    <div className='w-[200px] shrink-0 pt-2 pl-2 max-vk:w-full max-vk:pl-0'>
       <button
         type='button'
-        className='block m-0 p-0 border-0 bg-transparent cursor-pointer'
+        className='block m-0 p-0 border-0 bg-transparent cursor-pointer max-vk:w-full'
         onClick={() => setPhotoOpen(true)}
       >
         <img
           src={avatar}
           alt={name}
-          className='w-[200px] h-[200px] object-cover'
+          className='w-[200px] h-[200px] object-cover max-vk:w-full max-vk:h-auto max-vk:aspect-square'
         />
       </button>
 

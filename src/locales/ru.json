@@ -130,6 +130,7 @@
     "downloadCv": {
       "title": "Скачать CV",
       "subtitle": "pdf resume",
+      "description": "PDF-резюме на английском и русском.",
       "details": [
         "Резюме на русском",
         "Резюме на английском",

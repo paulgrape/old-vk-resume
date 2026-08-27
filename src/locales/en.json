@@ -130,6 +130,7 @@
     "downloadCv": {
       "title": "Download CV",
       "subtitle": "pdf resume",
+      "description": "PDF resume in English and Russian.",
       "details": ["English CV", "Russian CV", "ATS-friendly layout"]
     }
   }

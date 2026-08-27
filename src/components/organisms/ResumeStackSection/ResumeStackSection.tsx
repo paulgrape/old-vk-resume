@@ -38,7 +38,7 @@ function SkillFriendsGrid({
     <div
       className={
         compact
-          ? 'grid grid-cols-[repeat(3,50px)] gap-x-[15px] gap-y-1 mb-0.5 pt-1 items-start justify-center'
+          ? 'grid grid-cols-[repeat(3,50px)] max-vk:grid-cols-[repeat(auto-fill,50px)] gap-x-[15px] gap-y-1 mb-0.5 pt-1 items-start justify-center max-vk:justify-start max-vk:px-2'
           : 'grid grid-cols-[repeat(auto-fill,50px)] gap-x-[15px] gap-y-1 px-2 pt-1 pb-0.5 items-start justify-start'
       }
     >

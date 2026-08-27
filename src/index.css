@@ -2,6 +2,7 @@
 
 @theme {
   /* VK palette — reuse via bg-vk-*, text-vk-*, border-vk-*, etc. */
+  --breakpoint-vk: 791px;
   --color-vk-link: #2b587a;
   --color-vk-border: #d2d9e0;
   --color-vk-border-light: #eef0f2;
@@ -25,6 +26,7 @@
   --color-vk-avatar-to: #8fa5b5;
   --color-vk-friend-avatar-from: #dde6ef;
   --color-vk-friend-avatar-to: #b0c2d0;
+  --color-vk-tab-glow: #5eb0e5;
 }
 
 @utility bg-vk-header {
@@ -33,6 +35,16 @@
     var(--color-vk-header-top) 0%,
     var(--color-vk-header-mid) 40%,
     var(--color-vk-header-bottom) 100%
+  );
+}
+
+@utility bg-vk-tabbar {
+  background: linear-gradient(
+    to bottom,
+    #4a4a4a 0%,
+    #2a2a2a 49%,
+    #000 50%,
+    #1a1a1a 100%
   );
 }
 
@@ -100,6 +112,11 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+
+  @media (max-width: 790px) {
+    border-inline: none;
+    text-align: left;
+  }
 }
 
 body {

@@ -58,6 +58,11 @@ export function DownloadCvSection({
         title={title}
         count={count}
       />
+      {description ? (
+        <p className='px-2 pt-2 text-left text-[13px] leading-[1.45] text-vk-text'>
+          {description}
+        </p>
+      ) : null}
       <div className='flex flex-col gap-2 p-2 text-left'>
         {files.map(file => (
           <DownloadCvButton

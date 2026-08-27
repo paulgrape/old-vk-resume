@@ -17,7 +17,7 @@ function isExternalHref(href: string): boolean {
 
 export function SiteFooter({ links, copyright, disclaimer }: SiteFooterProps) {
   return (
-    <footer className='border-t border-vk-border px-4 py-3 text-center max-w-[791px] mx-auto w-full  bg-vk-footer'>
+    <footer className='border-t border-vk-border px-4 py-3 text-center max-w-[791px] mx-auto w-full bg-vk-footer max-vk:max-w-none max-vk:px-3 max-vk:py-2'>
       <nav className='flex justify-center gap-4 flex-wrap mb-1'>
         {links.map(link => {
           const external = isExternalHref(link.href)

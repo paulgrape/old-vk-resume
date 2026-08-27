@@ -123,7 +123,7 @@ export function PhotoViewer({
       ) : null}
 
       <div
-        className='relative w-fit max-w-[calc(100vw-48px)] bg-white text-left shadow-[0_2px_16px_rgba(0,0,0,0.45)]'
+        className='relative w-fit max-w-[calc(100vw-48px)] bg-white text-left shadow-[0_2px_16px_rgba(0,0,0,0.45)] max-vk:max-w-[calc(100vw-16px)]'
         onClick={event => event.stopPropagation()}
         role='dialog'
         aria-modal='true'
@@ -146,11 +146,11 @@ export function PhotoViewer({
           <img
             src={photo.src}
             alt={photo.alt}
-            className='block max-h-[calc(100vh-200px)] max-w-[calc(100vw-88px)] h-auto w-auto mx-auto'
+            className='block max-h-[calc(100vh-200px)] max-w-[calc(100vw-88px)] h-auto w-auto mx-auto max-vk:max-w-[calc(100vw-48px)] max-vk:max-h-[calc(100vh-280px)]'
           />
         </div>
 
-        <div className='flex items-start justify-between gap-8 px-5 pt-3 pb-4'>
+        <div className='flex items-start justify-between gap-8 px-5 pt-3 pb-4 max-vk:flex-col max-vk:gap-3'>
           <div className='min-w-0 flex-1'>
             <div className='flex items-center text-[11px] text-vk-muted'>
               <span>
@@ -173,7 +173,7 @@ export function PhotoViewer({
             </p>
           </div>
 
-          <div className='w-[158px] shrink-0 text-[11px] leading-[1.45]'>
+          <div className='w-[158px] shrink-0 text-[11px] leading-[1.45] max-vk:w-full'>
             <div className='text-vk-muted'>
               {ui.photoAlbumLabel}{' '}
               <VkLink

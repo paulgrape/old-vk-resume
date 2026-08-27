@@ -15,9 +15,12 @@ export function ProfileInfoPanel({
   education,
   fields,
 }: ProfileInfoPanelProps) {
+  const educationLabel =
+    typeof education === 'string' ? education : education[0]?.institution
+
   return (
     <div className='pt-3 pb-2 border-b border-vk-border'>
-      <div className='flex justify-between items-start mb-1 mr-auto'>
+      <div className='flex justify-between items-start mb-1 mr-auto max-vk:hidden'>
         <div className='text-left'>
           <div className='text-[13px] font-bold text-vk-heading leading-tight'>
             {name}
@@ -26,9 +29,11 @@ export function ProfileInfoPanel({
             {status}
           </div>
         </div>
-        <div className='text-[12px] leading-tight text-vk-link shrink-0 self-start ml-4'>
-          {typeof education === 'string' ? education : education[0].institution}
-        </div>
+        {educationLabel ? (
+          <div className='text-[12px] leading-tight text-vk-link shrink-0 self-start ml-4 max-vk:ml-0'>
+            {educationLabel}
+          </div>
+        ) : null}
       </div>
 
       <table className='border-collapse w-full'>

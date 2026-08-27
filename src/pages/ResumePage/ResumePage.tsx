@@ -1,4 +1,10 @@
+import type { MobileTabIconName } from '@/components/atoms/MobileTabIcon/MobileTabIcon'
 import { DownloadCvSection } from '@/components/organisms/DownloadCvSection/DownloadCvSection'
+import {
+  MobileBottomNav,
+  type MobileBottomNavItem,
+} from '@/components/organisms/MobileBottomNav/MobileBottomNav'
+import { MobileTopBar } from '@/components/organisms/MobileTopBar/MobileTopBar'
 import { ProfileInfoPanel } from '@/components/organisms/ProfileInfoPanel/ProfileInfoPanel'
 import { ProfileTitlebar } from '@/components/organisms/ProfileTitlebar/ProfileTitlebar'
 import { ResumeAchievementsSection } from '@/components/organisms/ResumeAchievementsSection/ResumeAchievementsSection'
@@ -21,7 +27,10 @@ import {
 } from '@/data/resume'
 import {
   hydrateRoute,
+  mobileTabRouteIds,
   resumeRouteHrefs,
+  isMobileTabRouteId,
+  type ResumeNavItem,
   type ResumeRoute,
   type ResumeRouteId,
 } from '@/data/resumeRoutes'
@@ -62,6 +71,42 @@ type ResumePageProps = {
   routeId?: ResumeRouteId
 }
 
+const mobileTabIcons = {
+  home: 'news',
+  experience: 'wall',
+  contacts: 'dialogs',
+  stack: 'friends',
+  projects: 'media',
+} as const satisfies Record<(typeof mobileTabRouteIds)[number], MobileTabIconName>
+
+function sidebarLabelForHref(
+  items: readonly ResumeNavItem[],
+  href: string,
+): string | undefined {
+  return items.find(item => item.href === href)?.label
+}
+
+function mobileTabsFromSidebar(
+  items: readonly ResumeNavItem[],
+): MobileBottomNavItem[] {
+  return mobileTabRouteIds.flatMap(id => {
+    const href = resumeRouteHrefs[id]
+    const label = sidebarLabelForHref(items, href)
+
+    if (!label) {
+      return []
+    }
+
+    return [
+      {
+        label,
+        href,
+        icon: mobileTabIcons[id],
+      },
+    ]
+  })
+}
+
 type ResumePageDefinition = {
   showPhotoColumn?: boolean
   render: (
@@ -70,6 +115,37 @@ type ResumePageDefinition = {
     ui: UiLabels,
     locale: Locale,
   ) => ReactNode
+}
+
+function HomeSideRails({
+  resume,
+  ui,
+}: {
+  resume: ResumeContent
+  ui: UiLabels
+}) {
+  return (
+    <>
+      <ResumeProjectsSection
+        title={resume.projectsSection.title}
+        count={resume.projectsSection.count}
+        linkText={resume.projectsSection.linkText}
+        linkHref={resumeRouteHrefs.projects}
+        projects={resume.projects}
+        variant='compact'
+        demoLabel={ui.projectDemo}
+        npmLabel={ui.projectNpm}
+      />
+      <ResumeStackSection
+        skillGroups={resume.skillGroups}
+        skillsCountTemplate={ui.skillsCount}
+        showAllLabel={ui.showAll}
+        variant='compact'
+        title={ui.skillsTitle}
+        linkHref={resumeRouteHrefs.stack}
+      />
+    </>
+  )
 }
 
 function ResumeHomeContent({
@@ -91,6 +167,12 @@ function ResumeHomeContent({
         labels={ui.education}
         entries={resume.education}
       />
+      <div className='hidden -mx-2 max-vk:block'>
+        <HomeSideRails
+          resume={resume}
+          ui={ui}
+        />
+      </div>
       <ResumeExperienceSection
         title={resume.experienceSection.title}
         count={resume.experienceSection.count}
@@ -208,10 +290,24 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
   const definition = resumePageRegistry[effectiveRouteId]
   const isHomeRoute = effectiveRouteId === 'home'
   const ui = messages.ui
+  const activeHref = resumeRouteHrefs[effectiveRouteId]
+  const pageTitle =
+    sidebarLabelForHref(resume.sidebarNavItems, activeHref) ?? route.title
+  const mobileTabs = mobileTabsFromSidebar(resume.sidebarNavItems)
+  const tabActiveHref = isMobileTabRouteId(effectiveRouteId)
+    ? activeHref
+    : undefined
 
   return (
     <VkProfileLayout
       header={<TopNavbar links={resume.topNavLinks} />}
+      mobileHeader={
+        <MobileTopBar
+          title={pageTitle}
+          backLabel={ui.backHome}
+          showBack={!isHomeRoute}
+        />
+      }
       sidebar={
         <SidebarNav
           navItems={resume.sidebarNavItems}
@@ -229,32 +325,21 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
       }
       photoColumn={
         definition.showPhotoColumn ? (
-          <div className='w-[200px] shrink-0 pt-2 pl-2'>
+          <div className='w-[200px] shrink-0 pt-2 pl-2 max-vk:w-full max-vk:max-w-none max-vk:pl-0 max-vk:pt-0'>
             <ResumePhotoPanel
               name={resume.user.name}
+              status={resume.user.profileStatus}
               avatarSrc={resume.photos.avatar}
               avatarFullSrc={resume.photos.avatarFull}
               writeMessageHref={resume.telegram}
               writeMessageLabel={ui.writeMessage}
             />
-            <ResumeProjectsSection
-              title={resume.projectsSection.title}
-              count={resume.projectsSection.count}
-              linkText={resume.projectsSection.linkText}
-              linkHref={resumeRouteHrefs.projects}
-              projects={resume.projects}
-              variant='compact'
-              demoLabel={ui.projectDemo}
-              npmLabel={ui.projectNpm}
-            />
-            <ResumeStackSection
-              skillGroups={resume.skillGroups}
-              skillsCountTemplate={ui.skillsCount}
-              showAllLabel={ui.showAll}
-              variant='compact'
-              title={ui.skillsTitle}
-              linkHref={resumeRouteHrefs.stack}
-            />
+            <div className='max-vk:hidden'>
+              <HomeSideRails
+                resume={resume}
+                ui={ui}
+              />
+            </div>
           </div>
         ) : null
       }
@@ -264,6 +349,12 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
           links={resume.footerLinks}
           copyright={resume.footerCopyright}
           disclaimer={ui.footerDisclaimer}
+        />
+      }
+      mobileNav={
+        <MobileBottomNav
+          items={mobileTabs}
+          activeHref={tabActiveHref}
         />
       }
     />

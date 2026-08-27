@@ -41,6 +41,20 @@ export const resumeRouteHrefs = {
   downloadCv: '#/download-cv',
 } as const satisfies Record<ResumeRouteId, string>
 
+export const mobileTabRouteIds = [
+  'home',
+  'experience',
+  'contacts',
+  'stack',
+  'projects',
+] as const satisfies readonly ResumeRouteId[]
+
+export type MobileTabRouteId = (typeof mobileTabRouteIds)[number]
+
+export function isMobileTabRouteId(id: ResumeRouteId): id is MobileTabRouteId {
+  return (mobileTabRouteIds as readonly ResumeRouteId[]).includes(id)
+}
+
 export function hydrateRoute(
   id: ResumeRouteId,
   copy: ResumeRouteCopy,
