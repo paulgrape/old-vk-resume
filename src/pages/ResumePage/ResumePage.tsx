@@ -179,7 +179,7 @@ function ResumeHomeContent({
         linkText={resume.experienceSection.linkText}
         linkHref={resumeRouteHrefs.experience}
         entries={resume.experience}
-        avatarSrc={resume.photos.avatarIcon}
+        avatarSrc={resume.photos.avatar}
         replyLabel={ui.reply}
         replyHref={resume.telegram}
         likeLabel={ui.like}
@@ -206,7 +206,7 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
         linkText={ui.backToResume}
         linkHref={resumeRouteHrefs.home}
         entries={resume.experience}
-        avatarSrc={resume.photos.avatarIcon}
+        avatarSrc={resume.photos.avatar}
         replyLabel={ui.reply}
         replyHref={resume.telegram}
         likeLabel={ui.like}
@@ -330,7 +330,6 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
               name={resume.user.name}
               status={resume.user.profileStatus}
               avatarSrc={resume.photos.avatar}
-              avatarFullSrc={resume.photos.avatarFull}
               writeMessageHref={resume.telegram}
               writeMessageLabel={ui.writeMessage}
             />

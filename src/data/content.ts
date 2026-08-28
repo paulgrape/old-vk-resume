@@ -46,8 +46,6 @@ export type ResumeJson = typeof enResume
 
 export type SitePhotos = {
   avatar: string
-  avatarFull: string
-  avatarIcon: string
 }
 
 export const siteConfig: SiteConfig = site
@@ -59,6 +57,4 @@ export const resumeByLocale: Record<Locale, ResumeJson> = {
 
 export const sitePhotos: SitePhotos = {
   avatar: photoUrl(site.photos.avatar),
-  avatarFull: photoUrl(site.photos.avatarFull),
-  avatarIcon: photoUrl(site.photos.avatarIcon),
 }

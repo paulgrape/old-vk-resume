@@ -7,7 +7,6 @@ type ResumePhotoPanelProps = {
   name: string
   status?: string
   avatarSrc: string
-  avatarFullSrc: string
   writeMessageHref: string
   writeMessageLabel: string
 }
@@ -16,7 +15,6 @@ export function ResumePhotoPanel({
   name,
   status,
   avatarSrc,
-  avatarFullSrc,
   writeMessageHref,
   writeMessageLabel,
 }: ResumePhotoPanelProps) {
@@ -32,8 +30,10 @@ export function ResumePhotoPanel({
         >
           <img
             src={avatarSrc}
+            srcSet={`${avatarSrc} 500w`}
+            sizes='(max-width: 790px) 120px, 200px'
             alt={name}
-            className='w-[200px] h-[200px] object-cover max-vk:size-[120px]'
+            className='w-[200px] h-[200px] object-cover [image-rendering:high-quality] max-vk:size-[120px]'
           />
         </button>
 
@@ -53,7 +53,7 @@ export function ResumePhotoPanel({
         <PhotoViewer
           photos={[
             {
-              src: avatarFullSrc,
+              src: avatarSrc,
               alt: name,
               authorName: name,
               authorAvatar: avatarSrc,

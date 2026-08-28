@@ -1,6 +1,6 @@
-import avatar from '@/assets/avatar-icon.jpg'
 import { PhotoTile } from '@/components/atoms/PhotoTile/PhotoTile'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
+import { sitePhotos } from '@/data/content'
 import type { WallPost as WallPostData } from '@/data/profile'
 
 type WallPostProps = {
@@ -11,8 +11,10 @@ export function WallPost({ post }: WallPostProps) {
   return (
     <article className='flex gap-2.5 pr-3 pt-2.5 pb-2 border-b border-vk-border-light'>
       <img
-        src={avatar}
+        src={sitePhotos.avatar}
         alt={post.author}
+        width={45}
+        height={45}
         className='size-[45px] object-cover'
       />
       <div className='flex-1 min-w-0'>

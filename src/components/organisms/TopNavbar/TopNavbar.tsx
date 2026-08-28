@@ -1,4 +1,4 @@
-import headerBg from '@/assets/xhead2.gif'
+import headerBg from '@/assets/vk-header-bg.gif'
 import { LocaleSwitch } from '@/components/atoms/LocaleSwitch/LocaleSwitch'
 import { NavLink } from '@/components/atoms/NavLink/NavLink'
 import { SearchInput } from '@/components/atoms/SearchInput/SearchInput'

@@ -11,13 +11,13 @@ content/
   site.json          # contacts, socials, photo filenames
   en.json            # English resume copy
   ru.json            # Russian resume copy
-  photos/            # avatar.jpg, avatar-full.jpg, avatar-icon.jpg
+  photos/            # avatar-full.jpg
   icons/             # optional logos for jobs and projects
 ```
 
 1. Edit `content/site.json` (email and profile links).
 2. Edit `content/en.json` and `content/ru.json` (name, stats, jobs, projects).
-3. Drop three photos into `content/photos/` using the filenames from `site.json`.
+3. Drop one full-size avatar into `content/photos/` using the filename from `site.json`.
 4. `npm i && npm run dev`
 
 UI strings (Search, Like, route titles) stay in `src/locales/`.
@@ -37,9 +37,7 @@ Omit any you do not use. `photos` maps filenames in `content/photos/`:
   "github": "https://github.com/you",
   "linkedin": "https://www.linkedin.com/in/you",
   "photos": {
-    "avatar": "avatar.jpg",
-    "avatarFull": "avatar-full.jpg",
-    "avatarIcon": "avatar-icon.jpg"
+    "avatar": "avatar-full.jpg"
   }
 }
 ```
@@ -48,9 +46,7 @@ Omit any you do not use. `photos` maps filenames in `content/photos/`:
 
 | File | Used for |
 | --- | --- |
-| `avatar` | 200px profile column |
-| `avatarFull` | full-size photo viewer |
-| `avatarIcon` | experience-row fallback when a job has no `logo` |
+| `avatar` | One full-size photo. Shown at 200px in the profile column (`object-cover`), in the photo viewer, and as the 45px fallback when a job has no `logo`. |
 
 ### `icons/`
 

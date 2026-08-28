@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import avatar from '@/assets/avatar-small.jpg'
-import avatarFull from '@/assets/avatar-full.jpg'
 import { Divider } from '@/components/atoms/Divider/Divider'
 import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { FriendCard } from '@/components/molecules/FriendCard/FriendCard'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import { StatRow } from '@/components/molecules/StatRow/StatRow'
 import { PhotoViewer } from '@/components/organisms/PhotoViewer/PhotoViewer'
+import { sitePhotos } from '@/data/content'
 import type { ProfileStat } from '@/data/profile'
 
 type FriendsSectionData = {
@@ -40,9 +39,11 @@ export function ProfilePhotoPanel({
         onClick={() => setPhotoOpen(true)}
       >
         <img
-          src={avatar}
+          src={sitePhotos.avatar}
+          srcSet={`${sitePhotos.avatar} 500w`}
+          sizes='(max-width: 790px) 100vw, 200px'
           alt={name}
-          className='w-[200px] h-[200px] object-cover max-vk:w-full max-vk:h-auto max-vk:aspect-square'
+          className='w-[200px] h-[200px] object-cover [image-rendering:high-quality] max-vk:w-full max-vk:h-auto max-vk:aspect-square'
         />
       </button>
 
@@ -50,10 +51,10 @@ export function ProfilePhotoPanel({
         <PhotoViewer
           photos={[
             {
-              src: avatarFull,
+              src: sitePhotos.avatar,
               alt: name,
               authorName: name,
-              authorAvatar: avatar,
+              authorAvatar: sitePhotos.avatar,
             },
           ]}
           index={0}
