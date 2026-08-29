@@ -1,0 +1,9 @@
+{
+  "email": "hello@example.com",
+  "telegram": "https://t.me/example",
+  "github": "https://github.com/example",
+  "linkedin": "https://www.linkedin.com/in/example",
+  "photos": {
+    "avatar": "placeholder.svg"
+  }
+}

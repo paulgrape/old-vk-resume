@@ -1,0 +1,144 @@
+{
+  "user": {
+    "name": "Алекс Сэмпл",
+    "titlebarSubtitle": "(frontend developer)",
+    "status": "онлайн",
+    "profileStatus": "Замените этот пример на свой content/",
+    "specialization": "Frontend"
+  },
+  "cv": {
+    "title": "Frontend Developer",
+    "location": "Удалённо",
+    "summary": "Образец резюме из шаблона. Замените content/en.json, content/ru.json и content/site.json на свои данные. Собака в стиле старого VK — заглушка аватара.",
+    "languages": ["Английский - свободный", "Русский - свободный"],
+    "education": [
+      {
+        "degree": "Бакалавр, информатика",
+        "institution": "Example University",
+        "period": "2016 - 2020"
+      }
+    ],
+    "sections": {
+      "summary": "О себе",
+      "skills": "Технические навыки",
+      "experience": "Опыт работы",
+      "projects": "Избранные проекты",
+      "stack": "Стек",
+      "education": "Образование",
+      "languages": "Языки"
+    },
+    "updated": "2026-08"
+  },
+  "topNavLinks": [
+    { "id": "experience", "label": "опыт" },
+    { "id": "projects", "label": "проекты" },
+    { "id": "stack", "label": "стек" },
+    { "id": "contacts", "label": "контакты" },
+    { "id": "github", "label": "github" },
+    { "id": "linkedin", "label": "linkedin" }
+  ],
+  "sidebarNavItems": [
+    { "id": "home", "label": "Моя Страница" },
+    { "id": "experience", "label": "Мой Опыт" },
+    { "id": "projects", "label": "Мои Проекты" },
+    { "id": "stack", "label": "Мои Навыки" },
+    { "id": "achievements", "label": "Мои Достижения" },
+    { "id": "contacts", "label": "Мои Контакты" },
+    { "id": "downloadCv", "label": "Скачать CV" }
+  ],
+  "appMenuItems": [
+    { "label": "Open to work", "badge": "remote" },
+    { "label": "English", "badge": "Fluent" }
+  ],
+  "fields": [
+    {
+      "label": "Город:",
+      "value": "Удалённо",
+      "link": false
+    },
+    {
+      "label": "Опыт:",
+      "value": "Frontend, UI, delivery",
+      "link": false
+    },
+    {
+      "label": "Основной стек:",
+      "value": "React, TypeScript, Vite",
+      "link": false
+    },
+    {
+      "label": "Языки:",
+      "value": "English, Русский",
+      "link": false
+    }
+  ],
+  "skillGroups": [
+    {
+      "title": "Frontend",
+      "items": ["React", "TypeScript", "Vite"]
+    },
+    {
+      "title": "Tooling",
+      "items": ["Vitest", "Playwright", "Docker"]
+    }
+  ],
+  "projectsSection": {
+    "title": "Избранное",
+    "count": "1 проект",
+    "linkText": "подробнее"
+  },
+  "projects": [
+    {
+      "title": "Пример проекта",
+      "description": "Заглушка, чтобы шаблон что-то показал. Замените запись на свою работу.",
+      "features": [
+        "Правите content/en.json и content/ru.json",
+        "Необязательные demoHref и screenshots",
+        "Необязательная иконка в content/icons/"
+      ],
+      "stack": ["React", "TypeScript", "Vite"],
+      "metric": "шаблон",
+      "href": "https://github.com/example"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Example University '20",
+      "major": "Информатика",
+      "status": "Бакалавр"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "Собрали образец сайта",
+      "description": "Эта строка нужна, чтобы страница достижений была видна. Удалите или замените.",
+      "year": "2026"
+    }
+  ],
+  "experienceSection": {
+    "title": "Опыт работы",
+    "count": "карьерный путь",
+    "linkText": "подробнее"
+  },
+  "experience": [
+    {
+      "company": "Example Studio",
+      "role": "Frontend Developer",
+      "period": "2022 - наст.вр.",
+      "summary": "Заглушка роли. Замените блок на настоящую работу.",
+      "highlights": [
+        "Опишите результат, за который отвечали.",
+        "Добавьте второй пункт, если нужно."
+      ],
+      "stack": ["React", "TypeScript", "Vite"]
+    }
+  ],
+  "footerLinks": [
+    { "id": "github", "label": "GitHub" },
+    { "id": "linkedin", "label": "LinkedIn" },
+    { "id": "telegram", "label": "Telegram" },
+    { "id": "email", "label": "Email" },
+    { "id": "downloadCv", "label": "PDF CV" }
+  ],
+  "footerCopyright": "© 2026, Алекс Сэмпл"
+}

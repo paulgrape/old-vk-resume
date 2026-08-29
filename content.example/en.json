@@ -1,0 +1,144 @@
+{
+  "user": {
+    "name": "Alex Sample",
+    "titlebarSubtitle": "(frontend developer)",
+    "status": "online",
+    "profileStatus": "Replace this sample with your own content/",
+    "specialization": "Frontend"
+  },
+  "cv": {
+    "title": "Frontend Developer",
+    "location": "Remote",
+    "summary": "Sample resume shipped with this template. Replace content/en.json, content/ru.json, and content/site.json with your own details. The old-VK dog avatar is a placeholder.",
+    "languages": ["English - Fluent", "Russian - Fluent"],
+    "education": [
+      {
+        "degree": "BSc, Computer Science",
+        "institution": "Example University",
+        "period": "2016 - 2020"
+      }
+    ],
+    "sections": {
+      "summary": "Professional Summary",
+      "skills": "Technical Skills",
+      "experience": "Professional Experience",
+      "projects": "Selected Projects",
+      "stack": "Stack",
+      "education": "Education",
+      "languages": "Languages"
+    },
+    "updated": "2026-08"
+  },
+  "topNavLinks": [
+    { "id": "experience", "label": "experience" },
+    { "id": "projects", "label": "projects" },
+    { "id": "stack", "label": "stack" },
+    { "id": "contacts", "label": "contacts" },
+    { "id": "github", "label": "github" },
+    { "id": "linkedin", "label": "linkedin" }
+  ],
+  "sidebarNavItems": [
+    { "id": "home", "label": "My Page" },
+    { "id": "experience", "label": "My Experience" },
+    { "id": "projects", "label": "My Projects" },
+    { "id": "stack", "label": "My Skills" },
+    { "id": "achievements", "label": "My Achievements" },
+    { "id": "contacts", "label": "My Contacts" },
+    { "id": "downloadCv", "label": "Download CV" }
+  ],
+  "appMenuItems": [
+    { "label": "Open to work", "badge": "remote" },
+    { "label": "English", "badge": "Fluent" }
+  ],
+  "fields": [
+    {
+      "label": "Location:",
+      "value": "Remote",
+      "link": false
+    },
+    {
+      "label": "Experience:",
+      "value": "Frontend, UI, delivery",
+      "link": false
+    },
+    {
+      "label": "Core stack:",
+      "value": "React, TypeScript, Vite",
+      "link": false
+    },
+    {
+      "label": "Languages:",
+      "value": "English, Russian",
+      "link": false
+    }
+  ],
+  "skillGroups": [
+    {
+      "title": "Frontend",
+      "items": ["React", "TypeScript", "Vite"]
+    },
+    {
+      "title": "Tooling",
+      "items": ["Vitest", "Playwright", "Docker"]
+    }
+  ],
+  "projectsSection": {
+    "title": "Featured Projects",
+    "count": "1 project",
+    "linkText": "details"
+  },
+  "projects": [
+    {
+      "title": "Sample project",
+      "description": "A placeholder project so the template has something to render. Replace this entry with your own work.",
+      "features": [
+        "Edit content/en.json and content/ru.json",
+        "Optional demoHref and screenshots",
+        "Optional icon file under content/icons/"
+      ],
+      "stack": ["React", "TypeScript", "Vite"],
+      "metric": "template",
+      "href": "https://github.com/example"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Example University '20",
+      "major": "Computer Science",
+      "status": "Bachelor's"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "Shipped a sample site",
+      "description": "This row exists so the Achievements page is visible. Remove or replace it.",
+      "year": "2026"
+    }
+  ],
+  "experienceSection": {
+    "title": "Experience",
+    "count": "career timeline",
+    "linkText": "details"
+  },
+  "experience": [
+    {
+      "company": "Example Studio",
+      "role": "Frontend Developer",
+      "period": "2022 - Present",
+      "summary": "Placeholder role. Replace this block with a real job.",
+      "highlights": [
+        "Describe a result you owned.",
+        "Add a second highlight if you want."
+      ],
+      "stack": ["React", "TypeScript", "Vite"]
+    }
+  ],
+  "footerLinks": [
+    { "id": "github", "label": "GitHub" },
+    { "id": "linkedin", "label": "LinkedIn" },
+    { "id": "telegram", "label": "Telegram" },
+    { "id": "email", "label": "Email" },
+    { "id": "downloadCv", "label": "PDF CV" }
+  ],
+  "footerCopyright": "© 2026, Alex Sample"
+}

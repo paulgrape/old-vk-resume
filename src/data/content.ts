@@ -3,7 +3,7 @@ import ruResume from '@content/ru.json'
 import site from '@content/site.json'
 import type { Locale } from '@/i18n/locales'
 
-const photoModules = import.meta.glob('../../content/photos/*.{jpg,jpeg,png,webp,gif}', {
+const photoModules = import.meta.glob('../../content/photos/*.{jpg,jpeg,png,webp,gif,svg}', {
   eager: true,
   query: '?url',
   import: 'default',
@@ -30,7 +30,9 @@ function photoUrl(filename: string): string {
   const url = urlFromModules(photoModules, filename)
 
   if (!url) {
-    throw new Error(`Missing content/photos/${filename}`)
+    throw new Error(
+      `Missing content/photos/${filename}. Run npm run setup to copy content.example/, or add the file.`,
+    )
   }
 
   return url

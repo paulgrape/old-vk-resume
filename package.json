@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "setup": "tsx --tsconfig tsconfig.node.json scripts/ensure-content.ts",
+    "predev": "npm run setup",
+    "precv": "npm run setup",
+    "prebuild": "npm run setup",
     "dev": "vite",
     "cv": "tsx --tsconfig tsconfig.node.json scripts/build-cv.tsx",
     "build": "npm run cv && tsc -b && vite build",
@@ -30,6 +34,7 @@
     "tsx": "^4.23.12",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "vite-imagetools": "^12.0.1"
   }
 }
