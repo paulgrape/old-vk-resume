@@ -7,7 +7,7 @@ type ResumePhotoPanelProps = {
   name: string
   status?: string
   avatarSrc: string
-  writeMessageHref: string
+  writeMessageHref?: string
   writeMessageLabel: string
 }
 
@@ -66,16 +66,19 @@ export function ResumePhotoPanel({
 
       <Divider className='my-2' />
 
-      <VkLink
-        href={writeMessageHref}
-        target='_blank'
-        rel='noopener noreferrer'
-        className='flex items-center gap-1.5 max-vk:px-2'
-      >
-        {writeMessageLabel}
-      </VkLink>
-
-      <Divider className='my-2' />
+      {writeMessageHref ? (
+        <>
+          <VkLink
+            href={writeMessageHref}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='flex items-center gap-1.5 max-vk:px-2'
+          >
+            {writeMessageLabel}
+          </VkLink>
+          <Divider className='my-2' />
+        </>
+      ) : null}
     </div>
   )
 }

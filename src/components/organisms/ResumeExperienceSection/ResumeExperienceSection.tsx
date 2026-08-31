@@ -13,7 +13,7 @@ type ResumeExperienceSectionProps = {
   entries: ExperienceEntry[]
   avatarSrc: string
   replyLabel: string
-  replyHref: string
+  replyHref?: string
   likeLabel: string
   linkHref?: string
   variant?: ExperienceVariant
@@ -23,7 +23,7 @@ type ExperienceCardProps = {
   entry: ExperienceEntry
   avatarSrc: string
   replyLabel: string
-  replyHref: string
+  replyHref?: string
   likeLabel: string
   variant: ExperienceVariant
 }
@@ -95,7 +95,7 @@ function ExperienceCard({
           </div>
         )}
         <div className='flex items-center gap-4 mt-2 text-[12px] text-vk-muted'>
-          <VkLink href={replyHref}>{replyLabel}</VkLink>
+          {replyHref ? <VkLink href={replyHref}>{replyLabel}</VkLink> : null}
           <LikeControl
             likeLabel={likeLabel}
             count={likes}

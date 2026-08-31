@@ -5,7 +5,7 @@ import type { EducationEntry } from '@/data/resume'
 type ProfileInfoPanelProps = {
   name: string
   status: string
-  education: EducationEntry[] | string
+  education: EducationEntry[]
   fields: ProfileField[]
 }
 
@@ -15,8 +15,7 @@ export function ProfileInfoPanel({
   education,
   fields,
 }: ProfileInfoPanelProps) {
-  const educationLabel =
-    typeof education === 'string' ? education : education[0]?.institution
+  const educationLabel = education[0]?.institution
 
   return (
     <div className='pt-3 pb-2 border-b border-vk-border'>

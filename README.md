@@ -44,8 +44,8 @@ Omit any you do not use. `photos` maps filenames in `content/photos/`:
 
 ### `photos/`
 
-| File     | Used for                                                                                                                                            |
-| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| File     | Used for                                                                                                                                                                                                                                   |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `avatar` | One photo (`jpg`, `jpeg`, `png`, `webp`, `gif`, or `svg`). Shown at 200px in the profile column (`object-cover`), in the photo viewer, and as the 45px fallback when a job has no `logo`. The sample ships `placeholder.svg` (old-VK dog). |
 
 ### `icons/`
@@ -102,7 +102,7 @@ Keep a matching `{ "id": "achievements", "label": "…" }` row in `sidebarNavIte
 ### What not to put in `content/`
 
 - Search, Like, and route titles — `src/locales/`
-- Generated PDFs — `npm run cv` writes them to `public/cv/`
+- Generated PDFs — `npm run cv` writes them to `public/cv/`. Filenames come from the English `user.name` plus locale (`John_Pork_EN.pdf`).
 
 ## Fresh clone
 

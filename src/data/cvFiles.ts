@@ -1,4 +1,4 @@
-import type { Locale } from '@/i18n/locales'
+import { locales, type Locale } from '@/i18n/locales'
 
 export type CvFile = {
   locale: Locale
@@ -8,20 +8,44 @@ export type CvFile = {
 
 export const cvOutputDir = 'cv'
 
-export const cvFileNames: Record<Locale, string> = {
-  en: 'Pavel_Vinogradov_Frontend_Developer_EN.pdf',
-  ru: 'Pavel_Vinogradov_Frontend_Developer_RU.pdf',
+export function slugifyPersonName(name: string): string {
+  const slug = name
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^A-Za-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '')
+
+  return slug || 'Resume'
 }
 
-export const cvFiles: Record<Locale, CvFile> = {
-  en: {
-    locale: 'en',
-    fileName: cvFileNames.en,
-    href: `/${cvOutputDir}/${cvFileNames.en}`,
-  },
-  ru: {
-    locale: 'ru',
-    fileName: cvFileNames.ru,
-    href: `/${cvOutputDir}/${cvFileNames.ru}`,
-  },
+export function cvFileName(name: string, locale: Locale): string {
+  return `${slugifyPersonName(name)}_${locale.toUpperCase()}.pdf`
+}
+
+function publicBaseUrl(): string {
+  const env = (import.meta as { env?: { BASE_URL?: string } }).env
+  const base = env?.BASE_URL
+  const prefix = typeof base === 'string' && base.length > 0 ? base : '/'
+
+  return prefix.endsWith('/') ? prefix : `${prefix}/`
+}
+
+export function cvFileHref(fileName: string): string {
+  return `${publicBaseUrl()}${cvOutputDir}/${fileName}`
+}
+
+export function cvFileFor(name: string, locale: Locale): CvFile {
+  const fileName = cvFileName(name, locale)
+
+  return {
+    locale,
+    fileName,
+    href: cvFileHref(fileName),
+  }
+}
+
+export function cvFilesFor(name: string): Record<Locale, CvFile> {
+  return Object.fromEntries(
+    locales.map(locale => [locale, cvFileFor(name, locale)]),
+  ) as Record<Locale, CvFile>
 }

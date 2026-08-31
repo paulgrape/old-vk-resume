@@ -11,7 +11,7 @@ import {
   View,
   renderToFile,
 } from '@react-pdf/renderer'
-import { cvFileNames, cvOutputDir } from '../src/data/cvFiles.ts'
+import { cvFileName, cvOutputDir } from '../src/data/cvFiles.ts'
 import type { Locale } from '../src/i18n/locales.ts'
 import type { ReactNode } from 'react'
 
@@ -72,11 +72,11 @@ type ResumeJson = {
 }
 
 type SiteJson = {
-  email: string
-  phone: string
-  telegram: string
-  github: string
-  linkedin: string
+  email?: string
+  phone?: string
+  telegram?: string
+  github?: string
+  linkedin?: string
 }
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -186,8 +186,33 @@ function telegramHandle(url: string): string {
   return handle.startsWith('@') ? handle : `@${handle}`
 }
 
+function telegramHref(raw: string): string {
+  if (raw.startsWith('http://') || raw.startsWith('https://')) {
+    return raw
+  }
+
+  return `https://t.me/${raw.replace(/^@/, '')}`
+}
+
 function bareUrl(url: string): string {
   return url.replace(/^https?:\/\//, '').replace(/\/+$/, '')
+}
+
+function joinParts(parts: ReactNode[]): ReactNode[] {
+  return parts.flatMap((part, index) => {
+    const node = (
+      <Text key={`part-${index}`}>
+        {part}
+      </Text>
+    )
+
+    return index === 0
+      ? [node]
+      : [
+          <Text key={`sep-${index}`}>{'  |  '}</Text>,
+          node,
+        ]
+  })
 }
 
 function Section({
@@ -229,43 +254,58 @@ function CvDocument({ resume }: { resume: ResumeJson }) {
           <Text style={styles.name}>{resume.user.name}</Text>
           <Text style={styles.title}>{cv.title}</Text>
           <Text style={styles.contactLine}>
-            {`${cv.location}  |  `}
-            <Link
-              src={telHref(site.phone)}
-              style={styles.link}
-            >
-              {site.phone}
-            </Link>
-            {'  |  '}
-            <Link
-              src={`mailto:${site.email}`}
-              style={styles.link}
-            >
-              {site.email}
-            </Link>
-            {'  |  '}
-            <Link
-              src={site.telegram}
-              style={styles.link}
-            >
-              {telegramHandle(site.telegram)}
-            </Link>
+            {joinParts([
+              cv.location,
+              site.phone ? (
+                <Link
+                  src={telHref(site.phone)}
+                  style={styles.link}
+                >
+                  {site.phone}
+                </Link>
+              ) : null,
+              site.email ? (
+                <Link
+                  src={`mailto:${site.email}`}
+                  style={styles.link}
+                >
+                  {site.email}
+                </Link>
+              ) : null,
+              site.telegram ? (
+                <Link
+                  src={telegramHref(site.telegram)}
+                  style={styles.link}
+                >
+                  {telegramHandle(site.telegram)}
+                </Link>
+              ) : null,
+            ].filter(part => part != null))}
           </Text>
-          <Text style={styles.contactLine}>
-            <Link
-              src={site.github}
-              style={styles.link}
-            >
-              {bareUrl(site.github)}
-            </Link>
-            {'  |  '}
-            <Link
-              src={site.linkedin}
-              style={styles.link}
-            >
-              {bareUrl(site.linkedin)}
-            </Link>
-          </Text>
+          {site.github || site.linkedin ? (
+            <Text style={styles.contactLine}>
+              {joinParts(
+                [
+                  site.github ? (
+                    <Link
+                      src={site.github}
+                      style={styles.link}
+                    >
+                      {bareUrl(site.github)}
+                    </Link>
+                  ) : null,
+                  site.linkedin ? (
+                    <Link
+                      src={site.linkedin}
+                      style={styles.link}
+                    >
+                      {bareUrl(site.linkedin)}
+                    </Link>
+                  ) : null,
+                ].filter(part => part != null),
+              )}
+            </Text>
+          ) : null}
         </View>
 
         <Section title={cv.sections.summary}>
@@ -367,7 +407,10 @@ function CvDocument({ resume }: { resume: ResumeJson }) {
 }
 
 async function buildCv(locale: Locale): Promise<void> {
-  const outPath = path.join(outDir, cvFileNames[locale])
+  const outPath = path.join(
+    outDir,
+    cvFileName(resumeByLocale.en.user.name, locale),
+  )
 
   await renderToFile(<CvDocument resume={resumeByLocale[locale]} />, outPath)
 

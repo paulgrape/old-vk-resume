@@ -1,5 +1,5 @@
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
-import { cvFiles, type CvFile } from '@/data/cvFiles'
+import { cvFilesFor, type CvFile } from '@/data/cvFiles'
 import { interpolate } from '@/i18n/interpolate'
 import { locales, type Locale, type LocaleMessages } from '@/i18n/locales'
 
@@ -10,6 +10,7 @@ type DownloadCvSectionProps = {
   count?: string
   description?: string
   locale: Locale
+  personName: string
   labels: DownloadCvLabels
 }
 
@@ -45,11 +46,13 @@ export function DownloadCvSection({
   count,
   description,
   locale,
+  personName,
   labels,
 }: DownloadCvSectionProps) {
+  const filesByLocale = cvFilesFor(personName)
   const files = [
-    cvFiles[locale],
-    ...locales.filter(item => item !== locale).map(item => cvFiles[item]),
+    filesByLocale[locale],
+    ...locales.filter(item => item !== locale).map(item => filesByLocale[item]),
   ]
 
   return (

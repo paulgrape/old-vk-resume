@@ -10,6 +10,7 @@ import { skillIconUrls } from '@/data/skillIcons'
 import {
   contactIds,
   contactLogoUrls,
+  isContactId,
   type ContactId,
 } from '@/data/contactLogos'
 import {
@@ -96,9 +97,9 @@ export type ResumeContent = {
   experience: ExperienceEntry[]
   footerLinks: readonly FooterLink[]
   footerCopyright: string
-  email: string
-  phone: string
-  telegram: string
+  email?: string
+  phone?: string
+  telegram?: string
   contacts: readonly ContactEntry[]
   photos: SitePhotos
 }
@@ -195,21 +196,11 @@ function contactsFromSite(): ContactEntry[] {
   })
 }
 
-function getNavHref(id: string): string {
-  if (id === 'github') {
-    return siteConfig.github
-  }
+function getNavHref(id: string): string | undefined {
+  if (isContactId(id)) {
+    const raw = siteContactRaw(id)
 
-  if (id === 'linkedin') {
-    return siteConfig.linkedin
-  }
-
-  if (id === 'telegram') {
-    return siteConfig.telegram
-  }
-
-  if (id === 'email') {
-    return `mailto:${siteConfig.email}`
+    return raw ? contactHref(id, raw) : undefined
   }
 
   if (id in resumeRouteHrefs) {
@@ -217,6 +208,16 @@ function getNavHref(id: string): string {
   }
 
   return '#'
+}
+
+function hydrateNavItems(
+  items: readonly { id: string; label: string }[],
+): ResumeNavItem[] {
+  return items.flatMap(item => {
+    const href = getNavHref(item.id)
+
+    return href ? [{ label: item.label, href }] : []
+  })
 }
 
 function achievementsFromResume(resume: ResumeJson): AchievementEntry[] {
@@ -229,26 +230,17 @@ function achievementsFromResume(resume: ResumeJson): AchievementEntry[] {
 
 export function hydrateResume(resume: ResumeJson): ResumeContent {
   const achievements = achievementsFromResume(resume)
+  const telegramRaw = siteContactRaw('telegram')
 
   return {
     user: resume.user,
     cv: resume.cv,
-    topNavLinks: resume.topNavLinks.map(item => ({
-      label: item.label,
-      href: getNavHref(item.id),
-    })),
-    sidebarNavItems: resume.sidebarNavItems.flatMap(item => {
-      if (item.id === 'achievements' && achievements.length === 0) {
-        return []
-      }
-
-      return [
-        {
-          label: item.label,
-          href: getNavHref(item.id),
-        },
-      ]
-    }),
+    topNavLinks: hydrateNavItems(resume.topNavLinks),
+    sidebarNavItems: hydrateNavItems(
+      resume.sidebarNavItems.filter(
+        item => item.id !== 'achievements' || achievements.length > 0,
+      ),
+    ),
     appMenuItems: resume.appMenuItems,
     fields: resume.fields,
     skillGroups: resume.skillGroups.map(group => ({
@@ -292,14 +284,11 @@ export function hydrateResume(resume: ResumeJson): ResumeContent {
         logoSrc: logo ? iconUrl(logo) : undefined,
       }
     }),
-    footerLinks: resume.footerLinks.map(item => ({
-      label: item.label,
-      href: getNavHref(item.id),
-    })),
+    footerLinks: hydrateNavItems(resume.footerLinks),
     footerCopyright: resume.footerCopyright,
-    email: siteConfig.email,
-    phone: siteConfig.phone,
-    telegram: siteConfig.telegram,
+    email: siteContactRaw('email'),
+    phone: siteContactRaw('phone'),
+    telegram: telegramRaw ? contactHref('telegram', telegramRaw) : undefined,
     contacts: contactsFromSite(),
     photos: sitePhotos,
   }

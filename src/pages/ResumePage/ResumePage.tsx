@@ -42,29 +42,36 @@ type UiLabels = LocaleMessages['ui']
 
 function profileInfoFields(resume: ResumeContent, ui: UiLabels) {
   const [location, ...rest] = resume.fields
+  const contacts = []
 
-  return [
-    ...(location ? [location] : []),
-    {
+  if (resume.phone) {
+    contacts.push({
       label: ui.phone,
       value: resume.phone,
-      link: true,
+      link: true as const,
       href: telHref(resume.phone),
-    },
-    {
+    })
+  }
+
+  if (resume.email) {
+    contacts.push({
       label: ui.email,
       value: resume.email,
-      link: true,
+      link: true as const,
       href: `mailto:${resume.email}`,
-    },
-    {
+    })
+  }
+
+  if (resume.telegram) {
+    contacts.push({
       label: ui.telegram,
       value: telegramHandle(resume.telegram),
-      link: true,
+      link: true as const,
       href: resume.telegram,
-    },
-    ...rest,
-  ]
+    })
+  }
+
+  return [...(location ? [location] : []), ...contacts, ...rest]
 }
 
 type ResumePageProps = {
@@ -270,6 +277,7 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
         count={route.subtitle}
         description={route.description}
         locale={locale}
+        personName={resumeByLocale.en.user.name}
         labels={ui.downloadCv}
       />
     ),
