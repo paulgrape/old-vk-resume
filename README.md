@@ -112,7 +112,7 @@ Social preview images (`og:image`) work best as jpg/png. The sample dog is SVG, 
 
 ## Deploy
 
-Needs Node 20+ (`.nvmrc` pins 22). `npm run build` writes `dist/`.
+Needs Node 20+ (`.nvmrc` pins 24, `packageManager` is npm 11.6.2). `npm run build` writes `dist/`.
 
 **GitHub Pages (project site):** `.github/workflows/pages.yml` builds with `BASE_PATH=/<repo>/` so asset URLs work under `https://<user>.github.io/<repo>/`. In the repo: Settings → Pages → Source: GitHub Actions. For a user site (`username.github.io`), set Actions variable `BASE_PATH` to `/`.
 
