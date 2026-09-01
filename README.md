@@ -110,15 +110,30 @@ Keep a matching `{ "id": "achievements", "label": "…" }` row in `sidebarNavIte
 
 Social preview images (`og:image`) work best as jpg/png. The sample dog is SVG, so skip OG image until you add a raster photo.
 
-## Later: GitHub template
+## Deploy
 
-This repo can become a template. `content.example/` is the sample person. Mark the repo as a GitHub Template when ready. Forkers replace `content/` only.
+Needs Node 20+ (`.nvmrc` pins 22). `npm run build` writes `dist/`.
+
+**GitHub Pages (project site):** `.github/workflows/pages.yml` builds with `BASE_PATH=/<repo>/` so asset URLs work under `https://<user>.github.io/<repo>/`. In the repo: Settings → Pages → Source: GitHub Actions. For a user site (`username.github.io`), set Actions variable `BASE_PATH` to `/`.
+
+Local project-pages build:
+
+```
+BASE_PATH=/old-vk-resume/ npm run build
+```
+
+**Vercel / Netlify:** import the repo, output `dist/`. `vercel.json` and `public/_headers` set `X-Content-Type-Options`, `Referrer-Policy`, and a CSP that allows skill/contact icons from Simple Icons, jsDelivr, and GitHub user images, plus project screenshots from `raw.githubusercontent.com`. If you add other image hosts, update those files. GitHub Pages does not apply `_headers`; put the same headers on a CDN if you need them there.
+
+## GitHub template
+
+After the default branch is green, mark the repo as a Template (Settings → General → Template repository). Forkers replace `content/` only.
 
 ## Scripts
 
 ```
-npm run setup    # copy content.example/ → content/ if missing
-npm run dev      # local
-npm run cv       # PDF resume from content cv blocks
-npm run build    # dist/ for GitHub Pages
+npm run setup      # copy content.example/ → content/ if missing
+npm run dev        # local
+npm run cv         # PDF resume from content cv blocks
+npm run typecheck  # tsc -b
+npm run build      # dist/ (respects BASE_PATH)
 ```

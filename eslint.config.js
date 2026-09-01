@@ -18,6 +18,12 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      'react-refresh/only-export-components': [
+        'error',
+        { allowExportNames: ['useLocale'] },
+      ],
+    },
   },
   {
     files: ['scripts/**/*.{ts,tsx}'],
