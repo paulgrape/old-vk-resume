@@ -457,7 +457,10 @@ function CvDocument({
   )
 }
 
-async function writePdf(element: ReactNode, outPath: string): Promise<void> {
+async function writePdf(
+  element: Parameters<typeof renderToFile>[0],
+  outPath: string,
+): Promise<void> {
   const tmpPath = `${outPath}.tmp.pdf`
 
   await renderToFile(element, tmpPath)
