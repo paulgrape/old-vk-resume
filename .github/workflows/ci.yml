@@ -14,8 +14,6 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      - run: corepack enable
-      - run: corepack prepare npm@11.6.2 --activate
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
