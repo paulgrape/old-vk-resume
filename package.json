@@ -6,13 +6,16 @@
   "scripts": {
     "setup": "tsx --tsconfig tsconfig.node.json scripts/ensure-content.ts",
     "predev": "npm run setup",
-    "precv": "npm run setup",
+    "precv": "npm run setup && npm run validate-content",
     "prebuild": "npm run setup",
     "dev": "vite",
     "cv": "tsx --tsconfig tsconfig.node.json scripts/build-cv.tsx",
     "build": "npm run cv && tsc -b && vite build",
+    "prevalidate-content": "npm run setup",
+    "validate-content": "tsx --tsconfig tsconfig.node.json scripts/validate-content.ts",
     "pretypecheck": "npm run setup",
     "typecheck": "tsc -b",
+    "test": "vitest run",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -38,7 +41,9 @@
     "tsx": "^4.23.12",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "vitest": "^4.1.11",
+    "zod": "^4.5.4"
   },
   "engines": {
     "node": ">=20"

@@ -1,9 +1,10 @@
-import { mkdirSync, readFileSync } from 'node:fs'
+import { copyFileSync, mkdirSync, readFileSync, unlinkSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
   Document,
   Font,
+  Image,
   Link,
   Page,
   StyleSheet,
@@ -14,6 +15,7 @@ import {
 import { cvFileName, cvOutputDir } from '../src/data/cvFiles.ts'
 import type { Locale } from '../src/i18n/locales.ts'
 import type { ReactNode } from 'react'
+import { readPdfAvatar } from './pdfAvatar.ts'
 
 type CvEducationEntry = {
   degree: string
@@ -77,6 +79,7 @@ type SiteJson = {
   telegram?: string
   github?: string
   linkedin?: string
+  photos: { avatar: string }
 }
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -116,22 +119,41 @@ const styles = StyleSheet.create({
     paddingBottom: 34,
     paddingHorizontal: 38,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    objectFit: 'cover',
+    objectPosition: 'center',
+    marginRight: 14,
+  },
+  headerText: {
+    flexGrow: 1,
+    flexShrink: 1,
+  },
   name: {
     fontFamily: 'Roboto',
     fontSize: 19,
     fontWeight: 700,
     letterSpacing: 0.2,
+    lineHeight: 1.2,
   },
   title: {
     fontFamily: 'Roboto',
     fontSize: 11.5,
     fontWeight: 400,
-    marginTop: 5,
+    marginTop: 10,
+    lineHeight: 1.3,
   },
   contactLine: {
     fontFamily: 'Roboto',
     fontSize: 9,
-    marginTop: 4,
+    marginTop: 6,
+    lineHeight: 1.35,
     color: '#333333',
   },
   link: {
@@ -140,7 +162,7 @@ const styles = StyleSheet.create({
     textDecoration: 'none',
   },
   section: {
-    marginTop: 13,
+    marginTop: 14,
   },
   sectionTitle: {
     fontFamily: 'Roboto',
@@ -149,7 +171,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6,
     borderBottomWidth: 0.75,
     borderBottomColor: '#999999',
-    paddingBottom: 2,
+    paddingBottom: 3,
     marginBottom: 5,
   },
   entry: {
@@ -234,7 +256,77 @@ function Bullet({ children }: { children: string }) {
   return <Text style={styles.bullet}>{`\u2022  ${children}`}</Text>
 }
 
-function CvDocument({ resume }: { resume: ResumeJson }) {
+function Identity({ resume }: { resume: ResumeJson }) {
+  const { cv } = resume
+
+  return (
+    <View>
+      <Text style={styles.name}>{resume.user.name}</Text>
+      <Text style={styles.title}>{cv.title}</Text>
+      <Text style={styles.contactLine}>
+        {joinParts([
+          cv.location,
+          site.phone ? (
+            <Link
+              src={telHref(site.phone)}
+              style={styles.link}
+            >
+              {site.phone}
+            </Link>
+          ) : null,
+          site.email ? (
+            <Link
+              src={`mailto:${site.email}`}
+              style={styles.link}
+            >
+              {site.email}
+            </Link>
+          ) : null,
+          site.telegram ? (
+            <Link
+              src={telegramHref(site.telegram)}
+              style={styles.link}
+            >
+              {telegramHandle(site.telegram)}
+            </Link>
+          ) : null,
+        ].filter(part => part != null))}
+      </Text>
+      {site.github || site.linkedin ? (
+        <Text style={styles.contactLine}>
+          {joinParts(
+            [
+              site.github ? (
+                <Link
+                  src={site.github}
+                  style={styles.link}
+                >
+                  {bareUrl(site.github)}
+                </Link>
+              ) : null,
+              site.linkedin ? (
+                <Link
+                  src={site.linkedin}
+                  style={styles.link}
+                >
+                  {bareUrl(site.linkedin)}
+                </Link>
+              ) : null,
+            ].filter(part => part != null),
+          )}
+        </Text>
+      ) : null}
+    </View>
+  )
+}
+
+function CvDocument({
+  resume,
+  avatar,
+}: {
+  resume: ResumeJson
+  avatar: Buffer | null
+}) {
   const { cv } = resume
   const stackLabel = cv.sections.stack
 
@@ -250,63 +342,22 @@ function CvDocument({ resume }: { resume: ResumeJson }) {
         size='A4'
         style={styles.page}
       >
-        <View>
-          <Text style={styles.name}>{resume.user.name}</Text>
-          <Text style={styles.title}>{cv.title}</Text>
-          <Text style={styles.contactLine}>
-            {joinParts([
-              cv.location,
-              site.phone ? (
-                <Link
-                  src={telHref(site.phone)}
-                  style={styles.link}
-                >
-                  {site.phone}
-                </Link>
-              ) : null,
-              site.email ? (
-                <Link
-                  src={`mailto:${site.email}`}
-                  style={styles.link}
-                >
-                  {site.email}
-                </Link>
-              ) : null,
-              site.telegram ? (
-                <Link
-                  src={telegramHref(site.telegram)}
-                  style={styles.link}
-                >
-                  {telegramHandle(site.telegram)}
-                </Link>
-              ) : null,
-            ].filter(part => part != null))}
-          </Text>
-          {site.github || site.linkedin ? (
-            <Text style={styles.contactLine}>
-              {joinParts(
-                [
-                  site.github ? (
-                    <Link
-                      src={site.github}
-                      style={styles.link}
-                    >
-                      {bareUrl(site.github)}
-                    </Link>
-                  ) : null,
-                  site.linkedin ? (
-                    <Link
-                      src={site.linkedin}
-                      style={styles.link}
-                    >
-                      {bareUrl(site.linkedin)}
-                    </Link>
-                  ) : null,
-                ].filter(part => part != null),
-              )}
-            </Text>
-          ) : null}
-        </View>
+        {avatar ? (
+          <View
+            style={styles.header}
+            wrap={false}
+          >
+            <Image
+              src={avatar}
+              style={styles.avatar}
+            />
+            <View style={styles.headerText}>
+              <Identity resume={resume} />
+            </View>
+          </View>
+        ) : (
+          <Identity resume={resume} />
+        )}
 
         <Section title={cv.sections.summary}>
           <Text>{cv.summary}</Text>
@@ -406,19 +457,63 @@ function CvDocument({ resume }: { resume: ResumeJson }) {
   )
 }
 
-async function buildCv(locale: Locale): Promise<void> {
+async function writePdf(element: ReactNode, outPath: string): Promise<void> {
+  const tmpPath = `${outPath}.tmp.pdf`
+
+  await renderToFile(element, tmpPath)
+
+  try {
+    copyFileSync(tmpPath, outPath)
+    console.log(`built ${path.relative(rootDir, outPath)}`)
+  } catch (error) {
+    const code =
+      error && typeof error === 'object' && 'code' in error
+        ? String(error.code)
+        : ''
+
+    if (code === 'EBUSY' || code === 'EPERM') {
+      const fallback = outPath.replace(/\.pdf$/i, '.new.pdf')
+      copyFileSync(tmpPath, fallback)
+      console.warn(
+        `could not overwrite ${path.relative(rootDir, outPath)} (file is open); wrote ${path.relative(rootDir, fallback)}`,
+      )
+    } else {
+      throw error
+    }
+  } finally {
+    try {
+      unlinkSync(tmpPath)
+    } catch {
+      // ignore
+    }
+  }
+}
+
+async function buildCv(locale: Locale, avatar: Buffer | null): Promise<void> {
   const outPath = path.join(
     outDir,
     cvFileName(resumeByLocale.en.user.name, locale),
   )
 
-  await renderToFile(<CvDocument resume={resumeByLocale[locale]} />, outPath)
+  await writePdf(
+    <CvDocument
+      resume={resumeByLocale[locale]}
+      avatar={avatar}
+    />,
+    outPath,
+  )
+}
 
-  console.log(`built ${path.relative(rootDir, outPath)}`)
+const avatar = readPdfAvatar(contentDir, site.photos.avatar)
+
+if (!avatar) {
+  console.warn(
+    `CV avatar skipped: photos/${site.photos.avatar} is not jpg/jpeg/png/svg (formats react-pdf can embed).`,
+  )
 }
 
 mkdirSync(outDir, { recursive: true })
 
 for (const locale of Object.keys(resumeByLocale) as Locale[]) {
-  await buildCv(locale)
+  await buildCv(locale, avatar)
 }

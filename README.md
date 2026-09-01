@@ -46,7 +46,7 @@ Omit any you do not use. `photos` maps filenames in `content/photos/`:
 
 | File     | Used for                                                                                                                                                                                                                                   |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `avatar` | One photo (`jpg`, `jpeg`, `png`, `webp`, `gif`, or `svg`). Shown at 200px in the profile column (`object-cover`), in the photo viewer, and as the 45px fallback when a job has no `logo`. The sample ships `placeholder.svg` (old-VK dog). |
+| `avatar` | One photo (`jpg`, `jpeg`, `png`, `webp`, `gif`, or `svg`). Shown at 200px in the profile column (`object-cover`), in the photo viewer, as the 45px fallback when a job has no `logo`, and on the PDF resume (`npm run cv`) as an 80pt square next to the name. The PDF embed supports `jpg`/`jpeg`/`png`/`svg`; `webp`/`gif` stay site-only. The sample ships `placeholder.svg` (old-VK dog). |
 
 ### `icons/`
 
@@ -59,7 +59,7 @@ Skill names that already have CDN icons in the app need no files.
 
 ### `en.json` / `ru.json`
 
-Keep both locales in sync. Required blocks:
+Keep both locales in sync. `npm run validate-content` (also `npm run cv` / `npm run build`) checks the Zod schema, EN/RU keys and list lengths, and that the avatar and Roboto fonts exist. Required blocks:
 
 | Block                              | Used for                        |
 | ---------------------------------- | ------------------------------- |
@@ -131,9 +131,11 @@ After the default branch is green, mark the repo as a Template (Settings → Gen
 ## Scripts
 
 ```
-npm run setup      # copy content.example/ → content/ if missing
-npm run dev        # local
-npm run cv         # PDF resume from content cv blocks
-npm run typecheck  # setup then tsc -b
-npm run build      # dist/ (respects BASE_PATH)
+npm run setup             # copy content.example/ → content/ if missing
+npm run validate-content  # Zod-check site/en/ru.json, locale parity, avatar and fonts
+npm run dev               # local
+npm run cv                # validate content, then PDF resume
+npm run typecheck         # setup then tsc -b
+npm run test              # Vitest (content.example schemas)
+npm run build             # dist/ (respects BASE_PATH)
 ```

@@ -26,7 +26,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['scripts/**/*.{ts,tsx}'],
+    files: ['scripts/**/*.{ts,tsx}', 'vite.config.ts', 'vitest.config.ts'],
     languageOptions: {
       globals: globals.node,
     },

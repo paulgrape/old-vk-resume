@@ -28,5 +28,6 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "content", "content.example"]
+  "include": ["src", "content", "content.example"],
+  "exclude": ["src/**/*.test.ts"]
 }

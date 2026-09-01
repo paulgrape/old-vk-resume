@@ -1,6 +1,7 @@
 import { cpSync, existsSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { validateContentDir } from './validateContentDir.ts'
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const exampleDir = path.join(rootDir, 'content.example')
@@ -18,3 +19,5 @@ if (!existsSync(exampleDir)) {
 
 cpSync(exampleDir, contentDir, { recursive: true })
 console.log('Copied content.example/ → content/. Edit content/ with your details.')
+validateContentDir(contentDir)
+
