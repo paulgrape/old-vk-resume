@@ -118,7 +118,7 @@ function lastPathSegment(url: string): string {
 }
 
 function siteContactRaw(id: ContactId): string | undefined {
-  const value = (siteConfig as Record<string, unknown>)[id]
+  const value = siteConfig[id]
 
   return typeof value === 'string' && value.trim() !== ''
     ? value.trim()
@@ -221,11 +221,7 @@ function hydrateNavItems(
 }
 
 function achievementsFromResume(resume: ResumeJson): AchievementEntry[] {
-  if (!('achievements' in resume) || !Array.isArray(resume.achievements)) {
-    return []
-  }
-
-  return resume.achievements
+  return resume.achievements ?? []
 }
 
 export function hydrateResume(resume: ResumeJson): ResumeContent {
@@ -251,39 +247,29 @@ export function hydrateResume(resume: ResumeJson): ResumeContent {
       })),
     })),
     projectsSection: resume.projectsSection,
-    projects: resume.projects.map(project => {
-      const icon = 'icon' in project ? project.icon : undefined
-      const screenshots =
-        'screenshots' in project ? project.screenshots : undefined
-
-      return {
-        title: project.title,
-        description: project.description,
-        features: project.features,
-        stack: project.stack,
-        metric: project.metric,
-        href: project.href,
-        demoHref: project.demoHref,
-        iconSrc: icon ? iconUrl(icon) : undefined,
-        screenshots,
-      }
-    }),
+    projects: resume.projects.map(project => ({
+      title: project.title,
+      description: project.description,
+      features: project.features,
+      stack: project.stack,
+      metric: project.metric,
+      href: project.href,
+      demoHref: project.demoHref,
+      iconSrc: project.icon ? iconUrl(project.icon) : undefined,
+      screenshots: project.screenshots,
+    })),
     education: resume.education ?? [],
     achievements,
     experienceSection: resume.experienceSection,
-    experience: resume.experience.map(entry => {
-      const logo = 'logo' in entry ? entry.logo : undefined
-
-      return {
-        company: entry.company,
-        role: entry.role,
-        period: entry.period,
-        summary: entry.summary,
-        highlights: entry.highlights,
-        stack: entry.stack,
-        logoSrc: logo ? iconUrl(logo) : undefined,
-      }
-    }),
+    experience: resume.experience.map(entry => ({
+      company: entry.company,
+      role: entry.role,
+      period: entry.period,
+      summary: entry.summary,
+      highlights: entry.highlights,
+      stack: entry.stack,
+      logoSrc: entry.logo ? iconUrl(entry.logo) : undefined,
+    })),
     footerLinks: hydrateNavItems(resume.footerLinks),
     footerCopyright: resume.footerCopyright,
     email: siteContactRaw('email'),
