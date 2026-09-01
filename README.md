@@ -134,6 +134,6 @@ After the default branch is green, mark the repo as a Template (Settings → Gen
 npm run setup      # copy content.example/ → content/ if missing
 npm run dev        # local
 npm run cv         # PDF resume from content cv blocks
-npm run typecheck  # tsc -b
+npm run typecheck  # setup then tsc -b
 npm run build      # dist/ (respects BASE_PATH)
 ```

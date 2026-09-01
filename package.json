@@ -11,6 +11,7 @@
     "dev": "vite",
     "cv": "tsx --tsconfig tsconfig.node.json scripts/build-cv.tsx",
     "build": "npm run cv && tsc -b && vite build",
+    "pretypecheck": "npm run setup",
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "preview": "vite preview"
