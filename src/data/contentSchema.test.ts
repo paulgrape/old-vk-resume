@@ -15,7 +15,9 @@ const rootDir = path.resolve(
 const exampleDir = path.join(rootDir, 'content.example')
 
 function readExample(name: string): unknown {
-  return JSON.parse(readFileSync(path.join(exampleDir, name), 'utf8')) as unknown
+  return JSON.parse(
+    readFileSync(path.join(exampleDir, name), 'utf8'),
+  ) as unknown
 }
 
 describe('content.example', () => {
@@ -42,8 +44,8 @@ describe('content schemas', () => {
     const ruWithoutAchievements = { ...ru }
     Reflect.deleteProperty(ruWithoutAchievements, 'achievements')
 
-    expect(() =>
-      assertResumeLocaleParity(en, ruWithoutAchievements),
-    ).toThrow(/top-level keys differ/)
+    expect(() => assertResumeLocaleParity(en, ruWithoutAchievements)).toThrow(
+      /top-level keys differ/,
+    )
   })
 })

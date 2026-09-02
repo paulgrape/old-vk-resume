@@ -2,15 +2,18 @@ import enResume from '@content/en.json'
 import ruResume from '@content/ru.json'
 import site from '@content/site.json'
 import type { Locale } from '@/i18n/locales'
-import type { ResumeJson, SiteConfig } from '@/data/contentTypes'
+import type { ResumeJson, SiteConfig, SitePhotos } from '@/data/contentTypes'
 
-export type { ResumeJson, SiteConfig }
+export type { ResumeJson, SiteConfig, SitePhotos }
 
-const photoModules = import.meta.glob('../../content/photos/*.{jpg,jpeg,png,webp,gif,svg}', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-}) as Record<string, string>
+const photoModules = import.meta.glob(
+  '../../content/photos/*.{jpg,jpeg,png,webp,gif,svg}',
+  {
+    eager: true,
+    query: '?url',
+    import: 'default',
+  },
+) as Record<string, string>
 
 const iconModules = import.meta.glob('../../content/icons/**/*.{svg,png,ico}', {
   eager: true,
@@ -43,10 +46,6 @@ function photoUrl(filename: string): string {
 
 export function iconUrl(filename: string): string | undefined {
   return urlFromModules(iconModules, filename)
-}
-
-export type SitePhotos = {
-  avatar: string
 }
 
 export const siteConfig: SiteConfig = site satisfies SiteConfig

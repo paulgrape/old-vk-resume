@@ -18,7 +18,7 @@ import { SidebarNav } from '@/components/organisms/SidebarNav/SidebarNav'
 import { SiteFooter } from '@/components/organisms/SiteFooter/SiteFooter'
 import { TopNavbar } from '@/components/organisms/TopNavbar/TopNavbar'
 import { VkProfileLayout } from '@/components/templates/VkProfileLayout/VkProfileLayout'
-import { resumeByLocale } from '@/data/content'
+import { iconUrl, resumeByLocale, siteConfig, sitePhotos } from '@/data/content'
 import {
   hydrateResume,
   telHref,
@@ -84,7 +84,10 @@ const mobileTabIcons = {
   contacts: 'dialogs',
   stack: 'friends',
   projects: 'media',
-} as const satisfies Record<(typeof mobileTabRouteIds)[number], MobileTabIconName>
+} as const satisfies Record<
+  (typeof mobileTabRouteIds)[number],
+  MobileTabIconName
+>
 
 function sidebarLabelForHref(
   items: readonly ResumeNavItem[],
@@ -175,10 +178,7 @@ function ResumeHomeContent({
         entries={resume.education}
       />
       <div className='hidden -mx-2 max-vk:block'>
-        <HomeSideRails
-          resume={resume}
-          ui={ui}
-        />
+        <HomeSideRails resume={resume} ui={ui} />
       </div>
       <ResumeExperienceSection
         title={resume.experienceSection.title}
@@ -199,10 +199,7 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
   home: {
     showPhotoColumn: true,
     render: (resume, _route, ui) => (
-      <ResumeHomeContent
-        resume={resume}
-        ui={ui}
-      />
+      <ResumeHomeContent resume={resume} ui={ui} />
     ),
   },
   experience: {
@@ -286,7 +283,12 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
 
 export function ResumePage({ routeId = 'home' }: ResumePageProps) {
   const { locale, messages } = useLocale()
-  const resume = hydrateResume(resumeByLocale[locale])
+  const resume = hydrateResume(
+    resumeByLocale[locale],
+    siteConfig,
+    sitePhotos,
+    iconUrl,
+  )
   const effectiveRouteId =
     routeId === 'achievements' && resume.achievements.length === 0
       ? 'home'
@@ -308,6 +310,7 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
 
   return (
     <VkProfileLayout
+      skipLabel={ui.skipToContent}
       header={<TopNavbar links={resume.topNavLinks} />}
       mobileHeader={
         <MobileTopBar
@@ -342,10 +345,7 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
               writeMessageLabel={ui.writeMessage}
             />
             <div className='max-vk:hidden'>
-              <HomeSideRails
-                resume={resume}
-                ui={ui}
-              />
+              <HomeSideRails resume={resume} ui={ui} />
             </div>
           </div>
         ) : null
@@ -359,10 +359,7 @@ export function ResumePage({ routeId = 'home' }: ResumePageProps) {
         />
       }
       mobileNav={
-        <MobileBottomNav
-          items={mobileTabs}
-          activeHref={tabActiveHref}
-        />
+        <MobileBottomNav items={mobileTabs} activeHref={tabActiveHref} />
       }
     />
   )

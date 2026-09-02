@@ -43,11 +43,7 @@ function SkillFriendsGrid({
       }
     >
       {items.map(item => (
-        <FriendCard
-          key={item.name}
-          name={item.name}
-          src={item.iconSrc}
-        />
+        <FriendCard key={item.name} name={item.name} src={item.iconSrc} />
       ))}
     </div>
   )
@@ -59,9 +55,7 @@ function hasAnySkillIcon(groups: readonly SkillGroup[]) {
 
 function SkillGroupHeading({ title }: { title: string }) {
   return (
-    <div className='text-left px-2 pt-1 text-[11px] text-vk-muted'>
-      {title}
-    </div>
+    <div className='text-left px-2 pt-1 text-[11px] text-vk-muted'>{title}</div>
   )
 }
 
@@ -75,12 +69,7 @@ function SkillGroupBody({
   useGrid: boolean
 }) {
   if (useGrid) {
-    return (
-      <SkillFriendsGrid
-        items={items}
-        compact={compact}
-      />
-    )
+    return <SkillFriendsGrid items={items} compact={compact} />
   }
 
   return <SkillTags items={items} />
@@ -110,11 +99,7 @@ export function ResumeStackSection({
         {skillGroups.map(group => (
           <div key={group.title}>
             <SkillGroupHeading title={group.title} />
-            <SkillGroupBody
-              items={group.items}
-              compact
-              useGrid={useGrid}
-            />
+            <SkillGroupBody items={group.items} compact useGrid={useGrid} />
           </div>
         ))}
       </section>

@@ -7,11 +7,7 @@ import type { LocaleMessages } from '@/i18n/locales'
 type EducationLabels = LocaleMessages['ui']['education']
 
 type EducationFieldKey =
-  | 'institution'
-  | 'department'
-  | 'major'
-  | 'mode'
-  | 'status'
+  'institution' | 'department' | 'major' | 'mode' | 'status'
 
 const EDUCATION_FIELDS: EducationFieldKey[] = [
   'institution',

@@ -41,8 +41,14 @@ export function validateContentDir(contentDir: string): {
     path.join(contentDir, 'photos', site.photos.avatar),
     `photos/${site.photos.avatar}`,
   )
-  requireFile(path.join(contentDir, 'fonts', 'Roboto-Regular.ttf'), 'fonts/Roboto-Regular.ttf')
-  requireFile(path.join(contentDir, 'fonts', 'Roboto-Bold.ttf'), 'fonts/Roboto-Bold.ttf')
+  requireFile(
+    path.join(contentDir, 'fonts', 'Roboto-Regular.ttf'),
+    'fonts/Roboto-Regular.ttf',
+  )
+  requireFile(
+    path.join(contentDir, 'fonts', 'Roboto-Bold.ttf'),
+    'fonts/Roboto-Bold.ttf',
+  )
 
   const iconNames = new Set(
     [...en.projects, ...ru.projects]

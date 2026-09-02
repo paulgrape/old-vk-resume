@@ -7,20 +7,13 @@ type ProfileFieldRowProps = {
   href?: string
 }
 
-export function ProfileFieldRow({
-  label,
-  value,
-  link,
-  href,
-}: ProfileFieldRowProps) {
+export function ProfileFieldRow({ label, value, href }: ProfileFieldRowProps) {
   return (
     <tr>
       <td className='text-[12px] text-vk-muted pr-2 align-top whitespace-nowrap text-left'>
         {label}
       </td>
-      <td
-        className={`text-[12px] align-top text-left ${link && !href ? 'text-vk-link' : 'text-vk-text'}`}
-      >
+      <td className='text-[12px] align-top text-left text-vk-text'>
         {href ? (
           <VkLink
             href={href}

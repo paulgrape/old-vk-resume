@@ -1,9 +1,5 @@
 export type MobileTabIconName =
-  | 'news'
-  | 'wall'
-  | 'dialogs'
-  | 'friends'
-  | 'media'
+  'news' | 'wall' | 'dialogs' | 'friends' | 'media'
 
 type MobileTabIconProps = {
   name: MobileTabIconName
@@ -18,11 +14,7 @@ export function MobileTabIcon({ name, className = '' }: MobileTabIconProps) {
   switch (name) {
     case 'news':
       return (
-        <svg
-          viewBox='0 0 24 24'
-          className={combined}
-          aria-hidden
-        >
+        <svg viewBox='0 0 24 24' className={combined} aria-hidden>
           <rect
             x='4'
             y='4'
@@ -44,11 +36,7 @@ export function MobileTabIcon({ name, className = '' }: MobileTabIconProps) {
       )
     case 'wall':
       return (
-        <svg
-          viewBox='0 0 24 24'
-          className={combined}
-          aria-hidden
-        >
+        <svg viewBox='0 0 24 24' className={combined} aria-hidden>
           <path
             d='M7 4.5h8.2L19 8.3V19.5H7z'
             fill='none'
@@ -74,11 +62,7 @@ export function MobileTabIcon({ name, className = '' }: MobileTabIconProps) {
       )
     case 'dialogs':
       return (
-        <svg
-          viewBox='0 0 24 24'
-          className={combined}
-          aria-hidden
-        >
+        <svg viewBox='0 0 24 24' className={combined} aria-hidden>
           <path
             d='M4.5 6.5h11.5v8H9.2L5 17.2V14.5H4.5z'
             fill='none'
@@ -98,11 +82,7 @@ export function MobileTabIcon({ name, className = '' }: MobileTabIconProps) {
       )
     case 'friends':
       return (
-        <svg
-          viewBox='0 0 24 24'
-          className={combined}
-          aria-hidden
-        >
+        <svg viewBox='0 0 24 24' className={combined} aria-hidden>
           <circle
             cx='9'
             cy='8'
@@ -137,11 +117,7 @@ export function MobileTabIcon({ name, className = '' }: MobileTabIconProps) {
       )
     case 'media':
       return (
-        <svg
-          viewBox='0 0 24 24'
-          className={combined}
-          aria-hidden
-        >
+        <svg viewBox='0 0 24 24' className={combined} aria-hidden>
           <rect
             x='3.5'
             y='6'
@@ -152,12 +128,7 @@ export function MobileTabIcon({ name, className = '' }: MobileTabIconProps) {
             stroke='currentColor'
             strokeWidth='1.8'
           />
-          <circle
-            cx='8.2'
-            cy='10.4'
-            r='1.5'
-            fill='currentColor'
-          />
+          <circle cx='8.2' cy='10.4' r='1.5' fill='currentColor' />
           <path
             d='M7.5 17.2 11.2 13l2.4 2.3 2-1.8 4.1 3.7'
             fill='none'

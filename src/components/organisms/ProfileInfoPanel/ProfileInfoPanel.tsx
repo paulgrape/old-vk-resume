@@ -38,10 +38,7 @@ export function ProfileInfoPanel({
       <table className='border-collapse w-full'>
         <tbody>
           {fields.map(field => (
-            <ProfileFieldRow
-              key={field.label}
-              {...field}
-            />
+            <ProfileFieldRow key={field.label} {...field} />
           ))}
         </tbody>
       </table>

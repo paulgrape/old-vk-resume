@@ -4,10 +4,12 @@ import { NavLink } from '@/components/atoms/NavLink/NavLink'
 import { SearchInput } from '@/components/atoms/SearchInput/SearchInput'
 import { useLocale } from '@/i18n/LocaleContext'
 
-type NavigationItem = string | {
-  label: string
-  href: string
-}
+type NavigationItem =
+  | string
+  | {
+      label: string
+      href: string
+    }
 
 type TopNavbarProps = {
   links: readonly NavigationItem[]
@@ -30,7 +32,10 @@ export function TopNavbar({ links }: TopNavbarProps) {
       style={{ backgroundImage: `url(${headerBg})` }}
     >
       <div className='relative z-10 flex h-full w-full items-center gap-3 pl-[150px] pr-2'>
-        <SearchInput placeholder={messages.ui.searchPlaceholder} />
+        <SearchInput
+          placeholder={messages.ui.searchPlaceholder}
+          aria-label={messages.ui.searchPlaceholder}
+        />
 
         <nav className='flex flex-1 flex-wrap items-center justify-end gap-5 pr-1.5'>
           {links.map(link => {

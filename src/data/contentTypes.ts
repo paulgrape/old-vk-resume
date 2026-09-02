@@ -8,3 +8,7 @@ export type {
   ResumeNavRef,
   SiteConfig,
 } from '@/data/contentSchema'
+
+export type SitePhotos = {
+  avatar: string
+}

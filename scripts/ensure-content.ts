@@ -18,6 +18,7 @@ if (!existsSync(exampleDir)) {
 }
 
 cpSync(exampleDir, contentDir, { recursive: true })
-console.log('Copied content.example/ → content/. Edit content/ with your details.')
+console.log(
+  'Copied content.example/ → content/. Edit content/ with your details.',
+)
 validateContentDir(contentDir)
-

@@ -65,7 +65,14 @@
         "ru": "Russian"
       }
     },
-    "placeholderNote": "This page is prepared as a resume section.",
+    "skipToContent": "Skip to content",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "That address is not a resume page.",
+    "errorTitle": "Something went wrong",
+    "errorBody": "The page failed to render. Try again or go back home.",
+    "errorRetry": "Try again",
+    "photoPrevious": "Previous photo",
+    "photoNext": "Next photo",
     "backHome": "Back to home",
     "backToResume": "to resume",
     "localeSwitch": "Language",

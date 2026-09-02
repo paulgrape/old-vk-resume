@@ -58,13 +58,7 @@ function ExperienceCard({
         }
       />
       <div className='flex-1 min-w-0 text-left'>
-        <VkLink
-          href='#'
-          size='md'
-          bold
-          block
-          className='mb-0.5'
-        >
+        <VkLink href='#' size='md' bold block className='mb-0.5'>
           {entry.company}
         </VkLink>
         <div className='text-[12px] font-semibold text-vk-text-subtle mb-1'>

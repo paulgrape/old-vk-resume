@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Hash routes (#/experience) are not separate crawlable URLs. No sitemap.

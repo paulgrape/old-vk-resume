@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
+import { ErrorBoundary } from './components/organisms/ErrorBoundary/ErrorBoundary'
 import { LocaleProvider } from './i18n/LocaleContext'
+import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage'
 import { ResumePage } from './pages/ResumePage/ResumePage'
 import { getResumeRouteIdFromHash } from './data/resumeRoutes'
 
 export default function App() {
-  const [routeId, setRouteId] = useState(() => getResumeRouteIdFromHash(window.location.hash))
+  const [routeId, setRouteId] = useState(() =>
+    getResumeRouteIdFromHash(window.location.hash),
+  )
 
   useEffect(() => {
     function handleHashChange() {
@@ -20,7 +24,9 @@ export default function App() {
 
   return (
     <LocaleProvider>
-      <ResumePage routeId={routeId} />
+      <ErrorBoundary>
+        {routeId ? <ResumePage routeId={routeId} /> : <NotFoundPage />}
+      </ErrorBoundary>
     </LocaleProvider>
   )
 }

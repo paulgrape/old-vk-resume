@@ -7,7 +7,13 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { resumeByLocale } from '@/data/content'
+import { resumeByLocale, sitePhotos } from '@/data/content'
+import { applyDocumentHead } from '@/seo/applyDocumentHead'
+import {
+  buildDocumentHead,
+  isSocialPreviewImage,
+  toAbsoluteUrl,
+} from '@/seo/documentHead'
 import {
   defaultLocale,
   isLocale,
@@ -57,8 +63,22 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   }, [])
 
   useEffect(() => {
-    document.documentElement.lang = locale
-    document.title = resumeByLocale[locale].user.name
+    const resume = resumeByLocale[locale]
+    const avatar = sitePhotos.avatar
+    const imageUrl = isSocialPreviewImage(avatar)
+      ? toAbsoluteUrl(avatar, window.location.origin, import.meta.env.BASE_URL)
+      : null
+
+    applyDocumentHead(
+      locale,
+      buildDocumentHead({
+        locale,
+        name: resume.user.name,
+        role: resume.cv.title,
+        description: resume.cv.summary,
+        imageUrl,
+      }),
+    )
   }, [locale])
 
   const value = useMemo(
@@ -66,7 +86,9 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     [locale, messages, setLocale],
   )
 
-  return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
+  return (
+    <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
+  )
 }
 
 export function useLocale() {

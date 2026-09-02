@@ -222,28 +222,15 @@ function bareUrl(url: string): string {
 
 function joinParts(parts: ReactNode[]): ReactNode[] {
   return parts.flatMap((part, index) => {
-    const node = (
-      <Text key={`part-${index}`}>
-        {part}
-      </Text>
-    )
+    const node = <Text key={`part-${index}`}>{part}</Text>
 
     return index === 0
       ? [node]
-      : [
-          <Text key={`sep-${index}`}>{'  |  '}</Text>,
-          node,
-        ]
+      : [<Text key={`sep-${index}`}>{'  |  '}</Text>, node]
   })
 }
 
-function Section({
-  title,
-  children,
-}: {
-  title: string
-  children: ReactNode
-}) {
+function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <View style={styles.section}>
       <Text style={styles.sectionTitle}>{title.toUpperCase()}</Text>
@@ -264,51 +251,38 @@ function Identity({ resume }: { resume: ResumeJson }) {
       <Text style={styles.name}>{resume.user.name}</Text>
       <Text style={styles.title}>{cv.title}</Text>
       <Text style={styles.contactLine}>
-        {joinParts([
-          cv.location,
-          site.phone ? (
-            <Link
-              src={telHref(site.phone)}
-              style={styles.link}
-            >
-              {site.phone}
-            </Link>
-          ) : null,
-          site.email ? (
-            <Link
-              src={`mailto:${site.email}`}
-              style={styles.link}
-            >
-              {site.email}
-            </Link>
-          ) : null,
-          site.telegram ? (
-            <Link
-              src={telegramHref(site.telegram)}
-              style={styles.link}
-            >
-              {telegramHandle(site.telegram)}
-            </Link>
-          ) : null,
-        ].filter(part => part != null))}
+        {joinParts(
+          [
+            cv.location,
+            site.phone ? (
+              <Link src={telHref(site.phone)} style={styles.link}>
+                {site.phone}
+              </Link>
+            ) : null,
+            site.email ? (
+              <Link src={`mailto:${site.email}`} style={styles.link}>
+                {site.email}
+              </Link>
+            ) : null,
+            site.telegram ? (
+              <Link src={telegramHref(site.telegram)} style={styles.link}>
+                {telegramHandle(site.telegram)}
+              </Link>
+            ) : null,
+          ].filter(part => part != null),
+        )}
       </Text>
       {site.github || site.linkedin ? (
         <Text style={styles.contactLine}>
           {joinParts(
             [
               site.github ? (
-                <Link
-                  src={site.github}
-                  style={styles.link}
-                >
+                <Link src={site.github} style={styles.link}>
                   {bareUrl(site.github)}
                 </Link>
               ) : null,
               site.linkedin ? (
-                <Link
-                  src={site.linkedin}
-                  style={styles.link}
-                >
+                <Link src={site.linkedin} style={styles.link}>
                   {bareUrl(site.linkedin)}
                 </Link>
               ) : null,
@@ -338,19 +312,10 @@ function CvDocument({
       creator={resume.user.name}
       producer={resume.user.name}
     >
-      <Page
-        size='A4'
-        style={styles.page}
-      >
+      <Page size='A4' style={styles.page}>
         {avatar ? (
-          <View
-            style={styles.header}
-            wrap={false}
-          >
-            <Image
-              src={avatar}
-              style={styles.avatar}
-            />
+          <View style={styles.header} wrap={false}>
+            <Image src={avatar} style={styles.avatar} />
             <View style={styles.headerText}>
               <Identity resume={resume} />
             </View>
@@ -365,10 +330,7 @@ function CvDocument({
 
         <Section title={cv.sections.skills}>
           {resume.skillGroups.map(group => (
-            <Text
-              key={group.title}
-              style={styles.paragraph}
-            >
+            <Text key={group.title} style={styles.paragraph}>
               <Text style={styles.entryTitle}>{`${group.title}: `}</Text>
               {group.items.join(', ')}
             </Text>
@@ -377,10 +339,7 @@ function CvDocument({
 
         <Section title={cv.sections.experience}>
           {resume.experience.map(entry => (
-            <View
-              key={`${entry.company}-${entry.period}`}
-              style={styles.entry}
-            >
+            <View key={`${entry.company}-${entry.period}`} style={styles.entry}>
               <Text style={styles.entryTitle}>
                 {`${entry.role}, ${entry.company}`}
               </Text>
@@ -399,26 +358,16 @@ function CvDocument({
 
         <Section title={cv.sections.projects}>
           {resume.projects.map(project => (
-            <View
-              key={project.title}
-              style={styles.entry}
-              wrap={false}
-            >
+            <View key={project.title} style={styles.entry} wrap={false}>
               <Text style={styles.entryTitle}>{project.title}</Text>
               <Text style={styles.entryMeta}>
-                <Link
-                  src={project.href}
-                  style={styles.link}
-                >
+                <Link src={project.href} style={styles.link}>
                   {bareUrl(project.href)}
                 </Link>
                 {project.demoHref ? (
                   <>
                     {'  |  '}
-                    <Link
-                      src={project.demoHref}
-                      style={styles.link}
-                    >
+                    <Link src={project.demoHref} style={styles.link}>
                       {bareUrl(project.demoHref)}
                     </Link>
                   </>
@@ -435,10 +384,7 @@ function CvDocument({
 
         <Section title={cv.sections.education}>
           {cv.education.map(entry => (
-            <View
-              key={`${entry.degree}-${entry.period}`}
-              wrap={false}
-            >
+            <View key={`${entry.degree}-${entry.period}`} wrap={false}>
               <Text style={styles.entryTitle}>{entry.degree}</Text>
               <Text style={styles.entryMeta}>
                 {`${entry.institution}, ${entry.period}`}
@@ -499,10 +445,7 @@ async function buildCv(locale: Locale, avatar: Buffer | null): Promise<void> {
   )
 
   await writePdf(
-    <CvDocument
-      resume={resumeByLocale[locale]}
-      avatar={avatar}
-    />,
+    <CvDocument resume={resumeByLocale[locale]} avatar={avatar} />,
     outPath,
   )
 }

@@ -20,18 +20,13 @@ export function MobileBottomNav({ items, activeHref }: MobileBottomNavProps) {
   }
 
   return (
-    <nav
-      className='fixed inset-x-0 bottom-0 z-30 hidden border-t border-black/80 bg-vk-tabbar max-vk:block pb-[env(safe-area-inset-bottom)]'
-    >
+    <nav className='fixed inset-x-0 bottom-0 z-30 hidden border-t border-black/80 bg-vk-tabbar max-vk:block pb-[env(safe-area-inset-bottom)]'>
       <ul className='m-0 flex min-h-[49px] list-none p-0'>
         {items.map(item => {
           const active = item.href === activeHref
 
           return (
-            <li
-              key={item.href}
-              className='min-w-0 flex-1'
-            >
+            <li key={item.href} className='min-w-0 flex-1'>
               <a
                 href={item.href}
                 aria-current={active ? 'page' : undefined}

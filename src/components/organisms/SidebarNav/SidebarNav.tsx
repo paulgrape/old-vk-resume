@@ -2,10 +2,12 @@ import { SidebarMenuItem } from '@/components/molecules/SidebarMenuItem/SidebarM
 import { AppMenuItem } from '@/components/molecules/AppMenuItem/AppMenuItem'
 import type { AppMenuItem as AppMenuItemData } from '@/data/profile'
 
-type NavigationItem = string | {
-  label: string
-  href: string
-}
+type NavigationItem =
+  | string
+  | {
+      label: string
+      href: string
+    }
 
 type SidebarNavProps = {
   navItems: readonly NavigationItem[]

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { SkipLink } from '@/components/atoms/SkipLink/SkipLink'
 
 type VkProfileLayoutProps = {
   header: ReactNode
@@ -9,6 +10,7 @@ type VkProfileLayoutProps = {
   mainColumn: ReactNode
   footer: ReactNode
   mobileNav?: ReactNode
+  skipLabel: string
 }
 
 export function VkProfileLayout({
@@ -20,6 +22,7 @@ export function VkProfileLayout({
   mainColumn,
   footer,
   mobileNav,
+  skipLabel,
 }: VkProfileLayoutProps) {
   const mainColumnClassName = photoColumn
     ? 'w-[420px] shrink-0 min-w-0 max-vk:w-full'
@@ -27,6 +30,7 @@ export function VkProfileLayout({
 
   return (
     <div className='flex flex-col min-h-screen bg-white w-full mx-auto max-vk:pb-[calc(56px+env(safe-area-inset-bottom))]'>
+      <SkipLink label={skipLabel} />
       <div className='max-vk:hidden'>{header}</div>
       {mobileHeader}
 
@@ -35,14 +39,16 @@ export function VkProfileLayout({
           <div className='max-vk:hidden self-stretch shrink-0'>{sidebar}</div>
 
           <div className='flex-1 min-w-0 flex flex-col border-x border-vk-border shadow-xs w-[632px] ml-[13px] mr-[15px] max-vk:w-full max-vk:ml-0 max-vk:mr-0 max-vk:border-x-0 max-vk:shadow-none max-vk:text-left'>
-            {titlebar ? (
-              <div className='max-vk:hidden'>{titlebar}</div>
-            ) : null}
+            {titlebar ? <div className='max-vk:hidden'>{titlebar}</div> : null}
 
-            <div className='flex flex-1 items-start bg-white scheme-light gap-[10px] max-vk:flex-col max-vk:gap-0'>
+            <main
+              id='main-content'
+              tabIndex={-1}
+              className='flex flex-1 items-start bg-white scheme-light gap-[10px] max-vk:flex-col max-vk:gap-0'
+            >
               {photoColumn}
               <div className={mainColumnClassName}>{mainColumn}</div>
-            </div>
+            </main>
           </div>
         </div>
       </div>

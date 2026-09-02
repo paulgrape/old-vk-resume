@@ -66,10 +66,11 @@ export function hydrateRoute(
   }
 }
 
-export function getResumeRouteIdFromHash(hash: string): ResumeRouteId {
+export function getResumeRouteIdFromHash(hash: string): ResumeRouteId | null {
   const path = hash.replace(/^#/, '') || '/'
-  const match = (Object.entries(resumeRoutePaths) as [ResumeRouteId, string][])
-    .find(([, routePath]) => routePath === path)
+  const match = (
+    Object.entries(resumeRoutePaths) as [ResumeRouteId, string][]
+  ).find(([, routePath]) => routePath === path)
 
-  return match?.[0] ?? 'home'
+  return match?.[0] ?? null
 }

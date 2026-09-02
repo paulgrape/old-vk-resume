@@ -76,11 +76,7 @@ function CompactProjectCard({ project }: { project: ResumeProject }) {
       }
     >
       {project.iconSrc ? (
-        <ProjectIcon
-          src={project.iconSrc}
-          alt={project.title}
-          size='sm'
-        />
+        <ProjectIcon src={project.iconSrc} alt={project.title} size='sm' />
       ) : null}
       {body}
     </article>
@@ -158,11 +154,7 @@ function FullProjectCard({
   return (
     <article className='flex gap-2.5 px-3 pt-2.5 pb-2 border-b border-vk-border-light'>
       {project.iconSrc ? (
-        <ProjectIcon
-          src={project.iconSrc}
-          alt={project.title}
-          size='md'
-        />
+        <ProjectIcon src={project.iconSrc} alt={project.title} size='md' />
       ) : null}
       <div className='flex-1 min-w-0 text-left'>
         <VkLink
@@ -202,19 +194,11 @@ function FullProjectCard({
           {project.stack.join(' · ')}
         </div>
         <div className='mt-2 flex items-center gap-3 text-[12px]'>
-          <VkLink
-            href={project.href}
-            target='_blank'
-            rel='noreferrer'
-          >
+          <VkLink href={project.href} target='_blank' rel='noreferrer'>
             {githubLabel}
           </VkLink>
           {project.demoHref ? (
-            <VkLink
-              href={project.demoHref}
-              target='_blank'
-              rel='noreferrer'
-            >
+            <VkLink href={project.demoHref} target='_blank' rel='noreferrer'>
               {isNpmHref(project.demoHref) ? npmLabel : demoLabel}
             </VkLink>
           ) : null}
@@ -252,10 +236,7 @@ export function ResumeProjectsSection({
       {compact ? (
         <div className='flex flex-col gap-1 p-1'>
           {projects.map(project => (
-            <CompactProjectCard
-              key={project.title}
-              project={project}
-            />
+            <CompactProjectCard key={project.title} project={project} />
           ))}
         </div>
       ) : (

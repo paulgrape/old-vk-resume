@@ -1,18 +1,18 @@
-import type { AppMenuItem, ProfileField } from '@/data/profile'
 import {
-  iconUrl,
-  siteConfig,
-  sitePhotos,
-  type ResumeJson,
-  type SitePhotos,
-} from '@/data/content'
-import { skillIconUrls } from '@/data/skillIcons'
+  contactHref,
+  contactValue,
+  telHref,
+  telegramHandle,
+} from '@/data/contacts'
+import type { ResumeJson, SiteConfig, SitePhotos } from '@/data/contentTypes'
 import {
   contactIds,
   contactLogoUrls,
   isContactId,
   type ContactId,
 } from '@/data/contactLogos'
+import type { AppMenuItem, ProfileField } from '@/data/profile'
+import { skillIconUrls } from '@/data/skillIcons'
 import {
   resumeRouteHrefs,
   type ResumeNavItem,
@@ -66,6 +66,7 @@ export type ExperienceEntry = {
 }
 
 export type { ResumeJson }
+export { contactHref, telHref, telegramHandle }
 
 export type FooterLink = {
   label: string
@@ -104,77 +105,12 @@ export type ResumeContent = {
   photos: SitePhotos
 }
 
-export function telHref(phone: string): string {
-  return `tel:${phone.replace(/[^\d+]/g, '')}`
-}
-
-export function telegramHandle(url: string): string {
-  const path = url.replace(/^https?:\/\/(t\.me|telegram\.me)\//, '')
-  return path.startsWith('@') ? path : `@${path}`
-}
-
-function lastPathSegment(url: string): string {
-  return url.replace(/\/+$/, '').split('/').pop() ?? url
-}
-
-function siteContactRaw(id: ContactId): string | undefined {
-  const value = siteConfig[id]
+function siteContactRaw(site: SiteConfig, id: ContactId): string | undefined {
+  const value = site[id]
 
   return typeof value === 'string' && value.trim() !== ''
     ? value.trim()
     : undefined
-}
-
-function looksLikeEmail(value: string): boolean {
-  return value.includes('@') && !value.includes('://')
-}
-
-function contactHref(id: ContactId, raw: string): string {
-  if (
-    raw.startsWith('mailto:') ||
-    raw.startsWith('tel:') ||
-    raw.startsWith('skype:')
-  ) {
-    return raw
-  }
-
-  if (raw.startsWith('http://') || raw.startsWith('https://')) {
-    return raw
-  }
-
-  if (id === 'email' || looksLikeEmail(raw)) {
-    return `mailto:${raw}`
-  }
-
-  if (id === 'phone') {
-    return telHref(raw)
-  }
-
-  if (id === 'telegram') {
-    return `https://t.me/${raw.replace(/^@/, '')}`
-  }
-
-  return raw
-}
-
-function contactValue(id: ContactId, raw: string, href: string): string {
-  if (id === 'email') {
-    return raw.replace(/^mailto:/, '')
-  }
-
-  if (id === 'phone') {
-    return raw
-  }
-
-  if (id === 'telegram') {
-    return telegramHandle(href)
-  }
-
-  if (href.startsWith('http://') || href.startsWith('https://')) {
-    return lastPathSegment(href)
-  }
-
-  return raw
 }
 
 function contactEntry(id: ContactId, raw: string): ContactEntry {
@@ -188,17 +124,17 @@ function contactEntry(id: ContactId, raw: string): ContactEntry {
   }
 }
 
-function contactsFromSite(): ContactEntry[] {
+function contactsFromSite(site: SiteConfig): ContactEntry[] {
   return contactIds.flatMap(id => {
-    const raw = siteContactRaw(id)
+    const raw = siteContactRaw(site, id)
 
     return raw ? [contactEntry(id, raw)] : []
   })
 }
 
-function getNavHref(id: string): string | undefined {
+function getNavHref(site: SiteConfig, id: string): string | undefined {
   if (isContactId(id)) {
-    const raw = siteContactRaw(id)
+    const raw = siteContactRaw(site, id)
 
     return raw ? contactHref(id, raw) : undefined
   }
@@ -211,10 +147,11 @@ function getNavHref(id: string): string | undefined {
 }
 
 function hydrateNavItems(
+  site: SiteConfig,
   items: readonly { id: string; label: string }[],
 ): ResumeNavItem[] {
   return items.flatMap(item => {
-    const href = getNavHref(item.id)
+    const href = getNavHref(site, item.id)
 
     return href ? [{ label: item.label, href }] : []
   })
@@ -224,15 +161,21 @@ function achievementsFromResume(resume: ResumeJson): AchievementEntry[] {
   return resume.achievements ?? []
 }
 
-export function hydrateResume(resume: ResumeJson): ResumeContent {
+export function hydrateResume(
+  resume: ResumeJson,
+  site: SiteConfig,
+  photos: SitePhotos,
+  resolveIcon: (filename: string) => string | undefined,
+): ResumeContent {
   const achievements = achievementsFromResume(resume)
-  const telegramRaw = siteContactRaw('telegram')
+  const telegramRaw = siteContactRaw(site, 'telegram')
 
   return {
     user: resume.user,
     cv: resume.cv,
-    topNavLinks: hydrateNavItems(resume.topNavLinks),
+    topNavLinks: hydrateNavItems(site, resume.topNavLinks),
     sidebarNavItems: hydrateNavItems(
+      site,
       resume.sidebarNavItems.filter(
         item => item.id !== 'achievements' || achievements.length > 0,
       ),
@@ -255,7 +198,7 @@ export function hydrateResume(resume: ResumeJson): ResumeContent {
       metric: project.metric,
       href: project.href,
       demoHref: project.demoHref,
-      iconSrc: project.icon ? iconUrl(project.icon) : undefined,
+      iconSrc: project.icon ? resolveIcon(project.icon) : undefined,
       screenshots: project.screenshots,
     })),
     education: resume.education ?? [],
@@ -268,14 +211,14 @@ export function hydrateResume(resume: ResumeJson): ResumeContent {
       summary: entry.summary,
       highlights: entry.highlights,
       stack: entry.stack,
-      logoSrc: entry.logo ? iconUrl(entry.logo) : undefined,
+      logoSrc: entry.logo ? resolveIcon(entry.logo) : undefined,
     })),
-    footerLinks: hydrateNavItems(resume.footerLinks),
+    footerLinks: hydrateNavItems(site, resume.footerLinks),
     footerCopyright: resume.footerCopyright,
-    email: siteContactRaw('email'),
-    phone: siteContactRaw('phone'),
+    email: siteContactRaw(site, 'email'),
+    phone: siteContactRaw(site, 'phone'),
     telegram: telegramRaw ? contactHref('telegram', telegramRaw) : undefined,
-    contacts: contactsFromSite(),
-    photos: sitePhotos,
+    contacts: contactsFromSite(site),
+    photos,
   }
 }

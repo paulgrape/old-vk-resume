@@ -59,10 +59,7 @@ export function ResumeContactsSection({
 }: ResumeContactsSectionProps) {
   return (
     <section className='border-b border-vk-border'>
-      <SectionHeader
-        title={title}
-        count={count}
-      />
+      <SectionHeader title={title} count={count} />
       {description ? (
         <p className='px-2 pt-2 text-left text-[13px] leading-[1.45] text-vk-text'>
           {description}

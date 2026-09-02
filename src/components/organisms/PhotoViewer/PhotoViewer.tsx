@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState, type MouseEvent } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { LikeControl } from '@/components/atoms/LikeControl/LikeControl'
-import { VkLink } from '@/components/atoms/VkLink/VkLink'
 import { interpolate } from '@/i18n/interpolate'
 import { useLocale } from '@/i18n/LocaleContext'
 import type { Locale } from '@/i18n/locales'
@@ -20,8 +19,17 @@ type PhotoViewerProps = {
   onIndexChange?: (index: number) => void
 }
 
-function preventNav(event: MouseEvent<HTMLAnchorElement>) {
-  event.preventDefault()
+const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'textarea:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',')
+
+function focusableElements(root: HTMLElement): HTMLElement[] {
+  return [...root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)]
 }
 
 function formatPhotoAddedDate(locale: Locale, date: Date): string {
@@ -44,6 +52,7 @@ export function PhotoViewer({
   const total = photos.length
   const showNav = total > 1 && onIndexChange != null
   const [likesBySrc, setLikesBySrc] = useState<Record<string, number>>({})
+  const containerRef = useRef<HTMLDivElement>(null)
   const openedAt = useMemo(() => new Date(), [])
   const addedDate = useMemo(
     () => formatPhotoAddedDate(locale, openedAt),
@@ -53,11 +62,39 @@ export function PhotoViewer({
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+    const previouslyFocused =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null
+
+    const root = containerRef.current
+    const initial = root ? focusableElements(root)[0] : null
+    initial?.focus()
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         onClose()
         return
+      }
+
+      if (event.key === 'Tab' && root) {
+        const nodes = focusableElements(root)
+
+        if (nodes.length === 0) {
+          event.preventDefault()
+          return
+        }
+
+        const first = nodes[0]
+        const last = nodes[nodes.length - 1]
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault()
+          last?.focus()
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault()
+          first?.focus()
+        }
       }
 
       if (!showNav) {
@@ -73,11 +110,12 @@ export function PhotoViewer({
       }
     }
 
-    window.addEventListener('keydown', onKeyDown)
+    document.addEventListener('keydown', onKeyDown)
 
     return () => {
       document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', onKeyDown)
+      document.removeEventListener('keydown', onKeyDown)
+      previouslyFocused?.focus()
     }
   }, [index, onClose, onIndexChange, showNav, total])
 
@@ -93,14 +131,19 @@ export function PhotoViewer({
 
   return createPortal(
     <div
-      className='fixed inset-0 z-[1000] flex items-center justify-center bg-black/70'
-      onClick={onClose}
-      role='presentation'
+      ref={containerRef}
+      className='fixed inset-0 z-[1000] flex items-center justify-center'
     >
       <button
         type='button'
         aria-label={ui.close}
-        className='absolute top-[10px] right-[14px] border-0 bg-transparent p-0 text-[24px] leading-none text-[#c8c8c8] hover:text-white cursor-pointer'
+        className='absolute inset-0 border-0 bg-black/70 p-0 cursor-default'
+        onClick={onClose}
+      />
+      <button
+        type='button'
+        aria-label={ui.close}
+        className='absolute top-[10px] right-[14px] z-10 border-0 bg-transparent p-0 text-[24px] leading-none text-[#c8c8c8] hover:text-white cursor-pointer'
         onClick={event => {
           event.stopPropagation()
           onClose()
@@ -112,7 +155,8 @@ export function PhotoViewer({
       {showNav ? (
         <button
           type='button'
-          className='absolute left-2 border-0 bg-transparent px-2 py-8 text-[28px] leading-none text-white/50 hover:text-white cursor-pointer'
+          aria-label={ui.photoPrevious}
+          className='absolute left-2 z-10 border-0 bg-transparent px-2 py-8 text-[28px] leading-none text-white/50 hover:text-white cursor-pointer'
           onClick={event => {
             event.stopPropagation()
             onIndexChange?.((index - 1 + total) % total)
@@ -123,11 +167,11 @@ export function PhotoViewer({
       ) : null}
 
       <div
-        className='relative w-fit max-w-[calc(100vw-48px)] bg-white text-left shadow-[0_2px_16px_rgba(0,0,0,0.45)] max-vk:max-w-[calc(100vw-16px)]'
-        onClick={event => event.stopPropagation()}
+        className='relative z-10 w-fit max-w-[calc(100vw-48px)] bg-white text-left shadow-[0_2px_16px_rgba(0,0,0,0.45)] max-vk:max-w-[calc(100vw-16px)]'
         role='dialog'
         aria-modal='true'
         aria-label={photoOfLabel}
+        tabIndex={-1}
       >
         <div className='flex items-baseline justify-between gap-6 px-5 pt-2 pb-2'>
           <span className='text-[11px] text-vk-heading-dark'>
@@ -153,9 +197,7 @@ export function PhotoViewer({
         <div className='flex items-start justify-between gap-8 px-5 pt-3 pb-4 max-vk:flex-col max-vk:gap-3'>
           <div className='min-w-0 flex-1'>
             <div className='flex items-center text-[11px] text-vk-muted'>
-              <span>
-                {interpolate(ui.photoAdded, { date: addedDate })}
-              </span>
+              <span>{interpolate(ui.photoAdded, { date: addedDate })}</span>
               <LikeControl
                 likeLabel={ui.like}
                 count={likes}
@@ -176,13 +218,7 @@ export function PhotoViewer({
           <div className='w-[158px] shrink-0 text-[11px] leading-[1.45] max-vk:w-full'>
             <div className='text-vk-muted'>
               {ui.photoAlbumLabel}{' '}
-              <VkLink
-                href='#'
-                size='sm'
-                onClick={preventNav}
-              >
-                {ui.photoAlbum}
-              </VkLink>
+              <span className='text-[11px] text-vk-link'>{ui.photoAlbum}</span>
             </div>
 
             <div className='mt-2 text-vk-muted'>{ui.photoSenderLabel}</div>
@@ -192,14 +228,9 @@ export function PhotoViewer({
                 alt=''
                 className='h-8 w-8 shrink-0 object-cover'
               />
-              <VkLink
-                href='#'
-                size='sm'
-                bold
-                onClick={preventNav}
-              >
+              <span className='text-[11px] font-bold text-vk-link'>
                 {photo.authorName}
-              </VkLink>
+              </span>
             </div>
           </div>
         </div>
@@ -208,7 +239,8 @@ export function PhotoViewer({
       {showNav ? (
         <button
           type='button'
-          className='absolute right-2 border-0 bg-transparent px-2 py-8 text-[28px] leading-none text-white/50 hover:text-white cursor-pointer'
+          aria-label={ui.photoNext}
+          className='absolute right-2 z-10 border-0 bg-transparent px-2 py-8 text-[28px] leading-none text-white/50 hover:text-white cursor-pointer'
           onClick={event => {
             event.stopPropagation()
             onIndexChange?.((index + 1) % total)

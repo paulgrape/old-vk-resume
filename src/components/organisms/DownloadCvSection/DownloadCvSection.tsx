@@ -57,10 +57,7 @@ export function DownloadCvSection({
 
   return (
     <section className='border-b border-vk-border'>
-      <SectionHeader
-        title={title}
-        count={count}
-      />
+      <SectionHeader title={title} count={count} />
       {description ? (
         <p className='px-2 pt-2 text-left text-[13px] leading-[1.45] text-vk-text'>
           {description}
@@ -68,11 +65,7 @@ export function DownloadCvSection({
       ) : null}
       <div className='flex flex-col gap-2 p-2 text-left'>
         {files.map(file => (
-          <DownloadCvButton
-            key={file.locale}
-            file={file}
-            labels={labels}
-          />
+          <DownloadCvButton key={file.locale} file={file} labels={labels} />
         ))}
       </div>
     </section>

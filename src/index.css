@@ -123,6 +123,27 @@ body {
   margin: 0;
 }
 
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  z-index: 2000;
+  padding: 8px 12px;
+  background: #fff;
+  color: var(--color-vk-link);
+  font-size: 13px;
+  text-decoration: underline;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+#main-content:focus {
+  outline: none;
+}
+
 h1,
 h2 {
   font-family: var(--heading);

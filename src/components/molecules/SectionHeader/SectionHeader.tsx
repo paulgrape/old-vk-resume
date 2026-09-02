@@ -17,9 +17,7 @@ export function SectionHeader({
     <div>
       <div className='flex items-baseline justify-between px-2 bg-vk-friends-header'>
         <span className='text-[13px] font-bold text-vk-heading'>{title}</span>
-        {linkText && (
-          <VkLink href={linkHref}>{linkText}</VkLink>
-        )}
+        {linkText && <VkLink href={linkHref}>{linkText}</VkLink>}
       </div>
       {count && (
         <div className='text-left px-2 bg-vk-friends-count'>

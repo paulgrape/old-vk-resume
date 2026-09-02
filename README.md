@@ -44,8 +44,8 @@ Omit any you do not use. `photos` maps filenames in `content/photos/`:
 
 ### `photos/`
 
-| File     | Used for                                                                                                                                                                                                                                   |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| File     | Used for                                                                                                                                                                                                                                                                                                                                                                                      |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `avatar` | One photo (`jpg`, `jpeg`, `png`, `webp`, `gif`, or `svg`). Shown at 200px in the profile column (`object-cover`), in the photo viewer, as the 45px fallback when a job has no `logo`, and on the PDF resume (`npm run cv`) as an 80pt square next to the name. The PDF embed supports `jpg`/`jpeg`/`png`/`svg`; `webp`/`gif` stay site-only. The sample ships `placeholder.svg` (old-VK dog). |
 
 ### `icons/`
@@ -112,7 +112,7 @@ Social preview images (`og:image`) work best as jpg/png. The sample dog is SVG, 
 
 ## Deploy
 
-Needs Node 20+ (`.nvmrc` pins 24). `npm run build` writes `dist/`. `@emnapi/core` and `@emnapi/runtime` are direct devDependencies so Linux `npm ci` finds the wasm optional peers that a Windows-generated lockfile otherwise omits.
+Needs Node 20+ (`.nvmrc` pins 24). `npm run build` writes `dist/`. `@emnapi/core` and `@emnapi/runtime` are direct devDependencies so Linux `npm ci` finds the wasm optional peers that a Windows-generated lockfile otherwise omits. `package.json` overrides `eslint-plugin-jsx-a11y`'s eslint peer so `npm ci` accepts ESLint 10 (the plugin works; its published range still stops at 9).
 
 **GitHub Pages (project site):** `.github/workflows/pages.yml` builds with `BASE_PATH=/<repo>/` so asset URLs work under `https://<user>.github.io/<repo>/`. In the repo: Settings → Pages → Source: GitHub Actions. For a user site (`username.github.io`), set Actions variable `BASE_PATH` to `/`.
 
@@ -123,6 +123,10 @@ BASE_PATH=/old-vk-resume/ npm run build
 ```
 
 **Vercel / Netlify:** import the repo, output `dist/`. `vercel.json` and `public/_headers` set `X-Content-Type-Options`, `Referrer-Policy`, and a CSP that allows skill/contact icons from Simple Icons, jsDelivr, and GitHub user images, plus project screenshots from `raw.githubusercontent.com`. If you add other image hosts, update those files. GitHub Pages does not apply `_headers`; put the same headers on a CDN if you need them there.
+
+## SEO
+
+This is a hash-routed SPA (`#/experience`). Crawlers and most social scrapers see `index.html`, not hash paths — there is no sitemap of `#/` URLs. The build injects English `title` and `description` from `content/en.json` (or `content.example` on a fresh clone). The running app updates `lang`, description, and Open Graph / Twitter tags when the locale changes. `og:image` is set at runtime only when the avatar is jpg/png/webp/gif; the sample `placeholder.svg` is skipped. `public/robots.txt` allows crawlers.
 
 ## GitHub template
 
@@ -136,6 +140,8 @@ npm run validate-content  # Zod-check site/en/ru.json, locale parity, avatar and
 npm run dev               # local
 npm run cv                # validate content, then PDF resume
 npm run typecheck         # setup then tsc -b
-npm run test              # Vitest (content.example schemas)
+npm run test              # Vitest (content, contacts, CV slugs, SEO helpers)
+npm run format            # Prettier write (src, scripts, configs; not content/)
+npm run format:check      # Prettier check
 npm run build             # dist/ (respects BASE_PATH)
 ```
