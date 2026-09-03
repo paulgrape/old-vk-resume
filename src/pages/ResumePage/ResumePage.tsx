@@ -27,9 +27,9 @@ import {
 } from '@/data/resume'
 import {
   hydrateRoute,
+  isMobileTabRouteId,
   mobileTabRouteIds,
   resumeRouteHrefs,
-  isMobileTabRouteId,
   type ResumeNavItem,
   type ResumeRoute,
   type ResumeRouteId,
@@ -272,7 +272,6 @@ const resumePageRegistry: Record<ResumeRouteId, ResumePageDefinition> = {
       <DownloadCvSection
         title={route.title}
         count={route.subtitle}
-        description={route.description}
         locale={locale}
         personName={resumeByLocale.en.user.name}
         labels={ui.downloadCv}

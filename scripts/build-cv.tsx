@@ -12,10 +12,11 @@ import {
   View,
   renderToFile,
 } from '@react-pdf/renderer'
+import { writeCvDocx } from './buildCvDocx.ts'
 import { cvFileName, cvOutputDir } from '../src/data/cvFiles.ts'
 import type { Locale } from '../src/i18n/locales.ts'
 import type { ReactNode } from 'react'
-import { readPdfAvatar } from './pdfAvatar.ts'
+import { readDocxAvatar, readPdfAvatar, type DocxAvatar } from './pdfAvatar.ts'
 
 type CvEducationEntry = {
   degree: string
@@ -438,19 +439,24 @@ async function writePdf(
   }
 }
 
-async function buildCv(locale: Locale, avatar: Buffer | null): Promise<void> {
-  const outPath = path.join(
-    outDir,
-    cvFileName(resumeByLocale.en.user.name, locale),
-  )
+async function buildCv(
+  locale: Locale,
+  avatar: Buffer | null,
+  docxAvatar: DocxAvatar | null,
+): Promise<void> {
+  const personName = resumeByLocale.en.user.name
+  const pdfPath = path.join(outDir, cvFileName(personName, locale, 'pdf'))
+  const docxPath = path.join(outDir, cvFileName(personName, locale, 'docx'))
 
   await writePdf(
     <CvDocument resume={resumeByLocale[locale]} avatar={avatar} />,
-    outPath,
+    pdfPath,
   )
+  await writeCvDocx(resumeByLocale[locale], site, docxPath, rootDir, docxAvatar)
 }
 
 const avatar = readPdfAvatar(contentDir, site.photos.avatar)
+const docxAvatar = readDocxAvatar(contentDir, site.photos.avatar)
 
 if (!avatar) {
   console.warn(
@@ -458,8 +464,14 @@ if (!avatar) {
   )
 }
 
+if (!docxAvatar) {
+  console.warn(
+    `DOCX avatar skipped: photos/${site.photos.avatar} is not jpg/jpeg/png/gif/bmp.`,
+  )
+}
+
 mkdirSync(outDir, { recursive: true })
 
 for (const locale of Object.keys(resumeByLocale) as Locale[]) {
-  await buildCv(locale, avatar)
+  await buildCv(locale, avatar, docxAvatar)
 }

@@ -59,7 +59,11 @@
     "projectFeatures": "Features",
     "projectStack": "Stack",
     "downloadCv": {
-      "download": "Download PDF ({language})",
+      "download": "Download {format} ({language})",
+      "formats": {
+        "pdf": "PDF",
+        "docx": "DOCX"
+      },
       "languages": {
         "en": "English",
         "ru": "Russian"
@@ -136,9 +140,8 @@
     },
     "downloadCv": {
       "title": "Download CV",
-      "subtitle": "pdf resume",
-      "description": "PDF resume in English and Russian.",
-      "details": ["English CV", "Russian CV", "ATS-friendly layout"]
+      "subtitle": "pdf and docx",
+      "details": ["English CV", "Russian CV", "PDF and DOCX"]
     }
   }
 }

@@ -1,5 +1,3 @@
-import type { LocaleMessages } from '@/i18n/locales'
-
 export type ResumeRouteId =
   | 'home'
   | 'experience'
@@ -14,7 +12,12 @@ export type ResumeNavItem = {
   href: string
 }
 
-export type ResumeRouteCopy = LocaleMessages['routes'][ResumeRouteId]
+export type ResumeRouteCopy = {
+  title: string
+  subtitle: string
+  description?: string
+  details: readonly string[]
+}
 
 export type ResumeRoute = ResumeRouteCopy & {
   id: ResumeRouteId

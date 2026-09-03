@@ -59,7 +59,11 @@
     "projectFeatures": "Возможности",
     "projectStack": "Стек",
     "downloadCv": {
-      "download": "Скачать PDF ({language})",
+      "download": "Скачать {format} ({language})",
+      "formats": {
+        "pdf": "PDF",
+        "docx": "DOCX"
+      },
       "languages": {
         "en": "английский",
         "ru": "русский"
@@ -136,13 +140,8 @@
     },
     "downloadCv": {
       "title": "Скачать CV",
-      "subtitle": "pdf resume",
-      "description": "PDF-резюме на английском и русском.",
-      "details": [
-        "Резюме на русском",
-        "Резюме на английском",
-        "Вёрстка под ATS"
-      ]
+      "subtitle": "pdf и docx",
+      "details": ["Резюме на русском", "Резюме на английском", "PDF и DOCX"]
     }
   }
 }

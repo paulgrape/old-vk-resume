@@ -138,7 +138,7 @@
     { "id": "linkedin", "label": "LinkedIn" },
     { "id": "telegram", "label": "Telegram" },
     { "id": "email", "label": "Email" },
-    { "id": "downloadCv", "label": "PDF CV" }
+    { "id": "downloadCv", "label": "CV" }
   ],
   "footerCopyright": "© 2026, Alex Sample"
 }

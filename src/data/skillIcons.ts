@@ -1,4 +1,22 @@
 export const skillIconUrls: Record<string, string> = {
+  Python: 'https://cdn.simpleicons.org/python/3776AB',
+  FastAPI: 'https://cdn.simpleicons.org/fastapi/009688',
+  Django: 'https://cdn.simpleicons.org/django/092E20',
+  NestJS: 'https://cdn.simpleicons.org/nestjs/E0234E',
+  PostgreSQL: 'https://cdn.simpleicons.org/postgresql/4169E1',
+  Keycloak: 'https://cdn.simpleicons.org/keycloak/4D4D4D',
+  LangChain: 'https://cdn.simpleicons.org/langchain/1C3C3C',
+  Cursor: 'https://cdn.simpleicons.org/cursor/000000',
+  'Claude Code': 'https://cdn.simpleicons.org/anthropic/191919',
+  RAG: 'https://cdn.jsdelivr.net/npm/lucide-static@0.469.0/icons/search.svg',
+  pgvector:
+    'https://cdn.jsdelivr.net/npm/lucide-static@0.469.0/icons/database.svg',
+  'Agent Skills':
+    'https://cdn.jsdelivr.net/npm/lucide-static@0.469.0/icons/bot.svg',
+  'Vue.js': 'https://cdn.simpleicons.org/vuedotjs/4FC08D',
+  Angular: 'https://cdn.simpleicons.org/angular/DD0031',
+  'Atomic Design':
+    'https://cdn.jsdelivr.net/npm/lucide-static@0.469.0/icons/layers.svg',
   React: 'https://cdn.simpleicons.org/react/61DAFB',
   TypeScript: 'https://cdn.simpleicons.org/typescript/3178C6',
   'Next.js': 'https://cdn.simpleicons.org/nextdotjs/000000',
