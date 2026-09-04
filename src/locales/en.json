@@ -135,7 +135,7 @@
     "contacts": {
       "title": "My Contacts",
       "subtitle": "get in touch",
-      "description": "Ways to get in touch about a frontend role, product or technical project.",
+      "description": "Ways to get in touch.",
       "details": ["Telegram", "Email", "LinkedIn"]
     },
     "downloadCv": {

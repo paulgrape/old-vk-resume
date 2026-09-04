@@ -12,24 +12,25 @@ const rootDir = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   '../..',
 )
-const exampleDir = path.join(rootDir, 'content.example')
 
-function readExample(name: string): unknown {
-  return JSON.parse(
-    readFileSync(path.join(exampleDir, name), 'utf8'),
-  ) as unknown
+function readPack(dir: string, name: string): unknown {
+  return JSON.parse(readFileSync(path.join(dir, name), 'utf8')) as unknown
 }
 
-describe('content.example', () => {
-  it('parses site.json, en.json, and ru.json', () => {
-    const site = parseSite(readExample('site.json'))
-    const en = parseResume(readExample('en.json'))
-    const ru = parseResume(readExample('ru.json'))
+function assertSamplePack(dir: string) {
+  const site = parseSite(readPack(dir, 'site.json'))
+  const en = parseResume(readPack(dir, 'en.json'))
+  const ru = parseResume(readPack(dir, 'ru.json'))
 
-    expect(site.photos.avatar).toBe('placeholder.svg')
-    expect(en.user.name).toBe('Alex Sample')
-    expect(ru.user.name).toBe('Алекс Сэмпл')
-    expect(() => assertResumeLocaleParity(en, ru)).not.toThrow()
+  expect(site.photos.avatar).toBe('placeholder.svg')
+  expect(en.user.name).toBe('Alex Sample')
+  expect(ru.user.name).toBe('Алекс Сэмпл')
+  expect(() => assertResumeLocaleParity(en, ru)).not.toThrow()
+}
+
+describe('sample content pack', () => {
+  it('parses committed content/', () => {
+    assertSamplePack(path.join(rootDir, 'content'))
   })
 })
 
@@ -39,8 +40,8 @@ describe('content schemas', () => {
   })
 
   it('rejects resume locale key mismatch', () => {
-    const en = parseResume(readExample('en.json'))
-    const ru = parseResume(readExample('ru.json'))
+    const en = parseResume(readPack(path.join(rootDir, 'content'), 'en.json'))
+    const ru = parseResume(readPack(path.join(rootDir, 'content'), 'ru.json'))
     const ruWithoutAchievements = { ...ru }
     Reflect.deleteProperty(ruWithoutAchievements, 'achievements')
 

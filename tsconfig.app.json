@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@content/*": ["content/*", "content.example/*"]
+      "@content/*": ["content/*"]
     },
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "es2023",
@@ -28,6 +28,6 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "content", "content.example"],
+  "include": ["src", "content"],
   "exclude": ["src/**/*.test.ts"]
 }

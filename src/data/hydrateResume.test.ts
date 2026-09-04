@@ -5,20 +5,20 @@ import { describe, expect, it } from 'vitest'
 import { parseResume, parseSite } from './contentSchema'
 import { hydrateResume } from './resume'
 
-const exampleDir = path.resolve(
+const contentDir = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
-  '../../content.example',
+  '../../content',
 )
 
-function readExample(name: string): unknown {
+function readContent(name: string): unknown {
   return JSON.parse(
-    readFileSync(path.join(exampleDir, name), 'utf8'),
+    readFileSync(path.join(contentDir, name), 'utf8'),
   ) as unknown
 }
 
 describe('hydrateResume', () => {
-  const site = parseSite(readExample('site.json'))
-  const en = parseResume(readExample('en.json'))
+  const site = parseSite(readContent('site.json'))
+  const en = parseResume(readContent('en.json'))
   const resume = hydrateResume(
     en,
     site,
@@ -75,5 +75,22 @@ describe('hydrateResume', () => {
     expect(
       hydrated.topNavLinks.some(item => item.href.includes('github')),
     ).toBe(false)
+  })
+
+  it('uses a local skill icon file when resolveIcon returns a slug match', () => {
+    const hydrated = hydrateResume(en, site, { avatar: '/a.jpg' }, filename =>
+      filename === 'react.svg' ? '/icons/react.svg' : undefined,
+    )
+
+    expect(
+      hydrated.skillGroups[0]?.items.find(item => item.name === 'React')
+        ?.iconSrc,
+    ).toBe('/icons/react.svg')
+  })
+
+  it('falls back to the CDN map when no skill file exists', () => {
+    expect(
+      resume.skillGroups[0]?.items.find(item => item.name === 'React')?.iconSrc,
+    ).toContain('simpleicons')
   })
 })

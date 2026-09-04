@@ -3,13 +3,13 @@
     "name": "Alex Sample",
     "titlebarSubtitle": "(frontend developer)",
     "status": "online",
-    "profileStatus": "Replace this sample with your own content/",
+    "profileStatus": "Shipping UI in public again.",
     "specialization": "Frontend"
   },
   "cv": {
     "title": "Frontend Developer",
     "location": "Remote",
-    "summary": "Sample resume shipped with this template. Replace content/en.json, content/ru.json, and content/site.json with your own details. The old-VK dog avatar is a placeholder.",
+    "summary": "Frontend developer who takes product UI from sketch to production. Comfortable owning React and TypeScript code, design-system work, and the last mile of delivery.",
     "languages": ["English - Fluent", "Russian - Fluent"],
     "education": [
       {
@@ -89,15 +89,15 @@
   },
   "projects": [
     {
-      "title": "Sample project",
-      "description": "A placeholder project so the template has something to render. Replace this entry with your own work.",
+      "title": "Harbor Board",
+      "description": "A small ops board for a volunteer harbor: berth status, weather, and a public map. Built as a Vite app with a thin API.",
       "features": [
-        "Edit content/en.json and content/ru.json",
-        "Optional demoHref and screenshots",
-        "Optional icon file under content/icons/"
+        "Live berth board on a shared TV",
+        "Public map of slips and notices",
+        "One-command deploy"
       ],
       "stack": ["React", "TypeScript", "Vite"],
-      "metric": "template",
+      "metric": "12 slips",
       "href": "https://github.com/example"
     }
   ],
@@ -110,9 +110,9 @@
   ],
   "achievements": [
     {
-      "title": "Shipped a sample site",
-      "description": "This row exists so the Achievements page is visible. Remove or replace it.",
-      "year": "2026"
+      "title": "Harbor board in six weeks",
+      "description": "Replaced a paper roster with a live board the volunteers actually leave on.",
+      "year": "2025"
     }
   ],
   "experienceSection": {
@@ -125,10 +125,10 @@
       "company": "Example Studio",
       "role": "Frontend Developer",
       "period": "2022 - Present",
-      "summary": "Placeholder role. Replace this block with a real job.",
+      "summary": "Own the product UI: new screens, the shared component set, and the release checklist.",
       "highlights": [
-        "Describe a result you owned.",
-        "Add a second highlight if you want."
+        "Cut first-load JavaScript on the main app by a third.",
+        "Turned a Figma kit into a typed component library the rest of the team ships from."
       ],
       "stack": ["React", "TypeScript", "Vite"]
     }

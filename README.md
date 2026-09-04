@@ -1,21 +1,21 @@
 # old-vk-resume
 
-Vite + React resume site with 2011 VK chrome. Copy lives in `content/` (gitignored). UI chrome lives in `src/`.
+A resume site that looks like VK from 2011. Put the person in `content/`. The UI chrome is `src/`.
 
-MIT. The look is a non-commercial parody of old VK / VKontakte. Not affiliated with VK Company Limited. See [LICENSE](LICENSE).
+MIT. Non-commercial parody of old VK / VKontakte. Not affiliated with VK Company Limited. See [LICENSE](LICENSE).
 
-Needs Node 20+ (`.nvmrc` pins 24).
+Node 20 or newer (`.nvmrc` pins 24).
 
 ## Use this template
 
-Repo owner (once): Settings → General → Template repository.
+Repo owner, once: Settings → General → **Template repository**.
 
-Then:
+1. On GitHub, **Use this template**. A fork copies this repo's git history.
+2. Clone. `npm i && npm run dev`.
+3. Put your resume in `content/` (JSON and a photo). An agent that loads [Agent Skills](https://agentskills.io) can fill it if you say "fill this with my resume."
+4. Commit `content/`. Settings → Pages → Build source: **GitHub Actions**. Push `main`.
 
-1. GitHub: **Use this template** (fork also works).
-2. Clone. `npm i`. First `npm run dev` (or `npm run setup`) copies `content.example/` → `content/` if `content/site.json` is missing. `prebuild` and `precv` do that copy too.
-3. Edit `content/`. Touch `src/` only if you are changing chrome.
-4. `npm run dev` locally. `npm run build` writes `dist/`.
+![Alex Sample home](docs/alex-sample.png)
 
 ```
 content/
@@ -23,17 +23,19 @@ content/
   en.json            # English resume
   ru.json            # Russian resume
   photos/            # file named in site.json (jpg/png/webp/gif/svg)
-  icons/             # optional job/project logos
+  icons/             # optional job/project logos and skill files
 ```
 
-Edit path:
+To fill it by hand:
 
 1. `content/site.json`: email and profile links.
 2. `content/en.json` and `content/ru.json`: name, jobs, projects.
 3. One avatar in `content/photos/` whose filename matches `site.json`.
 4. `npm run dev`
 
-`content.example/` ships a fictional person. The sample avatar is `placeholder.svg` (the old-VK dog).
+Committed `content/` is Alex Sample. Avatar file: `placeholder.svg` (the old-VK dog). `npm run setup` checks that `content/site.json` exists; restore `content/` from git if it is missing.
+
+If the agent only reads [AGENTS.md](AGENTS.md), start there. Fill-resume skill: [`.agents/skills/fill-resume/`](.agents/skills/fill-resume/).
 
 ## `content/` vs `src/locales/`
 
@@ -42,13 +44,13 @@ Edit path:
 | Name, jobs, projects, contacts, photo, PDF/DOCX copy   | `content/`                          |
 | Search placeholder, Like, route titles, skip-link, 404 | `src/locales/en.json` and `ru.json` |
 
-`npm run cv` writes `public/cv/`. Filenames use the English `user.name` plus locale: `Alex_Sample_EN.pdf`, `Alex_Sample_EN.docx`. Do not commit those files or root `Pavel_Vinogradov_*` leftovers.
+`npm run cv` writes `public/cv/`. Names come from the English `user.name` plus locale: `Alex_Sample_EN.pdf`, `Alex_Sample_EN.docx`. Leave `public/cv/` and stray root `*.pdf` / `*.docx` uncommitted.
 
 ## Deploy
 
-`npm run build` emits `dist/`.
+`npm run build` writes `dist/`.
 
-GitHub Pages (project site): `.github/workflows/pages.yml` sets `BASE_PATH=/<repo>/` so assets work at `https://<user>.github.io/<repo>/`. Repo Settings → Pages → Source: GitHub Actions. For `username.github.io`, set Actions variable `BASE_PATH` to `/`.
+GitHub Pages (project site): `.github/workflows/pages.yml` sets `BASE_PATH=/<repo>/` so assets load at `https://<user>.github.io/<repo>/`. Repo Settings → Pages → Source: **GitHub Actions**, or the first deploy never goes green. For `username.github.io`, set Actions variable `BASE_PATH` to `/`.
 
 ```
 BASE_PATH=/old-vk-resume/ npm run build
@@ -58,18 +60,17 @@ Vercel / Netlify: import the repo, output `dist/`. `vercel.json` and `public/_he
 
 Linux `npm ci`: `@emnapi/core` and `@emnapi/runtime` are pinned so wasm optional peers missing from a Windows lockfile still resolve. `package.json` overrides `eslint-plugin-jsx-a11y`'s eslint peer (published range stops at 9; the plugin runs on 10).
 
+This repository's Pages site is the Alex Sample demo. `content.frontend/` is gitignored. On the machine that maintains the template, that overlay is the live pack.
+
 ## Hash SEO
 
-Routes are `#/experience`. Crawlers see `index.html`, not hash paths. No sitemap of `#/` URLs. The build writes English title and description from `content/en.json` (or `content.example`). The app updates `lang` and Open Graph tags when the locale changes. `og:image` is set at runtime for jpg/png/webp/gif; SVG (including the sample dog) is skipped. `public/robots.txt` allows crawlers.
+Routes are `#/experience`. Crawlers fetch `index.html`. Hash paths are not in a sitemap. The build writes English title and description from `content/en.json`. The app updates `lang` and Open Graph tags when the locale changes. `og:image` is set at runtime for jpg/png/webp/gif. SVG, including the sample dog, is skipped. `public/robots.txt` allows crawlers.
 
 ## Skill icons
 
-Skill names listed in [`src/data/skillIcons.ts`](src/data/skillIcons.ts) load from a CDN. A skill SVG sitting in `content/icons/` is ignored.
+Put a file at `content/icons/skills/{slug}.svg` (or `.png`). Slug = skill name, lowercase, non-letters to hyphens (`TanStack Query` → `tanstack-query.svg`). Names listed in [`src/data/skillIcons.ts`](src/data/skillIcons.ts) load from a CDN when no file is present.
 
-To add a skill with an icon:
-
-1. Put the name in `skillGroups[].items` in `en.json` and `ru.json`.
-2. Add a URL for that exact name in `skillIcons.ts`.
+A group uses the friends grid when every skill in that group has an icon. Mixed groups render as tags.
 
 Job logos and project icons are local files, referenced by filename:
 
@@ -108,7 +109,7 @@ Omit unused keys.
 
 ### `en.json` / `ru.json`
 
-Keep EN and RU in sync. `npm run validate-content` (also `precv` / `build`) parses both with Zod. It also checks list lengths, that the avatar file exists, and that Roboto Regular + Bold are under `content/fonts/`.
+Keep EN and RU in sync. `npm run validate-content` (hooked to `precv` and `build`) parses both with Zod, checks list lengths, and requires the avatar file plus Roboto Regular and Bold in `content/fonts/`.
 
 Required blocks: `user`, `cv`, `topNavLinks`, `sidebarNavItems`, `appMenuItems`, `fields`, `skillGroups`, `projects` / `projectsSection`, `experience` / `experienceSection`, `footerLinks` / `footerCopyright`.
 
@@ -131,13 +132,13 @@ Optional: omit `education` / `achievements` or pass `[]` to hide them. An empty 
 ## Scripts
 
 ```
-npm run setup             # content.example/ → content/ if missing
-npm run validate-content  # Zod + locale parity + avatar + fonts
+npm run setup             # fails if content/site.json is missing
+npm run validate-content  # Zod, locale parity, avatar, fonts
 npm run dev               # local
 npm run cv                # PDF and DOCX into public/cv/
 npm run typecheck         # setup then tsc -b
 npm run test              # Vitest
-npm run format            # Prettier (skips content/)
+npm run format            # Prettier (skips content.frontend/)
 npm run format:check
 npm run build             # dist/ (respects BASE_PATH)
 ```

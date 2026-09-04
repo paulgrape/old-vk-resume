@@ -39,3 +39,34 @@ export const skillIconUrls: Record<string, string> = {
   'Feature-Sliced Design':
     'https://cdn.jsdelivr.net/gh/feature-sliced/documentation@master/static/img/brand/logo-square.png',
 }
+
+export function skillIconSlug(name: string): string {
+  return name
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+export function resolveSkillIconSrc(
+  name: string,
+  resolveIcon: (filename: string) => string | undefined,
+  cdnMap: Record<string, string> = skillIconUrls,
+): string | undefined {
+  const slug = skillIconSlug(name)
+
+  if (!slug) {
+    return cdnMap[name]
+  }
+
+  return (
+    resolveIcon(`${slug}.svg`) ?? resolveIcon(`${slug}.png`) ?? cdnMap[name]
+  )
+}
+
+export function skillGroupUsesGrid(
+  items: readonly { iconSrc?: string }[],
+): boolean {
+  return items.length > 0 && items.every(item => Boolean(item.iconSrc))
+}

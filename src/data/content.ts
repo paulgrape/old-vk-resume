@@ -7,7 +7,7 @@ import type { ResumeJson, SiteConfig, SitePhotos } from '@/data/contentTypes'
 export type { ResumeJson, SiteConfig, SitePhotos }
 
 const photoModules = import.meta.glob(
-  '../../content/photos/*.{jpg,jpeg,png,webp,gif,svg}',
+  '@content/photos/*.{jpg,jpeg,png,webp,gif,svg}',
   {
     eager: true,
     query: '?url',
@@ -15,7 +15,7 @@ const photoModules = import.meta.glob(
   },
 ) as Record<string, string>
 
-const iconModules = import.meta.glob('../../content/icons/**/*.{svg,png,ico}', {
+const iconModules = import.meta.glob('@content/icons/**/*.{svg,png,ico}', {
   eager: true,
   query: '?url',
   import: 'default',
@@ -25,20 +25,16 @@ function urlFromModules(
   modules: Record<string, string>,
   filename: string,
 ): string | undefined {
-  const match = Object.entries(modules).find(([modulePath]) =>
+  return Object.entries(modules).find(([modulePath]) =>
     modulePath.replaceAll('\\', '/').endsWith(`/${filename}`),
-  )
-
-  return match?.[1]
+  )?.[1]
 }
 
 function photoUrl(filename: string): string {
   const url = urlFromModules(photoModules, filename)
 
   if (!url) {
-    throw new Error(
-      `Missing content/photos/${filename}. Run npm run setup to copy content.example/, or add the file.`,
-    )
+    throw new Error(`Missing photos/${filename} in the active content pack.`)
   }
 
   return url

@@ -1,21 +1,28 @@
-import { existsSync, readFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
+import { resolveContentDir } from './scripts/contentRoot.ts'
 import {
   buildDocumentHead,
   documentHeadTags,
   escapeHtml,
 } from './src/seo/documentHead.ts'
 
+function viteContentDir(rootDir: string): string {
+  try {
+    return resolveContentDir(rootDir)
+  } catch {
+    return path.join(rootDir, 'content')
+  }
+}
+
 function htmlSeoPlugin(rootDir: string): Plugin {
   return {
     name: 'html-seo',
     transformIndexHtml(html) {
-      const contentDir = existsSync(path.join(rootDir, 'content', 'en.json'))
-        ? path.join(rootDir, 'content')
-        : path.join(rootDir, 'content.example')
+      const contentDir = resolveContentDir(rootDir)
       const resume = JSON.parse(
         readFileSync(path.join(contentDir, 'en.json'), 'utf8'),
       ) as { user: { name: string }; cv: { title: string; summary: string } }
@@ -53,13 +60,15 @@ function viteBase(): string {
   return withLeading.endsWith('/') ? withLeading : `${withLeading}/`
 }
 
+const rootDir = path.resolve(__dirname)
+
 export default defineConfig({
   base: viteBase(),
-  plugins: [react(), tailwindcss(), htmlSeoPlugin(path.resolve(__dirname))],
+  plugins: [react(), tailwindcss(), htmlSeoPlugin(rootDir)],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@content': path.resolve(__dirname, './content'),
+      '@': path.resolve(rootDir, './src'),
+      '@content': viteContentDir(rootDir),
     },
   },
 })

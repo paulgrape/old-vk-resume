@@ -12,7 +12,7 @@ import {
   type ContactId,
 } from '@/data/contactLogos'
 import type { AppMenuItem, ProfileField } from '@/data/profile'
-import { skillIconUrls } from '@/data/skillIcons'
+import { resolveSkillIconSrc, skillIconUrls } from '@/data/skillIcons'
 import {
   resumeRouteHrefs,
   type ResumeNavItem,
@@ -186,7 +186,7 @@ export function hydrateResume(
       title: group.title,
       items: group.items.map(name => ({
         name,
-        iconSrc: skillIconUrls[name],
+        iconSrc: resolveSkillIconSrc(name, resolveIcon, skillIconUrls),
       })),
     })),
     projectsSection: resume.projectsSection,

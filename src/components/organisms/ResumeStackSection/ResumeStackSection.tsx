@@ -1,6 +1,7 @@
 import { FriendCard } from '@/components/molecules/FriendCard/FriendCard'
 import { SectionHeader } from '@/components/molecules/SectionHeader/SectionHeader'
 import type { SkillGroup, SkillItem } from '@/data/resume'
+import { skillGroupUsesGrid } from '@/data/skillIcons'
 import { interpolate } from '@/i18n/interpolate'
 
 type ResumeStackSectionProps = {
@@ -49,10 +50,6 @@ function SkillFriendsGrid({
   )
 }
 
-function hasAnySkillIcon(groups: readonly SkillGroup[]) {
-  return groups.some(group => group.items.some(item => item.iconSrc))
-}
-
 function SkillGroupHeading({ title }: { title: string }) {
   return (
     <div className='text-left px-2 pt-1 text-[11px] text-vk-muted'>{title}</div>
@@ -84,7 +81,6 @@ export function ResumeStackSection({
   linkHref,
 }: ResumeStackSectionProps) {
   const compact = variant === 'compact'
-  const useGrid = hasAnySkillIcon(skillGroups)
   const total = skillGroups.reduce((sum, group) => sum + group.items.length, 0)
 
   if (compact) {
@@ -99,7 +95,11 @@ export function ResumeStackSection({
         {skillGroups.map(group => (
           <div key={group.title}>
             <SkillGroupHeading title={group.title} />
-            <SkillGroupBody items={group.items} compact useGrid={useGrid} />
+            <SkillGroupBody
+              items={group.items}
+              compact
+              useGrid={skillGroupUsesGrid(group.items)}
+            />
           </div>
         ))}
       </section>
@@ -120,7 +120,7 @@ export function ResumeStackSection({
           <SkillGroupBody
             items={group.items}
             compact={false}
-            useGrid={useGrid}
+            useGrid={skillGroupUsesGrid(group.items)}
           />
         </div>
       ))}

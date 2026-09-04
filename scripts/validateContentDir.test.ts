@@ -6,9 +6,9 @@ import { validateContentDir } from './validateContentDir.ts'
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 
 describe('validateContentDir', () => {
-  it('accepts content.example', () => {
+  it('accepts committed content/', () => {
     expect(() =>
-      validateContentDir(path.join(rootDir, 'content.example')),
+      validateContentDir(path.join(rootDir, 'content')),
     ).not.toThrow()
   })
 })

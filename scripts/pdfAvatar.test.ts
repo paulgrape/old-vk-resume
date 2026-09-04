@@ -9,9 +9,9 @@ import {
   readPdfAvatar,
 } from './pdfAvatar.ts'
 
-const exampleDir = path.resolve(
+const contentDir = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
-  '../content.example',
+  '../content',
 )
 
 describe('pdfAvatar', () => {
@@ -41,14 +41,14 @@ describe('pdfAvatar', () => {
     expect(docxImageType('placeholder.svg')).toBeNull()
   })
 
-  it('reads the sample avatar from content.example', () => {
-    const avatar = readPdfAvatar(exampleDir, 'placeholder.svg')
+  it('reads the sample avatar from content/', () => {
+    const avatar = readPdfAvatar(contentDir, 'placeholder.svg')
 
     expect(avatar).not.toBeNull()
     expect(avatar?.byteLength).toBeGreaterThan(0)
   })
 
   it('does not treat the sample svg as a Word photo', () => {
-    expect(readDocxAvatar(exampleDir, 'placeholder.svg')).toBeNull()
+    expect(readDocxAvatar(contentDir, 'placeholder.svg')).toBeNull()
   })
 })

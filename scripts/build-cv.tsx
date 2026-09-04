@@ -13,6 +13,7 @@ import {
   renderToFile,
 } from '@react-pdf/renderer'
 import { writeCvDocx } from './buildCvDocx.ts'
+import { resolveContentDir } from './contentRoot.ts'
 import { cvFileName, cvOutputDir } from '../src/data/cvFiles.ts'
 import type { Locale } from '../src/i18n/locales.ts'
 import type { ReactNode } from 'react'
@@ -84,7 +85,7 @@ type SiteJson = {
 }
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const contentDir = path.join(rootDir, 'content')
+const contentDir = resolveContentDir(rootDir)
 const fontsDir = path.join(contentDir, 'fonts')
 const outDir = path.join(rootDir, 'public', cvOutputDir)
 

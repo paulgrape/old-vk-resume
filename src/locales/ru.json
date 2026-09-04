@@ -135,7 +135,7 @@
     "contacts": {
       "title": "Мои Контакты",
       "subtitle": "get in touch",
-      "description": "Способы связаться для обсуждения frontend-роли, продукта или технического проекта.",
+      "description": "Способы связаться.",
       "details": ["Telegram", "Email", "LinkedIn"]
     },
     "downloadCv": {

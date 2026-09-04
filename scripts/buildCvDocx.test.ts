@@ -9,19 +9,19 @@ import {
   type CvDocxSite,
 } from './buildCvDocx.ts'
 
-const exampleDir = path.resolve(
+const contentDir = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
-  '../content.example',
+  '../content',
 )
 
-function readExample<T>(name: string): T {
-  return JSON.parse(readFileSync(path.join(exampleDir, name), 'utf8')) as T
+function readContent<T>(name: string): T {
+  return JSON.parse(readFileSync(path.join(contentDir, name), 'utf8')) as T
 }
 
 describe('createCvDocument', () => {
   it('packs a zip-shaped docx from the sample resume', async () => {
-    const resume = readExample<CvDocxResume>('en.json')
-    const site = readExample<CvDocxSite>('site.json')
+    const resume = readContent<CvDocxResume>('en.json')
+    const site = readContent<CvDocxSite>('site.json')
     const buffer = await Packer.toBuffer(createCvDocument(resume, site))
 
     expect(buffer[0]).toBe(0x50)
@@ -30,8 +30,8 @@ describe('createCvDocument', () => {
   })
 
   it('embeds a raster photo next to the name', async () => {
-    const resume = readExample<CvDocxResume>('en.json')
-    const site = readExample<CvDocxSite>('site.json')
+    const resume = readContent<CvDocxResume>('en.json')
+    const site = readContent<CvDocxSite>('site.json')
     const photo = Buffer.from(
       'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
       'base64',
