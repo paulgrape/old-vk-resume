@@ -1,0 +1,144 @@
+{
+  "user": {
+    "name": "Алекс Сэмпл",
+    "titlebarSubtitle": "(frontend developer)",
+    "status": "онлайн",
+    "profileStatus": "Снова выкладываю интерфейсы в открытый доступ.",
+    "specialization": "Frontend"
+  },
+  "cv": {
+    "title": "Frontend Developer",
+    "location": "Удалённо",
+    "summary": "Фронтенд-разработчик, который доводит UI от макета до продакшена. Спокойно живу в React и TypeScript, в дизайн-системах и в последней миле доставки.",
+    "languages": ["Английский - свободный", "Русский - свободный"],
+    "education": [
+      {
+        "degree": "Бакалавр, информатика",
+        "institution": "Example University",
+        "period": "2016 - 2020"
+      }
+    ],
+    "sections": {
+      "summary": "О себе",
+      "skills": "Технические навыки",
+      "experience": "Опыт работы",
+      "projects": "Избранные проекты",
+      "stack": "Стек",
+      "education": "Образование",
+      "languages": "Языки"
+    },
+    "updated": "2026-08"
+  },
+  "topNavLinks": [
+    { "id": "experience", "label": "опыт" },
+    { "id": "projects", "label": "проекты" },
+    { "id": "stack", "label": "стек" },
+    { "id": "contacts", "label": "контакты" },
+    { "id": "github", "label": "github" },
+    { "id": "linkedin", "label": "linkedin" }
+  ],
+  "sidebarNavItems": [
+    { "id": "home", "label": "Моя Страница" },
+    { "id": "experience", "label": "Мой Опыт" },
+    { "id": "projects", "label": "Мои Проекты" },
+    { "id": "stack", "label": "Мои Навыки" },
+    { "id": "achievements", "label": "Мои Достижения" },
+    { "id": "contacts", "label": "Мои Контакты" },
+    { "id": "downloadCv", "label": "Скачать CV" }
+  ],
+  "appMenuItems": [
+    { "label": "Open to work", "badge": "remote" },
+    { "label": "English", "badge": "Fluent" }
+  ],
+  "fields": [
+    {
+      "label": "Город:",
+      "value": "Удалённо",
+      "link": false
+    },
+    {
+      "label": "Опыт:",
+      "value": "Frontend, UI, delivery",
+      "link": false
+    },
+    {
+      "label": "Основной стек:",
+      "value": "React, TypeScript, Vite",
+      "link": false
+    },
+    {
+      "label": "Языки:",
+      "value": "English, Русский",
+      "link": false
+    }
+  ],
+  "skillGroups": [
+    {
+      "title": "Frontend",
+      "items": ["React", "TypeScript", "Vite"]
+    },
+    {
+      "title": "Tooling",
+      "items": ["Vitest", "Playwright", "Docker"]
+    }
+  ],
+  "projectsSection": {
+    "title": "Избранное",
+    "count": "1 проект",
+    "linkText": "подробнее"
+  },
+  "projects": [
+    {
+      "title": "Harbor Board",
+      "description": "Небольшая доска для волонтёрской гавани: места у причала, погода и публичная карта. Vite-приложение с тонким API.",
+      "features": [
+        "Живая доска причалов на общем экране",
+        "Публичная карта мест и объявлений",
+        "Деплой одной командой"
+      ],
+      "stack": ["React", "TypeScript", "Vite"],
+      "metric": "12 мест",
+      "href": "https://github.com/example"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Example University '20",
+      "major": "Информатика",
+      "status": "Бакалавр"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "Доска гавани за шесть недель",
+      "description": "Заменили бумажный список живой доской, которую волонтёры не выключают.",
+      "year": "2025"
+    }
+  ],
+  "experienceSection": {
+    "title": "Опыт работы",
+    "count": "карьерный путь",
+    "linkText": "подробнее"
+  },
+  "experience": [
+    {
+      "company": "Example Studio",
+      "role": "Frontend Developer",
+      "period": "2022 - наст.вр.",
+      "summary": "Держу продуктовый UI: новые экраны, общий набор компонентов и чеклист релиза.",
+      "highlights": [
+        "Урезал JavaScript первой загрузки основного приложения примерно на треть.",
+        "Перевёл набор из Figma в типизированную библиотеку компонентов, из которой собирает вся команда."
+      ],
+      "stack": ["React", "TypeScript", "Vite"]
+    }
+  ],
+  "footerLinks": [
+    { "id": "github", "label": "GitHub" },
+    { "id": "linkedin", "label": "LinkedIn" },
+    { "id": "telegram", "label": "Telegram" },
+    { "id": "email", "label": "Email" },
+    { "id": "downloadCv", "label": "CV" }
+  ],
+  "footerCopyright": "© 2026, Алекс Сэмпл"
+}

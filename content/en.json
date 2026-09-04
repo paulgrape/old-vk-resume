@@ -1,0 +1,144 @@
+{
+  "user": {
+    "name": "Alex Sample",
+    "titlebarSubtitle": "(frontend developer)",
+    "status": "online",
+    "profileStatus": "Shipping UI in public again.",
+    "specialization": "Frontend"
+  },
+  "cv": {
+    "title": "Frontend Developer",
+    "location": "Remote",
+    "summary": "Frontend developer who takes product UI from sketch to production. Comfortable owning React and TypeScript code, design-system work, and the last mile of delivery.",
+    "languages": ["English - Fluent", "Russian - Fluent"],
+    "education": [
+      {
+        "degree": "BSc, Computer Science",
+        "institution": "Example University",
+        "period": "2016 - 2020"
+      }
+    ],
+    "sections": {
+      "summary": "Professional Summary",
+      "skills": "Technical Skills",
+      "experience": "Professional Experience",
+      "projects": "Selected Projects",
+      "stack": "Stack",
+      "education": "Education",
+      "languages": "Languages"
+    },
+    "updated": "2026-08"
+  },
+  "topNavLinks": [
+    { "id": "experience", "label": "experience" },
+    { "id": "projects", "label": "projects" },
+    { "id": "stack", "label": "stack" },
+    { "id": "contacts", "label": "contacts" },
+    { "id": "github", "label": "github" },
+    { "id": "linkedin", "label": "linkedin" }
+  ],
+  "sidebarNavItems": [
+    { "id": "home", "label": "My Page" },
+    { "id": "experience", "label": "My Experience" },
+    { "id": "projects", "label": "My Projects" },
+    { "id": "stack", "label": "My Skills" },
+    { "id": "achievements", "label": "My Achievements" },
+    { "id": "contacts", "label": "My Contacts" },
+    { "id": "downloadCv", "label": "Download CV" }
+  ],
+  "appMenuItems": [
+    { "label": "Open to work", "badge": "remote" },
+    { "label": "English", "badge": "Fluent" }
+  ],
+  "fields": [
+    {
+      "label": "Location:",
+      "value": "Remote",
+      "link": false
+    },
+    {
+      "label": "Experience:",
+      "value": "Frontend, UI, delivery",
+      "link": false
+    },
+    {
+      "label": "Core stack:",
+      "value": "React, TypeScript, Vite",
+      "link": false
+    },
+    {
+      "label": "Languages:",
+      "value": "English, Russian",
+      "link": false
+    }
+  ],
+  "skillGroups": [
+    {
+      "title": "Frontend",
+      "items": ["React", "TypeScript", "Vite"]
+    },
+    {
+      "title": "Tooling",
+      "items": ["Vitest", "Playwright", "Docker"]
+    }
+  ],
+  "projectsSection": {
+    "title": "Featured Projects",
+    "count": "1 project",
+    "linkText": "details"
+  },
+  "projects": [
+    {
+      "title": "Harbor Board",
+      "description": "A small ops board for a volunteer harbor: berth status, weather, and a public map. Built as a Vite app with a thin API.",
+      "features": [
+        "Live berth board on a shared TV",
+        "Public map of slips and notices",
+        "One-command deploy"
+      ],
+      "stack": ["React", "TypeScript", "Vite"],
+      "metric": "12 slips",
+      "href": "https://github.com/example"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Example University '20",
+      "major": "Computer Science",
+      "status": "Bachelor's"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "Harbor board in six weeks",
+      "description": "Replaced a paper roster with a live board the volunteers actually leave on.",
+      "year": "2025"
+    }
+  ],
+  "experienceSection": {
+    "title": "Experience",
+    "count": "career timeline",
+    "linkText": "details"
+  },
+  "experience": [
+    {
+      "company": "Example Studio",
+      "role": "Frontend Developer",
+      "period": "2022 - Present",
+      "summary": "Own the product UI: new screens, the shared component set, and the release checklist.",
+      "highlights": [
+        "Cut first-load JavaScript on the main app by a third.",
+        "Turned a Figma kit into a typed component library the rest of the team ships from."
+      ],
+      "stack": ["React", "TypeScript", "Vite"]
+    }
+  ],
+  "footerLinks": [
+    { "id": "github", "label": "GitHub" },
+    { "id": "linkedin", "label": "LinkedIn" },
+    { "id": "telegram", "label": "Telegram" },
+    { "id": "email", "label": "Email" },
+    { "id": "downloadCv", "label": "CV" }
+  ],
+  "footerCopyright": "© 2026, Alex Sample"
+}

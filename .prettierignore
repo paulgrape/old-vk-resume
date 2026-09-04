@@ -1,0 +1,12 @@
+dist
+node_modules
+package-lock.json
+content.frontend
+content.bak
+content.bak-*
+public/cv
+*.pdf
+*.docx
+/_*.txt
+/_*.py
+/_*.xml

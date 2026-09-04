@@ -1,0 +1,147 @@
+{
+  "ui": {
+    "searchPlaceholder": "Search",
+    "writeMessage": "Write a message",
+    "reply": "Reply",
+    "like": "Like",
+    "showAll": "all",
+    "skillsCount": "{count} skills",
+    "skillsTitle": "Skills",
+    "phone": "Mobile:",
+    "email": "Email:",
+    "telegram": "Telegram:",
+    "education": {
+      "title": "Education",
+      "count": "{count} universities",
+      "linkText": "details",
+      "institution": "College or university:",
+      "department": "Department:",
+      "major": "Major:",
+      "mode": "Mode of study:",
+      "status": "Status:"
+    },
+    "achievements": {
+      "count": "{count} highlights"
+    },
+    "contacts": {
+      "telegram": "Telegram",
+      "email": "Email",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "phone": "Phone",
+      "whatsapp": "WhatsApp",
+      "discord": "Discord",
+      "skype": "Skype",
+      "signal": "Signal",
+      "viber": "Viber",
+      "slack": "Slack",
+      "vk": "VK",
+      "instagram": "Instagram",
+      "x": "X",
+      "facebook": "Facebook",
+      "messenger": "Messenger",
+      "youtube": "YouTube",
+      "gitlab": "GitLab",
+      "stackoverflow": "Stack Overflow",
+      "behance": "Behance",
+      "dribbble": "Dribbble",
+      "mastodon": "Mastodon",
+      "bluesky": "Bluesky",
+      "reddit": "Reddit",
+      "twitch": "Twitch",
+      "calendly": "Calendly",
+      "microsoftteams": "Microsoft Teams",
+      "wechat": "WeChat"
+    },
+    "projectDemo": "demo",
+    "projectNpm": "npm",
+    "projectGithub": "GitHub",
+    "projectFeatures": "Features",
+    "projectStack": "Stack",
+    "downloadCv": {
+      "download": "Download {format} ({language})",
+      "formats": {
+        "pdf": "PDF",
+        "docx": "DOCX"
+      },
+      "languages": {
+        "en": "English",
+        "ru": "Russian"
+      }
+    },
+    "skipToContent": "Skip to content",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "That address is not a resume page.",
+    "errorTitle": "Something went wrong",
+    "errorBody": "The page failed to render. Try again or go back home.",
+    "errorRetry": "Try again",
+    "photoPrevious": "Previous photo",
+    "photoNext": "Next photo",
+    "backHome": "Back to home",
+    "backToResume": "to resume",
+    "localeSwitch": "Language",
+    "photoOf": "Photo {current} of {total}",
+    "close": "Close",
+    "photoAdded": "Added {date}",
+    "photoAlbum": "Profile photos",
+    "photoAlbumLabel": "Album:",
+    "photoSenderLabel": "User:",
+    "commentsHidden": "Comments are hidden due to the user's privacy settings.",
+    "footerDisclaimer": "Non-commercial personal website. Not affiliated with, endorsed by, or connected to VK / VKontakte or VK Company Limited."
+  },
+  "routes": {
+    "home": {
+      "title": "My Page",
+      "subtitle": "resume profile",
+      "description": "Resume home with a short profile, featured projects and experience.",
+      "details": ["Profile", "Projects", "Work experience"]
+    },
+    "experience": {
+      "title": "My Experience",
+      "subtitle": "frontend timeline",
+      "description": "A detailed page about roles, ownership and results in product teams.",
+      "details": [
+        "Senior frontend delivery",
+        "UI architecture",
+        "Mentoring and reviews"
+      ]
+    },
+    "projects": {
+      "title": "My Projects",
+      "subtitle": "selected work",
+      "description": "Selected work focused on interfaces, design systems, platform solutions and DX.",
+      "details": ["Old VK Resume", "Design System", "Frontend Platform"]
+    },
+    "stack": {
+      "title": "My Skills",
+      "subtitle": "technology stack",
+      "description": "Technologies and practices I use regularly when building frontend products.",
+      "details": [
+        "React and TypeScript",
+        "Vite and CI/CD",
+        "Accessibility and performance"
+      ]
+    },
+    "achievements": {
+      "title": "My Achievements",
+      "subtitle": "impact highlights",
+      "description": "A short list of notable results: faster interfaces, better release quality and stronger team practices.",
+      "details": [
+        "Core Web Vitals",
+        "Reusable UI foundations",
+        "Release quality"
+      ]
+    },
+    "contacts": {
+      "title": "My Contacts",
+      "subtitle": "get in touch",
+      "description": "Ways to get in touch.",
+      "details": ["Telegram", "Email", "LinkedIn"]
+    },
+    "downloadCv": {
+      "title": "Download CV",
+      "subtitle": "pdf and docx",
+      "details": ["English CV", "Russian CV", "PDF and DOCX"]
+    }
+  }
+}

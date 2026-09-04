@@ -1,0 +1,189 @@
+@import 'tailwindcss';
+
+@theme {
+  /* VK palette — reuse via bg-vk-*, text-vk-*, border-vk-*, etc. */
+  --breakpoint-vk: 791px;
+  --color-vk-link: #2b587a;
+  --color-vk-border: #d2d9e0;
+  --color-vk-border-light: #eef0f2;
+  --color-vk-muted: #909499;
+  --color-vk-heading: #506a8d;
+  --color-vk-heading-dark: #2b3d4f;
+  --color-vk-badge-text: #507299;
+  --color-vk-badge-bg: #d9e6f0;
+  --color-vk-titlebar: #ede5b7;
+  --color-vk-section-bg: #f0f2f5;
+  --color-vk-footer: #e9ecf1;
+  --color-vk-friends-header: #dee3ec;
+  --color-vk-friends-count: #f1f1f1;
+  --color-vk-placeholder: #999999;
+  --color-vk-text: #333333;
+  --color-vk-text-subtle: #555555;
+  --color-vk-header-top: #476d96;
+  --color-vk-header-mid: #5d8ab8;
+  --color-vk-header-bottom: #6e9fc8;
+  --color-vk-avatar-from: #c8d5df;
+  --color-vk-avatar-to: #8fa5b5;
+  --color-vk-friend-avatar-from: #dde6ef;
+  --color-vk-friend-avatar-to: #b0c2d0;
+  --color-vk-tab-glow: #5eb0e5;
+}
+
+@utility bg-vk-header {
+  background: linear-gradient(
+    to bottom,
+    var(--color-vk-header-top) 0%,
+    var(--color-vk-header-mid) 40%,
+    var(--color-vk-header-bottom) 100%
+  );
+}
+
+@utility bg-vk-tabbar {
+  background: linear-gradient(
+    to bottom,
+    #4a4a4a 0%,
+    #2a2a2a 49%,
+    #000 50%,
+    #1a1a1a 100%
+  );
+}
+
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  /* --sans: system-ui, 'Segoe UI', Roboto, sans-serif; */
+  --sans: 'Tahoma', sans-serif;
+  /* --heading: system-ui, 'Segoe UI', Roboto, sans-serif; */
+  --heading: 'Tahoma', sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+#root {
+  /* width: 1126px; */
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  @media (max-width: 790px) {
+    border-inline: none;
+    text-align: left;
+  }
+}
+
+body {
+  margin: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  z-index: 2000;
+  padding: 8px 12px;
+  background: #fff;
+  color: var(--color-vk-link);
+  font-size: 13px;
+  text-decoration: underline;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+#main-content:focus {
+  outline: none;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}

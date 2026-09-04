@@ -1,0 +1,147 @@
+{
+  "ui": {
+    "searchPlaceholder": "Поиск",
+    "writeMessage": "Написать сообщение",
+    "reply": "Ответить",
+    "like": "Мне нравится",
+    "showAll": "все",
+    "skillsCount": "{count} навыков",
+    "skillsTitle": "Навыки",
+    "phone": "Моб. телефон:",
+    "email": "E-mail:",
+    "telegram": "Telegram:",
+    "education": {
+      "title": "Образование",
+      "count": "{count} вуза",
+      "linkText": "подробнее",
+      "institution": "Вуз:",
+      "department": "Факультет:",
+      "major": "Специальность:",
+      "mode": "Форма обучения:",
+      "status": "Статус:"
+    },
+    "achievements": {
+      "count": "{count} достижений"
+    },
+    "contacts": {
+      "telegram": "Telegram",
+      "email": "E-mail",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "phone": "Телефон",
+      "whatsapp": "WhatsApp",
+      "discord": "Discord",
+      "skype": "Skype",
+      "signal": "Signal",
+      "viber": "Viber",
+      "slack": "Slack",
+      "vk": "ВКонтакте",
+      "instagram": "Instagram",
+      "x": "X",
+      "facebook": "Facebook",
+      "messenger": "Messenger",
+      "youtube": "YouTube",
+      "gitlab": "GitLab",
+      "stackoverflow": "Stack Overflow",
+      "behance": "Behance",
+      "dribbble": "Dribbble",
+      "mastodon": "Mastodon",
+      "bluesky": "Bluesky",
+      "reddit": "Reddit",
+      "twitch": "Twitch",
+      "calendly": "Calendly",
+      "microsoftteams": "Microsoft Teams",
+      "wechat": "WeChat"
+    },
+    "projectDemo": "демо",
+    "projectNpm": "npm",
+    "projectGithub": "GitHub",
+    "projectFeatures": "Возможности",
+    "projectStack": "Стек",
+    "downloadCv": {
+      "download": "Скачать {format} ({language})",
+      "formats": {
+        "pdf": "PDF",
+        "docx": "DOCX"
+      },
+      "languages": {
+        "en": "английский",
+        "ru": "русский"
+      }
+    },
+    "skipToContent": "К основному содержимому",
+    "notFoundTitle": "Страница не найдена",
+    "notFoundBody": "Этого адреса нет среди страниц резюме.",
+    "errorTitle": "Что-то пошло не так",
+    "errorBody": "Страница не открылась. Попробуйте ещё раз или вернитесь на главную.",
+    "errorRetry": "Попробовать снова",
+    "photoPrevious": "Предыдущее фото",
+    "photoNext": "Следующее фото",
+    "backHome": "Вернуться на главную",
+    "backToResume": "к резюме",
+    "localeSwitch": "Язык",
+    "photoOf": "Фотография {current} из {total}",
+    "close": "Закрыть",
+    "photoAdded": "Добавлена {date}",
+    "photoAlbum": "Фотографии со страницы",
+    "photoAlbumLabel": "Альбом:",
+    "photoSenderLabel": "Пользователь:",
+    "commentsHidden": "Комментарии скрыты настройками приватности пользователя.",
+    "footerDisclaimer": "Некоммерческий личный сайт. Не связан с VK / ВКонтакте и VK Company Limited, не является их продуктом и не одобрен ими."
+  },
+  "routes": {
+    "home": {
+      "title": "Моя Страница",
+      "subtitle": "resume profile",
+      "description": "Главная страница резюме с кратким профилем, проектами и опытом.",
+      "details": ["Профиль", "Проекты", "Опыт работы"]
+    },
+    "experience": {
+      "title": "Мой Опыт",
+      "subtitle": "frontend timeline",
+      "description": "Подробная страница про роли, зоны ответственности и результаты в продуктовых командах.",
+      "details": [
+        "Senior frontend delivery",
+        "UI architecture",
+        "Mentoring and reviews"
+      ]
+    },
+    "projects": {
+      "title": "Мои Проекты",
+      "subtitle": "selected work",
+      "description": "Подборка проектов с акцентом на интерфейсы, дизайн-системы, платформенные решения и DX.",
+      "details": ["Old VK Resume", "Design System", "Frontend Platform"]
+    },
+    "stack": {
+      "title": "Мои Навыки",
+      "subtitle": "technology stack",
+      "description": "Технологии и практики, которыми я регулярно пользуюсь при разработке frontend-продуктов.",
+      "details": [
+        "React and TypeScript",
+        "Vite and CI/CD",
+        "Accessibility and performance"
+      ]
+    },
+    "achievements": {
+      "title": "Мои Достижения",
+      "subtitle": "impact highlights",
+      "description": "Короткий список заметных результатов: ускорение интерфейсов, улучшение качества релизов и развитие командных практик.",
+      "details": [
+        "Core Web Vitals",
+        "Reusable UI foundations",
+        "Release quality"
+      ]
+    },
+    "contacts": {
+      "title": "Мои Контакты",
+      "subtitle": "get in touch",
+      "description": "Способы связаться.",
+      "details": ["Telegram", "Email", "LinkedIn"]
+    },
+    "downloadCv": {
+      "title": "Скачать CV",
+      "subtitle": "pdf и docx",
+      "details": ["Резюме на русском", "Резюме на английском", "PDF и DOCX"]
+    }
+  }
+}
