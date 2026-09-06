@@ -12,17 +12,10 @@ dist
 dist-ssr
 *.local
 
-# Origin-only personal packs and generated CVs. The sample resume lives in
-# committed content/. A live site from this template should commit content/.
-/content.frontend/
-/content.bak/
-/content.bak-*/
+# Generated CVs. The sample resume lives in committed content/.
 /public/cv/
 /*.pdf
 /*.docx
-/_*.txt
-/_*.py
-/_*.xml
 
 # Editor directories and files
 .vscode/*

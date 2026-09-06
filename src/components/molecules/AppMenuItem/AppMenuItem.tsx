@@ -9,9 +9,9 @@ type AppMenuItemProps = {
 
 export function AppMenuItem({ label, badge, href = '#' }: AppMenuItemProps) {
   return (
-    <li className='flex items-center justify-between py-[2px]'>
+    <li className='flex items-center justify-start gap-1.5 py-[2px]'>
       <VkLink href={href}>{label}</VkLink>
-      {badge && <Badge>{badge}</Badge>}
+      {badge ? <Badge>{badge}</Badge> : null}
     </li>
   )
 }

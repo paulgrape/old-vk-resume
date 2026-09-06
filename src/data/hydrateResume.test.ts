@@ -43,6 +43,15 @@ describe('hydrateResume', () => {
     expect(resume.phone).toBeUndefined()
   })
 
+  it('puts project and skill counts on the matching sidebar items', () => {
+    expect(
+      resume.sidebarNavItems.find(item => item.href === '#/projects')?.badge,
+    ).toBe('+1')
+    expect(
+      resume.sidebarNavItems.find(item => item.href === '#/stack')?.badge,
+    ).toBe('+6')
+  })
+
   it('keeps the achievements nav item when the list is non-empty', () => {
     expect(
       resume.sidebarNavItems.some(item => item.href === '#/achievements'),

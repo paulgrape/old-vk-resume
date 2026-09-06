@@ -1,23 +1,23 @@
 import {
+  contactIds,
+  contactLogoUrls,
+  isContactId,
+  type ContactId,
+} from '@/data/contactLogos'
+import {
   contactHref,
   contactValue,
   telHref,
   telegramHandle,
 } from '@/data/contacts'
 import type { ResumeJson, SiteConfig, SitePhotos } from '@/data/contentTypes'
-import {
-  contactIds,
-  contactLogoUrls,
-  isContactId,
-  type ContactId,
-} from '@/data/contactLogos'
 import type { AppMenuItem, ProfileField } from '@/data/profile'
-import { resolveSkillIconSrc, skillIconUrls } from '@/data/skillIcons'
 import {
   resumeRouteHrefs,
   type ResumeNavItem,
   type ResumeRouteId,
 } from '@/data/resumeRoutes'
+import { resolveSkillIconSrc, skillIconUrls } from '@/data/skillIcons'
 
 export type SkillItem = {
   name: string
@@ -65,8 +65,8 @@ export type ExperienceEntry = {
   logoSrc?: string
 }
 
-export type { ResumeJson }
 export { contactHref, telHref, telegramHandle }
+export type { ResumeJson }
 
 export type FooterLink = {
   label: string
@@ -149,12 +149,41 @@ function getNavHref(site: SiteConfig, id: string): string | undefined {
 function hydrateNavItems(
   site: SiteConfig,
   items: readonly { id: string; label: string }[],
+  badgeForId?: (id: string) => string | undefined,
 ): ResumeNavItem[] {
   return items.flatMap(item => {
     const href = getNavHref(site, item.id)
 
-    return href ? [{ label: item.label, href }] : []
+    if (!href) {
+      return []
+    }
+
+    const badge = badgeForId?.(item.id)
+
+    return badge
+      ? [{ label: item.label, href, badge }]
+      : [{ label: item.label, href }]
   })
+}
+
+function sidebarNavBadge(id: string, resume: ResumeJson): string | undefined {
+  if (id === 'projects') {
+    return '+' + String(resume.projects.length)
+  }
+
+  if (id === 'stack') {
+    return (
+      '+' +
+      String(
+        resume.skillGroups.reduce(
+          (total, group) => total + group.items.length,
+          0,
+        ),
+      )
+    )
+  }
+
+  return undefined
 }
 
 function achievementsFromResume(resume: ResumeJson): AchievementEntry[] {
@@ -179,6 +208,7 @@ export function hydrateResume(
       resume.sidebarNavItems.filter(
         item => item.id !== 'achievements' || achievements.length > 0,
       ),
+      id => sidebarNavBadge(id, resume),
     ),
     appMenuItems: resume.appMenuItems,
     fields: resume.fields,

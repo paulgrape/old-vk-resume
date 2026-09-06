@@ -5,6 +5,7 @@ type VkLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   size?: 'xs' | 'sm' | 'md'
   bold?: boolean
   block?: boolean
+  hoverUnderline?: boolean
 }
 
 const sizeClasses = {
@@ -18,6 +19,7 @@ export function VkLink({
   size = 'sm',
   bold = false,
   block = false,
+  hoverUnderline = true,
   className = '',
   href = '#',
   ...props
@@ -25,7 +27,7 @@ export function VkLink({
   return (
     <a
       href={href}
-      className={`text-vk-link no-underline hover:underline ${sizeClasses[size]} ${bold ? 'font-bold' : ''} ${block ? 'block' : ''} ${className}`.trim()}
+      className={`text-vk-link no-underline ${hoverUnderline ? 'hover:underline' : ''} ${sizeClasses[size]} ${bold ? 'font-bold' : ''} ${block ? 'block' : ''} ${className}`.trim()}
       {...props}
     >
       {children}

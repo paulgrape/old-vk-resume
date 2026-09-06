@@ -1,12 +1,14 @@
-import { SidebarMenuItem } from '@/components/molecules/SidebarMenuItem/SidebarMenuItem'
 import { AppMenuItem } from '@/components/molecules/AppMenuItem/AppMenuItem'
+import { SidebarMenuItem } from '@/components/molecules/SidebarMenuItem/SidebarMenuItem'
 import type { AppMenuItem as AppMenuItemData } from '@/data/profile'
+import { resumeRouteHrefs } from '@/data/resumeRoutes'
 
 type NavigationItem =
   | string
   | {
       label: string
       href: string
+      badge?: string
     }
 
 type SidebarNavProps = {
@@ -19,23 +21,37 @@ function getNavigationItemData(item: NavigationItem) {
 }
 
 export function SidebarNav({ navItems, appItems }: SidebarNavProps) {
+  const items = navItems.map(getNavigationItemData)
+  const mainItems = items.filter(
+    item => item.href !== resumeRouteHrefs.downloadCv,
+  )
+  const downloadItems = items.filter(
+    item => item.href === resumeRouteHrefs.downloadCv,
+  )
+  const showBelow = downloadItems.length > 0 || appItems.length > 0
+
   return (
     <aside className='w-[132px] shrink-0 self-stretch bg-white scheme-light'>
-      <ul className='list-none self-start items-start m-0 p-0 pt-[5px] px-1'>
-        {navItems.map(navItem => {
-          const item = getNavigationItemData(navItem)
-
-          return (
+      <ul className='list-none self-start items-start m-0 p-0 pt-[5px] pl-1'>
+        {mainItems.map(item => (
+          <SidebarMenuItem
+            key={item.label}
+            label={item.label}
+            href={item.href}
+            badge={item.badge}
+          />
+        ))}
+      </ul>
+      {showBelow ? (
+        <ul className='list-none self-start items-start m-0 p-0 pt-2 px-1 border-t border-vk-border-light'>
+          {downloadItems.map(item => (
             <SidebarMenuItem
               key={item.label}
               label={item.label}
               href={item.href}
+              badge={item.badge}
             />
-          )
-        })}
-      </ul>
-      {appItems.length > 0 && (
-        <ul className='list-none self-start items-start m-0 p-0 pt-2 px-1 border-t border-vk-border-light'>
+          ))}
           {appItems.map(item => (
             <AppMenuItem
               key={item.label}
@@ -45,7 +61,7 @@ export function SidebarNav({ navItems, appItems }: SidebarNavProps) {
             />
           ))}
         </ul>
-      )}
+      ) : null}
     </aside>
   )
 }

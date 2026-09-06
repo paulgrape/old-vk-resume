@@ -10,12 +10,15 @@ Node 20 or newer (`.nvmrc` pins 24).
 
 Repo owner, once: Settings → General → **Template repository**.
 
-1. On GitHub, **Use this template**. A fork copies this repo's git history.
-2. Clone. `npm i && npm run dev`.
-3. Put your resume in `content/` (JSON and a photo). An agent that loads [Agent Skills](https://agentskills.io) can fill it if you say "fill this with my resume."
-4. Commit `content/`. Settings → Pages → Build source: **GitHub Actions**. Push `main`.
+**Use this template** makes a new repo with a clean copy. A **fork** also works if you want this repo's git history (pull requests go back here).
+
+1. Clone. `npm i && npm run dev`.
+2. Put your resume in `content/` (JSON and a photo). An agent that loads [Agent Skills](https://agentskills.io) can fill it if you say "fill this with my resume."
+3. Commit `content/`. Settings → Pages → Build source: **GitHub Actions**. Push `main`.
 
 ![Alex Sample home](docs/alex-sample.png)
+
+![Alex Sample home on a phone](docs/alex-sample-mobile.png)
 
 ```
 content/
@@ -60,7 +63,7 @@ Vercel / Netlify: import the repo, output `dist/`. `vercel.json` and `public/_he
 
 Linux `npm ci`: `@emnapi/core` and `@emnapi/runtime` are pinned so wasm optional peers missing from a Windows lockfile still resolve. `package.json` overrides `eslint-plugin-jsx-a11y`'s eslint peer (published range stops at 9; the plugin runs on 10).
 
-This repository's Pages site is the Alex Sample demo. `content.frontend/` is gitignored. On the machine that maintains the template, that overlay is the live pack.
+This repository's Pages site is the Alex Sample demo.
 
 ## Hash SEO
 
@@ -135,10 +138,14 @@ Optional: omit `education` / `achievements` or pass `[]` to hide them. An empty 
 npm run setup             # fails if content/site.json is missing
 npm run validate-content  # Zod, locale parity, avatar, fonts
 npm run dev               # local
+npm run preview           # serve dist/
 npm run cv                # PDF and DOCX into public/cv/
 npm run typecheck         # setup then tsc -b
+npm run lint              # ESLint
 npm run test              # Vitest
-npm run format            # Prettier (skips content.frontend/)
+npm run format            # Prettier
 npm run format:check
 npm run build             # dist/ (respects BASE_PATH)
 ```
+
+CI runs `lint`, `format:check`, `typecheck`, `test`, and `build`. Content validation runs via `build` → `cv` → `precv`.
