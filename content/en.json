@@ -46,10 +46,7 @@
     { "id": "contacts", "label": "My Contacts" },
     { "id": "downloadCv", "label": "Download CV" }
   ],
-  "appMenuItems": [
-    { "label": "Open to work", "badge": "remote" },
-    { "label": "English", "badge": "Fluent" }
-  ],
+  "appMenuItems": [],
   "fields": [
     {
       "label": "Location:",

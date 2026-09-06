@@ -9,34 +9,25 @@ function emptyRoot(): string {
 }
 
 describe('resolveContentDir', () => {
-  it('prefers content.frontend when site.json exists there', () => {
+  it('uses content/ when site.json is present', () => {
+    const root = emptyRoot()
+    mkdirSync(path.join(root, 'content'))
+    writeFileSync(path.join(root, 'content', 'site.json'), '{}')
+
+    expect(resolveContentDir(root)).toBe(path.join(root, 'content'))
+  })
+
+  it('ignores other content.* folders when content/ exists', () => {
     const root = emptyRoot()
     mkdirSync(path.join(root, 'content.frontend'))
     writeFileSync(path.join(root, 'content.frontend', 'site.json'), '{}')
     mkdirSync(path.join(root, 'content'))
     writeFileSync(path.join(root, 'content', 'site.json'), '{}')
 
-    expect(resolveContentDir(root)).toBe(path.join(root, 'content.frontend'))
-  })
-
-  it('uses content/ when the overlay has no site.json', () => {
-    const root = emptyRoot()
-    mkdirSync(path.join(root, 'content.frontend'))
-    mkdirSync(path.join(root, 'content'))
-    writeFileSync(path.join(root, 'content', 'site.json'), '{}')
-
     expect(resolveContentDir(root)).toBe(path.join(root, 'content'))
   })
 
-  it('uses content/ when the overlay is missing', () => {
-    const root = emptyRoot()
-    mkdirSync(path.join(root, 'content'))
-    writeFileSync(path.join(root, 'content', 'site.json'), '{}')
-
-    expect(resolveContentDir(root)).toBe(path.join(root, 'content'))
-  })
-
-  it('throws when neither pack exists', () => {
+  it('throws when content/site.json is missing', () => {
     expect(() => resolveContentDir(emptyRoot())).toThrow(/Restore content/)
   })
 })

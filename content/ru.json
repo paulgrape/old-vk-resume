@@ -46,10 +46,7 @@
     { "id": "contacts", "label": "Мои Контакты" },
     { "id": "downloadCv", "label": "Скачать CV" }
   ],
-  "appMenuItems": [
-    { "label": "Open to work", "badge": "remote" },
-    { "label": "English", "badge": "Fluent" }
-  ],
+  "appMenuItems": [],
   "fields": [
     {
       "label": "Город:",

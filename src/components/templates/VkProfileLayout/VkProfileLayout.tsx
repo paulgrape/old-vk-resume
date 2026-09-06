@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react'
 import { SkipLink } from '@/components/atoms/SkipLink/SkipLink'
+import type { ReactNode } from 'react'
 
 type VkProfileLayoutProps = {
   header: ReactNode

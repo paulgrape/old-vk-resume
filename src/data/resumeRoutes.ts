@@ -10,6 +10,7 @@ export type ResumeRouteId =
 export type ResumeNavItem = {
   label: string
   href: string
+  badge?: string
 }
 
 export type ResumeRouteCopy = {
