@@ -16,9 +16,24 @@ Repo owner, once: Settings → General → **Template repository**.
 2. Put your resume in `content/` (JSON and a photo). An agent that loads [Agent Skills](https://agentskills.io) can fill it if you say "fill this with my resume."
 3. Commit `content/`. Settings → Pages → Build source: **GitHub Actions**. Push `main`.
 
-![Alex Sample home](docs/alex-sample.png)
-
-![Alex Sample home on a phone](docs/alex-sample-mobile.png)
+<table>
+  <tr>
+    <th>Desktop</th>
+    <th>Mobile</th>
+  </tr>
+  <tr>
+    <td valign="top">
+      <img src="docs/alex-sample.png" alt="Alex Sample home" width="520" />
+    </td>
+    <td valign="top">
+      <img
+        src="docs/alex-sample-mobile.png"
+        alt="Alex Sample home on a phone"
+        width="240"
+      />
+    </td>
+  </tr>
+</table>
 
 ```
 content/
