@@ -166,7 +166,7 @@ function ResumeHomeContent({
   ui: UiLabels
 }) {
   return (
-    <div className='px-2'>
+    <div className='px-2 max-vk:px-0'>
       <ProfileInfoPanel
         name={resume.user.name}
         status={resume.user.profileStatus}
@@ -177,7 +177,7 @@ function ResumeHomeContent({
         labels={ui.education}
         entries={resume.education}
       />
-      <div className='hidden -mx-2 max-vk:block'>
+      <div className='hidden max-vk:block'>
         <HomeSideRails resume={resume} ui={ui} />
       </div>
       <ResumeExperienceSection

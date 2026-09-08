@@ -18,7 +18,7 @@ export function ProfileInfoPanel({
   const educationLabel = education[0]?.institution
 
   return (
-    <div className='pt-3 pb-2 border-b border-vk-border'>
+    <div className='pt-3 pb-2 border-b border-vk-border max-vk:px-2'>
       <div className='flex justify-between items-start mb-1 mr-auto max-vk:hidden'>
         <div className='text-left'>
           <div className='text-[13px] font-bold text-vk-heading leading-tight'>

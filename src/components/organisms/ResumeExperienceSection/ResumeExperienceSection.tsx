@@ -45,7 +45,7 @@ function ExperienceCard({
       className={
         full
           ? 'flex gap-2.5 px-3 pt-3 pb-2.5 border-b border-vk-border-light'
-          : 'flex gap-2.5 pr-3 pt-2.5 pb-2 border-b border-vk-border-light'
+          : 'flex gap-2.5 pl-2 pr-3 pt-2.5 pb-2 border-b border-vk-border-light'
       }
     >
       <img
@@ -67,7 +67,7 @@ function ExperienceCard({
         <p className='m-0 mb-1.5 text-[13px] text-vk-text leading-[1.45]'>
           {entry.summary}
         </p>
-        <ul className='m-0 mb-1.5 list-disc list-outside pl-5 space-y-0.5 text-[12px] text-vk-text leading-[1.5] marker:text-vk-heading'>
+        <ul className='m-0 mb-1.5 list-disc list-outside pl-5 space-y-0.5 text-[12px] text-vk-text leading-normal marker:text-vk-heading'>
           {entry.highlights.map(highlight => (
             <li key={highlight}>{highlight}</li>
           ))}
